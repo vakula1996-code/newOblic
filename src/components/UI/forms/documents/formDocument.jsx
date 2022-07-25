@@ -1,19 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import Box from "@mui/material/Box";
 import classes from "../../../../pages/coming/coming.module.css";
-import MySelect from "../../input/select";
 import InputDate from "../../input/inputDate";
 import Input from "../../input/input";
 import Select from "../../input/select";
+import {observer} from "mobx-react-lite";
+import {Context} from "../../../../index";
 
-const FormDocument = () => {
+const FormDocument = observer(() => {
+    const {document} = useContext(Context)
+
     const data = {
         documentNameId: "",
         toSubdivisionId: "",
         documentNumber: "",
         documentDate: ""
     }
-    const [document, setDocument] = useState(data)
+    const [doc, setDoc] = useState(data)
+    const addDocument= ()=>{
+        document.setDocument([doc])
+    }
     return (
         <Box className={classes.containerForm}>
 
@@ -25,36 +31,38 @@ const FormDocument = () => {
                     <th>Дата документа</th>
                     <th>Номер документа</th>
                     <th>Частина в яку</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                 <td>
-                    <Select label='Назва документа' nameSelect="typeDocumentCharity" value={document.documentNameId} name='documentName'
-                              getData={(data) => setDocument({...document, documentNameId: data.target.value})}/>
+                    <Select label='Назва документа' nameSelect="typeDocumentCharity" value={doc.documentNameId} name='documentName'
+                              getData={(data) => setDoc({...doc, documentNameId: data.target.value})}/>
 
                 </td>
                 <td>
-                    <InputDate value={document.documentDate}
-                               getData={(data) => setDocument({...document, documentDate: data.target.value})}/>
+                    <InputDate value={doc.documentDate}
+                               getData={(data) => setDoc({...doc, documentDate: data.target.value})}/>
 
                 </td>
                 <td>
-                    <Input label="Номер документа" value={document.documentNumber}
-                           getData={(data) => setDocument({...document, documentNumber: data.target.value})}/>
+                    <Input label="Номер документа" value={doc.documentNumber}
+                           getData={(data) => setDoc({...doc, documentNumber: data.target.value})}/>
 
                 </td>
                 <td>
-                    <Select label="Частина в яку" nameSelect="numberSubdivisions" value={document.toSubdivisionId} name='subdivisionName'
-                              getData={(data) => setDocument({...document, toSubdivisionId: data.target.value})}/>
+                    <Select label="Частина в яку" nameSelect="numberSubdivisions" value={doc.toSubdivisionId} name='subdivisionName'
+                              getData={(data) => setDoc({...doc, toSubdivisionId: data.target.value})}/>
 
                 </td>
+                    <td><button onClick={addDocument}>Додати документ</button></td>
                 </tr>
 
                 </tbody>
             </table>
         </Box>
     );
-};
+});
 
 export default FormDocument;

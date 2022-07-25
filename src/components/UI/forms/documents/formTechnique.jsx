@@ -60,8 +60,9 @@ const FormTechnique = observer(() => {
     }
 
     const getCategory = () => {
-        nameCategory(listTechnique.techniqueTypeId).then(data=> technique.setCategory(data))
-
+        if(listTechnique.techniqueTypeId){
+            nameCategory(listTechnique.techniqueTypeId).then(data=> technique.setCategory(data))
+        }
     }
     useEffect(()=>{
         getCategory()
@@ -97,7 +98,7 @@ const FormTechnique = observer(() => {
                     <td><Select label='Одиниці виміру' nameSelect="measurements" value={listTechnique.measurementId} name='measurement'
                                 getData={(data) => setListTechnique({...listTechnique, measurementId: data.target.value})}/></td>
                     <td><Input label='Кількість' value={listTechnique.count}
-                               getData={(data) => setListTechnique({...listTechnique, count: data.target.value})}/></td>
+                               getData={(data) => setListTechnique({...listTechnique, count:  parseInt(data.target.value)})}/></td>
                     <td>
                     <table>
                         <thead>

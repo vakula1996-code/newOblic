@@ -33,7 +33,7 @@ export default class TechniqueStore {
 
 
     get listTechnique(){
-        return this._listTechnique
+        return toJS(this._listTechnique)
     }
 
     get typeTechnique() {

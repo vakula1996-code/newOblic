@@ -7,6 +7,7 @@ import {
     TYPE_TECHNIQUE,
     TYPE_TECHNIQUE_NAME,
 } from "../utils/const";
+import {type} from "@testing-library/user-event/dist/type";
 
 export const nameSubdivisions = async () => {
     // if (localStorage.getItem('token')) {
@@ -44,5 +45,6 @@ export const nameCategory = async (id) => {
     // if (localStorage.getItem('token')) {
         const {data} = await $authHost.get(TYPE_CATEGORY_NAME(id))
         return data
+
     // }
 }

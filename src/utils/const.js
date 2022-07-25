@@ -26,3 +26,8 @@ export const TYPE_MEASUREMENTS_NAME = 'api/measurements'
 export const TYPE_CATEGORY_NAME= (id) => 'api/category?type='+id
 export const TYPE_TECHNIQUE = 'api/techniqueType'
 export const TYPE_TECHNIQUE_NAME = 'api/techniqueName'
+
+
+//Техніка
+export const ADD_NEW_TECHNIQUE = 'api/coming'
+export const ADD_NEW_TECHNIQUE_OUTFIT = 'api/coming?type=outfit'

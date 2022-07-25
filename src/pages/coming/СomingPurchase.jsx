@@ -12,6 +12,8 @@ import {
     nameTechniqueType
 } from "../../http/Type";
 import {Context} from "../../index";
+import {addNewTechniqueHttp} from "../../http/Technique";
+import classes from "../../components/UI/table/table.module.css";
 
 const ComingPurchase = observer(() => {
     const {document} = useContext(Context)
@@ -23,9 +25,12 @@ const ComingPurchase = observer(() => {
         nameTechnique().then(data=> technique.setNameTechnique(data))
         nameMeasurements().then(data=> technique.setMeasurements(data))
     },[])
+    const addNewTeqchnique = () => {
+        addNewTechniqueHttp(document.document,technique.listTechnique)
+    }
     return (
         <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center', marginRight:'10%'}}>
-            <h1>Закупка</h1>
+            <h1>Закупка <button className={classes.button} onClick={addNewTeqchnique}>Виконати дію</button></h1>
             <FormDocument/>
             <FormTechnique/>
             <Table/>
