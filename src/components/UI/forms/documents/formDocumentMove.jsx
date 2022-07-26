@@ -1,10 +1,10 @@
-import React,{useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from "../../../../pages/coming/coming.module.css";
 import Select from "../../input/select";
 import InputDate from "../../input/inputDate";
 import Box from "@mui/material/Box";
 
-const FormDocumentMove = () => {
+const FormDocumentMove = ({id}) => {
     const data = {
         documentNameId: "",
         toSubdivisionId: "",
@@ -12,10 +12,13 @@ const FormDocumentMove = () => {
         documentDate: ""
     }
     const [document, setDocument] = useState(data)
-
+    const [idSubdivision, setIdSubdivision] = useState()
+    useEffect(()=>{
+        id(document.toSubdivisionId)
+    },[document.toSubdivisionId])
     return (
         <div>
-            <Box className={classes.containerForm}>
+            <Box>
 
                 <h2>Документ</h2>
                 <table className={classes.table}>
@@ -40,13 +43,13 @@ const FormDocumentMove = () => {
 
                         </td>
                         <td>
-                            <Select label="Частина з якої" nameSelect="numberSubdivisions" value={document.toSubdivisionId}
+                            <Select label="Частина з якої" nameSelect="numberSubdivisions" value={document.toSubdivisionId} name='subdivisionName'
                                     getData={(data) => setDocument({...document, toSubdivisionId: data.target.value})}/>
 
                         </td>
                         <td>
-                            <Select label="Частина в яку" nameSelect="numberSubdivisions" value={document.toSubdivisionId} name='subdivisionName'
-                                    getData={(data) => setDocument({...document, toSubdivisionId: data.target.value})}/>
+                            <Select label="Частина в яку" nameSelect="numberSubdivisions" value={document.fromSubdivisionId} name='subdivisionName'
+                                    getData={(data) => setDocument({...document, fromSubdivisionId: data.target.value})}/>
 
                         </td>
 

@@ -1,6 +1,6 @@
 import {$authHost, $host} from "./index";
 import jwt_decode from "jwt-decode";
-import {ADD_NEW_TECHNIQUE, ADD_NEW_TECHNIQUE_OUTFIT} from "../utils/const";
+import {ADD_NEW_TECHNIQUE, ADD_NEW_TECHNIQUE_OUTFIT, SUBDIVISIONS_TECHNIQUES} from "../utils/const";
 
 
 export const addNewTechniqueHttp = async (document,technique) => {
@@ -15,3 +15,11 @@ export const addNewTechniqueOutfitHttp = async (document,technique) => {
         // return data
     // }
 }
+export const subdivisionsTechniques = async (id) => {
+        // if (localStorage.getItem('token')) {
+        const {data} = await $authHost.get(SUBDIVISIONS_TECHNIQUES(id))
+        return data
+        // }
+}
+
+

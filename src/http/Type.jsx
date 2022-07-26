@@ -12,7 +12,6 @@ import {type} from "@testing-library/user-event/dist/type";
 export const nameSubdivisions = async () => {
     // if (localStorage.getItem('token')) {
         const {data} = await $authHost.get(TYPE_SUBDIVISION_NAME)
-        console.log(data)
         return data
     // }
 }

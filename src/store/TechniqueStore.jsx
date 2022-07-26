@@ -8,6 +8,7 @@ export default class TechniqueStore {
         this._measurements = []
         this._category = []
         this._nameTechnique = []
+        this._moveTechnique= []
         makeAutoObservable(this)
     }
     setListTechnique(list){
@@ -30,7 +31,9 @@ export default class TechniqueStore {
         this._nameTechnique = name
     }
 
-
+    setMoveTechnique(technique){
+        this._moveTechnique = technique
+    }
 
     get listTechnique(){
         return toJS(this._listTechnique)
@@ -52,6 +55,10 @@ export default class TechniqueStore {
         return this._nameTechnique
     }
 
+
+    get moveTechnique(){
+        return this._moveTechnique
+    }
 
 }
 

@@ -31,3 +31,5 @@ export const TYPE_TECHNIQUE_NAME = 'api/techniqueName'
 //Техніка
 export const ADD_NEW_TECHNIQUE = 'api/coming'
 export const ADD_NEW_TECHNIQUE_OUTFIT = 'api/coming?type=outfit'
+export const CREATE_ORDER = 'api/createOrder'
+export const SUBDIVISIONS_TECHNIQUES =(id)=> 'api/subdivisions/'+id+'/techniques'
