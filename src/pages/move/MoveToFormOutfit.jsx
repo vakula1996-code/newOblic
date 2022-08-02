@@ -6,6 +6,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 import TableMoveChoice from "../../components/UI/table/tableMoveСhoice";
 import TableLookMove from "../../components/UI/table/tableLookMove";
+import {createOrder} from "../../http/Technique";
 
 const MoveToFormOutfit = observer(() => {
     const {document} = useContext(Context)
@@ -17,16 +18,21 @@ const MoveToFormOutfit = observer(() => {
     },[])
     const [modalTechnique, setModalTechnique] = useState(false)
     const [idSubdivision, setIdSubdivision] = useState()
+    const [listMoveTechnique, setListMoveTechnique] = useState([])
+    const [doc, setDoc] = useState()
+    const move = () => {
+        createOrder({document:doc,techniques:listMoveTechnique})
+    }
     return (
         <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center',marginLeft:'20%'}}>
+            <button onClick={move}><h2>Сформувати наряд</h2></button>
             <button onClick={() => setModalTechnique(true)}>Додати техніку</button>
-            <h2>Сформувати наряд</h2>
-            <FormDocumentMove id={setIdSubdivision}/>
+            <FormDocumentMove id={setIdSubdivision} f={setDoc}/>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <TableMoveChoice idSubdivision={idSubdivision} />
             </MyModal>
             {technique.moveTechnique.length>0
-                ?<TableLookMove/>
+                ?<TableLookMove list={setListMoveTechnique}/>
                 :<h2>Добавте техніку для передачі</h2>
             }
         </div>

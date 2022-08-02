@@ -2,7 +2,7 @@ import {$authHost, $host} from "./index";
 import jwt_decode from "jwt-decode";
 import {
     TYPE_CATEGORY_NAME,
-    TYPE_DOCUMENT_NAME, TYPE_MEASUREMENTS_NAME,
+    TYPE_DOCUMENT_NAME, TYPE_ENSURING, TYPE_MEASUREMENTS_NAME,
     TYPE_SUBDIVISION_NAME,
     TYPE_TECHNIQUE,
     TYPE_TECHNIQUE_NAME,
@@ -45,5 +45,11 @@ export const nameCategory = async (id) => {
         const {data} = await $authHost.get(TYPE_CATEGORY_NAME(id))
         return data
 
+    // }
+}
+export const nameEnsuring = async () => {
+    // if (localStorage.getItem('token')) {
+    const {data} = await $authHost.get(TYPE_ENSURING)
+    return data
     // }
 }

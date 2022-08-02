@@ -4,10 +4,15 @@ import Box from "@mui/material/Box";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
 import Select from "../input/select";
-import Input from "../input/input";
+import InputMui from "../input/inputMui";
 import InputDate from "../input/inputDate";
+import MyButtonRemove from "../button/MyButtonRemove";
+import MyButton from "../button/MyButton";
+import {addNewTechniqueHttp, addNewTechniqueOutfitHttp} from "../../../http/Technique";
 
-const Table = observer(() => {
+const Table = observer(({type}) => {
+    const {document} = useContext(Context)
+
     const {technique} = useContext(Context)
 
     const  handleTechniqueRemove = (index) =>{
@@ -20,49 +25,59 @@ const Table = observer(() => {
         list[indexTechnique]['details'].splice(indexSerialNumber, 1)
         technique.setListTechnique(list)
     }
+    const addNewTeqchnique = () => {
+        addNewTechniqueHttp(document.document,technique.listTechnique,type)
+    }
     return (
         <Box className={classes.containerTable}>
             {technique.listTechnique.length>0
                 ?
+                <div>
                 <table className={classes.table}>
                     <caption><h2>Список техніки</h2></caption>
                     <thead>
                     <tr>
+                        <th>№</th>
                         <th>Назва</th>
                         <th>Тип</th>
+                        <th>Тип забезпечення</th>
                         <th>Одиниці виміру</th>
-                        <th>Кількість</th>
-                        <th></th>
-                        <th></th>
+                        <th>Детальні данні</th>
+                        <th>Дія</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {technique.listTechnique.map(({techniqueTypeId,techniqueNameId,measurementId,count,details},indexTechnique)=>
+                    {technique.listTechnique.map(({techniqueTypeId,techniqueName,measurementId,details,ensuringTypeId},indexTechnique)=>
                         <tr key={indexTechnique}>
-                            <td><Select label='Назва' nameSelect="nameTechnique" value={techniqueNameId} name='techniqueName'
-                            /></td>
+                            <td style={{fontSize:'x-large', paddingTop:'35px'}}>{indexTechnique+1}</td>
+                            <td><InputMui label='Назва' value={techniqueName}/></td>
                             <td><Select label='Тип' nameSelect="typeTechnique" value={techniqueTypeId} name='techniqueType'
+                            /></td>
+                            <td><Select label='Тип забезпечення' nameSelect="typeEnsuring" value={ensuringTypeId}
+                                        name='ensuringType'
                             /></td>
                             <td><Select label='Одиниці виміру' nameSelect="measurements" value={measurementId} name='measurement'
                             /></td>
-                            <td><Input label='Кількість' value={count}/></td>
                             <td>
                                 <table>
                                     <thead>
                                     <tr>
+                                        <th>Кількість</th>
                                         <th>Серійний номер</th>
                                         <th>Ціна</th>
                                         <th>Дата створення</th>
                                         <th>Категорія</th>
-                                        {/*<th></th>*/}
+                                        <th>Дія</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {details.map(({serialNumber, price, categoryId, dateOfManufacture}, indexSerialNumber) => (
+                                    {details.map(({serialNumber, price, categoryId, dateOfManufacture,count}, indexSerialNumber) => (
                                         <tr key={indexSerialNumber}>
-                                            <td><Input value={serialNumber}/>
+                                            <td><InputMui label='Кількість' value={count}/></td>
+
+                                            <td><InputMui label='Серійний номер' value={serialNumber}/>
                                             </td>
-                                            <td><Input  value={price}/>
+                                            <td><InputMui label='Ціна' value={price}/>
 
                                             </td>
                                             <td><InputDate value={dateOfManufacture}/>
@@ -72,19 +87,22 @@ const Table = observer(() => {
                                             />
 
                                             </td>
-                                            <td><button onClick={()=>handleSerialNumberRemove(indexSerialNumber,indexTechnique)}>Видалити</button></td>
+                                            <td><MyButtonRemove onClick={()=>handleSerialNumberRemove(indexSerialNumber,indexTechnique)}>Видалити</MyButtonRemove></td>
                                         </tr>
                                     ))}
 
                                     </tbody>
                                 </table>
                             </td>
-                            <td><button onClick={()=>handleTechniqueRemove(indexTechnique)}>Видалити</button></td>
+                            <td><MyButtonRemove onClick={()=>handleTechniqueRemove(indexTechnique)}>Видалити</MyButtonRemove></td>
 
                         </tr>
                     )}
                     </tbody>
                 </table>
+                    <MyButton className={classes.button} onClick={addNewTeqchnique}>Виконати дію</MyButton>
+                </div>
+
                 :
                 <h2>Добавте техніку в сиписок</h2>
 

@@ -20,7 +20,7 @@ import {
     COMING_PURCHASE,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_REGISTRATION,
-    MOVE_TO_FORM
+    MOVE_TO_FORM, REPORT_FOR_SUBDIVISION
 } from "../../utils/const";
 
 export default function NavBar() {
@@ -47,7 +47,7 @@ export default function NavBar() {
     };
 
     return (
-        <div style={{borderRight:"1px solid black", position:'absolute', height:'100%'}}>
+        <div >
             <List
                 sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
                 component="nav"
@@ -62,7 +62,7 @@ export default function NavBar() {
                 </ListItemButton>
                 <Collapse in={open1} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <NavLink to={COMING_PURCHASE} className={classes.link} >
+                        <NavLink to={COMING_PURCHASE} className={classes.link}>
                             <ListItemButton sx={{pl: 4}}>
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
@@ -70,7 +70,7 @@ export default function NavBar() {
                                 <ListItemText primary="Закупка"/>
                             </ListItemButton>
                         </NavLink>
-                        <NavLink to={COMING_OUTFIT} className={classes.link} >
+                        <NavLink to={COMING_OUTFIT} className={classes.link}>
                             <ListItemButton sx={{pl: 4}}>
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
@@ -79,7 +79,7 @@ export default function NavBar() {
                                     primary="По наряду"/>
                             </ListItemButton>
                         </NavLink>
-                        <NavLink to={COMING_CHARITY} className={classes.link} >
+                        <NavLink to={COMING_CHARITY} className={classes.link}>
                             <ListItemButton sx={{pl: 4}}>
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
@@ -100,7 +100,7 @@ export default function NavBar() {
                 </ListItemButton>
                 <Collapse in={open2} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <NavLink to={MOVE_TO_FORM} className={classes.link} >
+                        <NavLink to={MOVE_TO_FORM} className={classes.link}>
                             <ListItemButton sx={{pl: 4}}>
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
@@ -108,7 +108,7 @@ export default function NavBar() {
                                 <ListItemText primary="Сформувати наряд"/>
                             </ListItemButton>
                         </NavLink>
-                        <NavLink to={MOVE_REGISTRATION} className={classes.link} >
+                        <NavLink to={MOVE_REGISTRATION} className={classes.link}>
                             <ListItemButton sx={{pl: 4}}>
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
@@ -123,7 +123,7 @@ export default function NavBar() {
                                 </ListItemIcon>
                                 <ListItemText primary="Підтвердити передачу"/>
                             </ListItemButton>
-                    </NavLink>
+                        </NavLink>
                     </List>
                 </Collapse>
 
@@ -159,12 +159,14 @@ export default function NavBar() {
                 </ListItemButton>
                 <Collapse in={open4} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton sx={{pl: 4}}>
-                            <ListItemIcon>
-                                <FiberManualRecordIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText primary="За підрозділ"/>
-                        </ListItemButton>
+                        <NavLink to={REPORT_FOR_SUBDIVISION} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="За підрозділ"/>
+                            </ListItemButton>
+                        </NavLink>
                         <ListItemButton sx={{pl: 4}}>
                             <ListItemIcon>
                                 <FiberManualRecordIcon fontSize='small'/>

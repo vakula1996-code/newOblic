@@ -4,18 +4,21 @@ import Select from "../../input/select";
 import InputDate from "../../input/inputDate";
 import Box from "@mui/material/Box";
 
-const FormDocumentMove = ({id}) => {
+const FormDocumentMove = ({id,f}) => {
     const data = {
-        documentNameId: "",
-        toSubdivisionId: "",
-        fromSubdivisionId: "",
-        documentDate: ""
+        documentNameId: null,
+        toSubdivisionId: null,
+        fromSubdivisionId: null,
+        documentDate: null
     }
     const [document, setDocument] = useState(data)
     const [idSubdivision, setIdSubdivision] = useState()
     useEffect(()=>{
-        id(document.toSubdivisionId)
-    },[document.toSubdivisionId])
+        id(document.fromSubdivisionId)
+    },[document.fromSubdivisionId])
+    useEffect(()=>{
+        f(document)
+    },[document])
     return (
         <div>
             <Box>
@@ -43,14 +46,13 @@ const FormDocumentMove = ({id}) => {
 
                         </td>
                         <td>
-                            <Select label="Частина з якої" nameSelect="numberSubdivisions" value={document.toSubdivisionId} name='subdivisionName'
-                                    getData={(data) => setDocument({...document, toSubdivisionId: data.target.value})}/>
+                            <Select label="Частина з якої" nameSelect="numberSubdivisions" value={document.fromSubdivisionId} name='subdivisionName'
+                                    getData={(data) => setDocument({...document, fromSubdivisionId: data.target.value})}/>
 
                         </td>
                         <td>
-                            <Select label="Частина в яку" nameSelect="numberSubdivisions" value={document.fromSubdivisionId} name='subdivisionName'
-                                    getData={(data) => setDocument({...document, fromSubdivisionId: data.target.value})}/>
-
+                            <Select label="Частина в яку" nameSelect="numberSubdivisions" value={document.toSubdivisionId} name='subdivisionName'
+                                    getData={(data) => setDocument({...document, toSubdivisionId: data.target.value})}/>
                         </td>
 
 

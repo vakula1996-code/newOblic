@@ -3,12 +3,13 @@ import {makeAutoObservable, toJS} from "mobx";
 export default class TechniqueStore {
     constructor() {
         this._listTechnique = []
-
         this._typeTechnique = []
+        this._typeEnsuring = []
         this._measurements = []
         this._category = []
         this._nameTechnique = []
         this._moveTechnique= []
+        this._moveTechniqueId = []
         makeAutoObservable(this)
     }
     setListTechnique(list){
@@ -18,7 +19,9 @@ export default class TechniqueStore {
     setTypeTechnique(type) {
         this._typeTechnique = type
     }
-
+    setTypeEnsuring(type) {
+        this._typeEnsuring = type
+    }
     setMeasurements(name) {
         this._measurements = name
     }
@@ -35,6 +38,10 @@ export default class TechniqueStore {
         this._moveTechnique = technique
     }
 
+    setMoveTechniqueId(techniqueId) {
+        this._moveTechniqueId = techniqueId
+    }
+
     get listTechnique(){
         return toJS(this._listTechnique)
     }
@@ -42,7 +49,9 @@ export default class TechniqueStore {
     get typeTechnique() {
         return this._typeTechnique
     }
-
+    get typeEnsuring() {
+        return this._typeEnsuring
+    }
     get measurements() {
         return this._measurements
     }
@@ -57,7 +66,11 @@ export default class TechniqueStore {
 
 
     get moveTechnique(){
-        return this._moveTechnique
+        return toJS(this._moveTechnique)
+    }
+
+    get moveTechniqueId() {
+        return toJS(this._moveTechniqueId)
     }
 
 }

@@ -1,8 +1,8 @@
-import React, {useState,useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import Box from "@mui/material/Box";
 import classes from "../../../../pages/coming/coming.module.css";
 import InputDate from "../../input/inputDate";
-import Input from "../../input/input";
+import InputMui from "../../input/inputMui";
 import Select from "../../input/select";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
@@ -11,15 +11,17 @@ const FormDocument = observer(() => {
     const {document} = useContext(Context)
 
     const data = {
-        documentNameId: "",
-        toSubdivisionId: "",
-        documentNumber: "",
-        documentDate: ""
+        documentNameId: null,
+        toSubdivisionId: null,
+        documentNumber: null,
+        documentDate: null
     }
+
     const [doc, setDoc] = useState(data)
-    const addDocument= ()=>{
+
+    useEffect(()=>
         document.setDocument([doc])
-    }
+        , [doc])
     return (
         <Box className={classes.containerForm}>
 
@@ -27,11 +29,10 @@ const FormDocument = observer(() => {
             <table className={classes.table}>
                 <thead>
                 <tr>
-                    <th>Назва документа</th>
-                    <th>Дата документа</th>
-                    <th>Номер документа</th>
-                    <th>Частина в яку</th>
-                    <th></th>
+                    <th>Назва </th>
+                    <th>Дата </th>
+                    <th>Номер</th>
+                    <th>Отримувач</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,8 +48,8 @@ const FormDocument = observer(() => {
 
                 </td>
                 <td>
-                    <Input label="Номер документа" value={doc.documentNumber}
-                           getData={(data) => setDoc({...doc, documentNumber: data.target.value})}/>
+                    <InputMui label="Номер документа" value={doc.documentNumber}
+                              getData={(data) => setDoc({...doc, documentNumber: data.target.value})}/>
 
                 </td>
                 <td>
@@ -56,7 +57,6 @@ const FormDocument = observer(() => {
                               getData={(data) => setDoc({...doc, toSubdivisionId: data.target.value})}/>
 
                 </td>
-                    <td><button onClick={addDocument}>Додати документ</button></td>
                 </tr>
 
                 </tbody>
