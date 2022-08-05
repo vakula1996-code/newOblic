@@ -6,6 +6,7 @@ import InputMui from "../../input/inputMui";
 import Select from "../../input/select";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
+import DateNow from "../../calendar/dateNow";
 
 const FormDocument = observer(() => {
     const {document} = useContext(Context)
@@ -14,7 +15,7 @@ const FormDocument = observer(() => {
         documentNameId: null,
         toSubdivisionId: null,
         documentNumber: null,
-        documentDate: null
+        documentDate: DateNow()
     }
 
     const [doc, setDoc] = useState(data)
@@ -31,7 +32,7 @@ const FormDocument = observer(() => {
                 <tr>
                     <th>Назва </th>
                     <th>Дата </th>
-                    <th>Номер</th>
+                    <th>Реєстраційний номер</th>
                     <th>Отримувач</th>
                 </tr>
                 </thead>

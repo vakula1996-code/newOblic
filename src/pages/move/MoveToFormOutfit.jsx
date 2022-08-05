@@ -4,9 +4,11 @@ import MyModal from "../../components/UI/modal/MyModal";
 import {nameDocument, nameSubdivisions} from "../../http/Type";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
-import TableMoveChoice from "../../components/UI/table/tableMoveСhoice";
-import TableLookMove from "../../components/UI/table/tableLookMove";
+import TableMoveChoice from "../../components/UI/table/Move/tableMoveСhoice";
+import TableLookMove from "../../components/UI/table/Move/tableLookMove";
 import {createOrder} from "../../http/Technique";
+import MyButton from "../../components/UI/button/MyButton";
+import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
 
 const MoveToFormOutfit = observer(() => {
     const {document} = useContext(Context)
@@ -14,7 +16,7 @@ const MoveToFormOutfit = observer(() => {
 
     useEffect(()=>{
         nameSubdivisions().then(data=> document.setTypeNumberSubdivisions(data))
-        nameDocument(2).then(data=> document.setTypeDocumentComing(data))
+        nameDocument(4).then(data=> document.setTypeDocumentComing(data))
     },[])
     const [modalTechnique, setModalTechnique] = useState(false)
     const [idSubdivision, setIdSubdivision] = useState()
@@ -24,15 +26,17 @@ const MoveToFormOutfit = observer(() => {
         createOrder({document:doc,techniques:listMoveTechnique})
     }
     return (
-        <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center',marginLeft:'20%'}}>
-            <button onClick={move}><h2>Сформувати наряд</h2></button>
-            <button onClick={() => setModalTechnique(true)}>Додати техніку</button>
+        <div>
+            <h1>Сформувати наряд</h1>
             <FormDocumentMove id={setIdSubdivision} f={setDoc}/>
+            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonAdd>
+
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <TableMoveChoice idSubdivision={idSubdivision} />
             </MyModal>
-            {technique.moveTechnique.length>0
-                ?<TableLookMove list={setListMoveTechnique}/>
+            {technique.moveTechnique.length
+                ?<div><TableLookMove list={setListMoveTechnique}/><MyButton onClick={move}>Свормувати наряд</MyButton></div>
+
                 :<h2>Добавте техніку для передачі</h2>
             }
         </div>

@@ -3,13 +3,14 @@ import classes from "../../../../pages/coming/coming.module.css";
 import Select from "../../input/select";
 import InputDate from "../../input/inputDate";
 import Box from "@mui/material/Box";
+import DateNow from "../../calendar/dateNow";
 
 const FormDocumentMove = ({id,f}) => {
     const data = {
         documentNameId: null,
         toSubdivisionId: null,
         fromSubdivisionId: null,
-        documentDate: null
+        documentDate: DateNow()
     }
     const [document, setDocument] = useState(data)
     const [idSubdivision, setIdSubdivision] = useState()

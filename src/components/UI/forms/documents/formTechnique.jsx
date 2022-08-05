@@ -9,6 +9,7 @@ import {Context} from "../../../../index";
 import {nameCategory} from "../../../../http/Type";
 import MyButtonRemove from "../../button/MyButtonRemove";
 import MyButton from "../../button/MyButton";
+import DateNow from "../../calendar/dateNow";
 
 
 const FormTechnique = observer(() => {
@@ -24,7 +25,7 @@ const FormTechnique = observer(() => {
                 price: '',
                 categoryId: '',
                 count: 1,
-                dateOfManufacture: ''
+                dateOfManufacture: DateNow()
             }
         ]
     }
@@ -47,19 +48,27 @@ const FormTechnique = observer(() => {
 
     const [listTechnique, setListTechnique] = useState(data)
     const [error, setError] = useState(dateError)
+    const handleTechniqueChange = (e, name) => {
+        console.log(e)
+        const {value} = e.target;
+        const list = {...listTechnique};
+        list[name] = value
+        setListTechnique(list)
+    }
 
     const handleSerialNumberAdd = () => {
         setListTechnique({
             ...listTechnique, details: [...listTechnique.details, {
-                serialNumber: '',
+                serialNumber: 'Б/Н',
                 price: '',
                 categoryId: '',
                 count: 1,
-                dateOfManufacture: ''
+                dateOfManufacture: DateNow()
             }]
         })
 
     }
+
     const handleSerialNumberChange = (e, index, name) => {
 
         const {value} = e.target;
@@ -99,13 +108,10 @@ const FormTechnique = observer(() => {
                     setListTechnique(data)
                 }
             })
-        } else {
-            switch (error) {
-                case error.techniqueName.length :
-                    setError({...error, techniqueName: true})
-                    break
-            }
         }
+
+
+
 
     }
     const getCategory = () => {
@@ -118,7 +124,10 @@ const FormTechnique = observer(() => {
     }, [listTechnique.techniqueTypeId])
     return (
         <Box className={classes.containerForm}><h2>Техніка</h2>
-
+            <MyButton className={classes.button}
+                      style={{marginBottom:'10px'}}
+                      onClick={addInListTeqchnique}>
+                Додати до списку</MyButton>
             <table className={classes.table}>
                 <thead>
                 <tr>
@@ -127,11 +136,6 @@ const FormTechnique = observer(() => {
                     <th>Тип забезпечення</th>
                     <th>Одиниці виміру</th>
                     <th>
-                        <MyButton className={classes.button}
-                                  type="button"
-                                  onClick={handleSerialNumberAdd}>
-                            Додати
-                        </MyButton>
 
                     </th>
                 </tr>
@@ -140,34 +144,22 @@ const FormTechnique = observer(() => {
                 <tr>
                     <td><InputMui label='Назва' value={listTechnique.techniqueName}
                                   error={error.techniqueName}
-                                  getData={(data) => setListTechnique({
-                                      ...listTechnique,
-                                      techniqueName: data.target.value
-                                  })}/></td>
+                                  getData={(e) => handleTechniqueChange(e, 'techniqueName')}/></td>
                     <td><Select label='Тип' nameSelect="typeTechnique" value={listTechnique.techniqueTypeId}
                                 error={error.techniqueTypeId}
 
                                 name='techniqueType'
-                                getData={(data) => setListTechnique({
-                                    ...listTechnique,
-                                    techniqueTypeId: data.target.value
-                                })}/></td>
+                                getData={(e) => handleTechniqueChange(e, 'techniqueTypeId')}/></td>
                     <td><Select label='Тип забезпечення' nameSelect="typeEnsuring" value={listTechnique.ensuringTypeId}
                                 error={error.ensuringTypeId}
 
                                 name='ensuringType'
-                                getData={(data) => setListTechnique({
-                                    ...listTechnique,
-                                    ensuringTypeId: data.target.value
-                                })}/></td>
+                                getData={(e) => handleTechniqueChange(e, 'ensuringTypeId')}/></td>
                     <td><Select label='Одиниці виміру' nameSelect="measurements" value={listTechnique.measurementId}
                                 error={error.measurementId}
 
                                 name='measurement'
-                                getData={(data) => setListTechnique({
-                                    ...listTechnique,
-                                    measurementId: data.target.value
-                                })}/></td>
+                                getData={(e) => handleTechniqueChange(e, 'measurementId')}/></td>
                     <td>
 
                         <table>
@@ -224,8 +216,11 @@ const FormTechnique = observer(() => {
                 </tbody>
             </table>
             <MyButton className={classes.button}
-                      onClick={addInListTeqchnique}>
-                Добавити техніку</MyButton>
+                      type="button"
+                      onClick={handleSerialNumberAdd}>
+                Додати додаткові дані
+            </MyButton>
+
         </Box>
     );
 });

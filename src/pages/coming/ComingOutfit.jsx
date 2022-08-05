@@ -1,10 +1,10 @@
-import React,{useContext, useEffect,useState}  from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import FormTechnique from "../../components/UI/forms/documents/formTechnique";
 import Table from "../../components/UI/table/table";
 import FormDocumentOutfit from "../../components/UI/forms/documents/formDocumentOutfit";
 import {
-    nameCategory,
-    nameDocument, nameEnsuring,
+    nameDocument,
+    nameEnsuring,
     nameMeasurements,
     nameSubdivisions,
     nameTechnique,
@@ -12,11 +12,8 @@ import {
 } from "../../http/Type";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
-import classes from "../../components/UI/table/table.module.css";
-import {addNewTechniqueHttp, addNewTechniqueOutfitHttp} from "../../http/Technique";
 import MyModal from "../../components/UI/modal/MyModal";
 import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
-import MyButton from "../../components/UI/button/MyButton";
 
 const ComingOutfit = observer(() => {
     const {document} = useContext(Context)

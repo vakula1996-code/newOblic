@@ -1,40 +1,36 @@
-import React,{useState,useContext,useEffect} from 'react';
-import Box from "@mui/material/Box";
+import React, {useContext, useState} from 'react';
+import {Context} from "../../../../index";
 import classes from "../../../../pages/coming/coming.module.css";
 import Select from "../../input/select";
 import InputDate from "../../input/inputDate";
 import InputMui from "../../input/inputMui";
 import {observer} from "mobx-react-lite";
-import {Context} from "../../../../index";
+import MyButton from "../../button/MyButton";
 import DateNow from "../../calendar/dateNow";
 
-
-const FormDocumentOutfit = observer(() => {
+const FormDocumentConfirm = observer(() => {
     const {document} = useContext(Context)
 
     const data = {
         documentNameId: null,
-        toSubdivisionId: null,
-        fromSubdivisionId: null,
         documentNumber: null,
         documentDate: DateNow()
     }
     const [doc, setDoc] = useState(data)
-    useEffect(()=>
-            document.setDocument([doc])
-        , [doc])
+    const addDocument= ()=>{
+        document.setDocumentConfirm([...document.documentConfirm, doc])
+    }
     return (
-        <Box className={classes.containerForm}>
+        <div>
+
 
             <h2>Документ</h2>
             <table className={classes.table}>
                 <thead>
                 <tr>
-                    <th>Назва </th>
-                    <th>Дата </th>
-                    <th>Реєстраційний номер </th>
-                    <th>Відправник</th>
-                    <th>Отримувач</th>
+                    <th>Назва документа</th>
+                    <th>Дата документа</th>
+                    <th>Номер документа</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,7 +38,6 @@ const FormDocumentOutfit = observer(() => {
                     <td>
                         <Select label='Назва документа' nameSelect="typeDocumentCharity" value={doc.documentNameId} name='documentName'
                                 getData={(data) => setDoc({...doc, documentNameId: data.target.value})}/>
-
                     </td>
                     <td>
                         <InputDate value={doc.documentDate}
@@ -54,25 +49,18 @@ const FormDocumentOutfit = observer(() => {
                                   getData={(data) => setDoc({...doc, documentNumber: data.target.value})}/>
 
                     </td>
-                    <td>
-                        <Select label="Частина з якої" nameSelect="numberSubdivisions" value={doc.fromSubdivisionId} name='subdivisionName'
-                                getData={(data) => setDoc({...doc, fromSubdivisionId: data.target.value})}/>
-
-                    </td>
-                    <td>
-                        <Select label="Частина в яку" nameSelect="numberSubdivisions" value={doc.toSubdivisionId} name='subdivisionName'
-                                getData={(data) => setDoc({...doc, toSubdivisionId: data.target.value})}/>
-
-                    </td>
 
 
                 </tr>
 
                 </tbody>
             </table>
-        </Box>
+            <MyButton onClick={addDocument}>Додати документ</MyButton>
+
+        </div>
+
     );
 
 });
 
-export default FormDocumentOutfit;
+export default FormDocumentConfirm;

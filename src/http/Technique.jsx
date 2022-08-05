@@ -49,7 +49,7 @@ export const techniqueInformation = async (id,idTechnique)=>{
         return data
         // }
 }
-export const techniqueHisory = async (id, idTechnique) => {
+export const techniqueHistory = async (id, idTechnique) => {
         // if (localStorage.getItem('token')) {
         const {data} = await $authHost.post(TECHNIQUE_HISTORY(id), {detailedTechniqueId:idTechnique})
         return data

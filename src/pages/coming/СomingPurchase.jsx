@@ -1,22 +1,19 @@
-import React, {useEffect,useContext,useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import FormDocument from "../../components/UI/forms/documents/formDocument";
 import Table from "../../components/UI/table/table";
 import FormTechnique from "../../components/UI/forms/documents/formTechnique";
 import {
-    nameDocument, nameEnsuring,
+    nameDocument,
+    nameEnsuring,
     nameMeasurements,
     nameSubdivisions,
     nameTechnique,
     nameTechniqueType
 } from "../../http/Type";
 import {Context} from "../../index";
-import {addNewTechniqueHttp} from "../../http/Technique";
-import classes from "../../components/UI/table/table.module.css";
-import MyTable from "../../components/UI/table/MyTable";
 import MyModal from "../../components/UI/modal/MyModal";
 import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
-import MyButton from "../../components/UI/button/MyButton";
 
 const ComingPurchase = observer(() => {
     const {document} = useContext(Context)

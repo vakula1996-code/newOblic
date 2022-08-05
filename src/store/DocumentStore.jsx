@@ -56,7 +56,7 @@ export default class DocumentStore {
     }
 
     get listOrderNotExecution() {
-        return [this._listOrderNotExecution]
+        return this._listOrderNotExecution
     }
 
     get documentConfirm(){

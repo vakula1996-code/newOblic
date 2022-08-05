@@ -10,8 +10,6 @@ const MySelect = observer(({label, value = null, getData, nameSelect, name,error
     const {technique} = useContext(Context)
     return (
         <div>
-            {error === true
-                ?
             <FormControl variant="standard" sx={{m: 1, minWidth: 100}}>
                 <InputLabel id="demo-simple-select-standard-label">{label}</InputLabel>
                 <Select
@@ -32,33 +30,12 @@ const MySelect = observer(({label, value = null, getData, nameSelect, name,error
 
 
                 </Select>
-                <FormHelperText id="component-error-text" style={{color:'#d32f2f'}}>{errorLabel}</FormHelperText>
-
-            </FormControl>
-                :
-                <FormControl variant="standard" sx={{m: 1, minWidth: 100}}>
-                    <InputLabel id="demo-simple-select-standard-label">{label}</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-standard-label"
-                        id="demo-simple-select-standard"
-                        value={value}
-                        onChange={(e) => getData(e)}
-                    >
-                        {(document[nameSelect] !== undefined)
-                            ?
-                            document[nameSelect].map(data =>
-                                <MenuItem key={data.id} value={data.id}>{data[name]}</MenuItem>)
-                            :
-                            technique[nameSelect].map(data =>
-                                <MenuItem key={data.id} value={data.id}>{data[name]}</MenuItem>)
-
-                        }
-
-
-                    </Select>
-
+                {error === true
+                    ? <FormHelperText id="component-error-text" style={{color: '#d32f2f'}}>{errorLabel}</FormHelperText>
+                    : <></>
+                }
                 </FormControl>
-            }
+
         </div>
     );
 });

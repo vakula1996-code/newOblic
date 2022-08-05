@@ -38,11 +38,11 @@
     border-radius: 0 20px 0 0;
 }
 .table tbody td {
-    text-align: left;
+    text-align: center;
+    vertical-align: center;
     border: none;
     padding: 10px 15px;
     font-size: 14px;
-    vertical-align: top;
     border-right: 1px solid #ddd;
 
 }
