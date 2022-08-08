@@ -3,13 +3,18 @@
     display: flex;
 }
 
-.container__item1{
+.container__navbar{
     height: 100%;
     width: max-content;
     min-width: max-content;
+    display: none;
 }
 
-.container__item2{
+.container__navbar_hide {
+    display:  flex;
+}
+
+.container__appRouter{
     height: 100%;
     position: center;
     text-align: center;
