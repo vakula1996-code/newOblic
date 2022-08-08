@@ -8,8 +8,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import {useState} from "react";
 
-export default function MenuAppBar() {
+export default function MenuAppBar({visibleNavbar, setVisibleNavbar}) {
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -22,6 +23,14 @@ export default function MenuAppBar() {
         setAnchorEl(null);
     };
 
+    const visibleNav = () => {
+        if (visibleNavbar === true)
+            setVisibleNavbar(false)
+        else {
+            setVisibleNavbar(true)
+        }
+    }
+
     return (
         <Box sx={{ flexGrow: 1, marginBottom: 1}}>
             <AppBar position="static">
@@ -32,6 +41,7 @@ export default function MenuAppBar() {
                         color="inherit"
                         aria-label="menu"
                         sx={{ mr: 2 }}
+                        onClick={visibleNav}
                     >
                         <MenuIcon />
                     </IconButton>
