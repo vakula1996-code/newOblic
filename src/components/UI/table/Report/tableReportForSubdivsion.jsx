@@ -32,7 +32,6 @@ const TableReportForSubdivsion = observer(() => {
                     <th>Назва техніки</th>
                     <th>Підрозділ</th>
                     <th>Одиниці виміру</th>
-                    <th>Кількість</th>
                     <th>Деталі</th>
                 </tr>
                 </thead>
@@ -52,24 +51,25 @@ const TableReportForSubdivsion = observer(() => {
                         <td>{nameTechniques}</td>
                         <td>{subdivision}</td>
                         <td>{measurement}</td>
-                        <td>{count}</td>
                         <td>
                             <table className={classes.table}>
                                 <thead>
                                 <tr>
                                     <th>№</th>
                                     <th>Серійний номер</th>
+                                    <th>Кількість</th>
                                     <th>Ціна</th>
                                     <th>Дата створення</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {techniqueDetails.map(({id, serialNumber, price, dateOfManufacture}, index) =>
+                                {techniqueDetails.map(({id, serialNumber, price, dateOfManufacture,category,categoryId,count}, index) =>
                                     <tr key={index}>
                                         <td>{index+1}</td>
                                         <td><Link
-                                            to={`/detailLookTechnique/${subdivisionId}/${id}`}>{serialNumber}</Link>
+                                            to={`/detailLookTechnique/${subdivisionId}/${id}/${categoryId}`}>{serialNumber}</Link>
                                         </td>
+                                        <td>{count}</td>
                                         <td>{price}</td>
                                         <td>{dateOfManufacture}</td>
                                     </tr>

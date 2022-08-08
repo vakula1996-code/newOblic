@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useState} from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -12,23 +12,23 @@ import FolderDeleteIcon from '@mui/icons-material/FolderDelete';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
 import MoveUpIcon from '@mui/icons-material/MoveUp';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import classes from "./NavBar.module.css";
 import {
     COMING_CHARITY,
     COMING_OUTFIT,
-    COMING_PURCHASE,
+    COMING_PURCHASE, ENSURING,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_REGISTRATION,
     MOVE_TO_FORM, REPORT_FOR_SUBDIVISION
 } from "../../utils/const";
 
 export default function NavBar() {
-    const [open1, setOpen1] = React.useState(false);
-    const [open2, setOpen2] = React.useState(false);
-    const [open3, setOpen3] = React.useState(false);
-    const [open4, setOpen4] = React.useState(false);
-    const [open5, setOpen5] = React.useState(false);
+    const [open1, setOpen1] = useState(false);
+    const [open2, setOpen2] = useState(false);
+    const [open3, setOpen3] = useState(false);
+    const [open4, setOpen4] = useState(false);
+    const [open5, setOpen5] = useState(false);
 
     const handleClick1 = () => {
         setOpen1(!open1);
@@ -47,7 +47,7 @@ export default function NavBar() {
     };
 
     return (
-        <div >
+        <div>
             <List
                 sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
                 component="nav"
@@ -159,7 +159,8 @@ export default function NavBar() {
                 </ListItemButton>
                 <Collapse in={open4} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <NavLink to={REPORT_FOR_SUBDIVISION} className={classes.link}>
+                        <NavLink to={ENSURING} className={classes.link}>
+
                             <ListItemButton sx={{pl: 4}}>
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
@@ -167,12 +168,17 @@ export default function NavBar() {
                                 <ListItemText primary="За підрозділ"/>
                             </ListItemButton>
                         </NavLink>
-                        <ListItemButton sx={{pl: 4}}>
-                            <ListItemIcon>
-                                <FiberManualRecordIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText primary="Рух техніки"/>
-                        </ListItemButton>
+
+                        <NavLink to={REPORT_FOR_SUBDIVISION} className={classes.link}>
+
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Рух техніки"/>
+                            </ListItemButton>
+                        </NavLink>
+
                     </List>
                 </Collapse>
                 <ListItemButton onClick={handleClick5}>

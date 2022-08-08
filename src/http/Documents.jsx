@@ -38,9 +38,9 @@ export const executionOrder = async (document)=>{
     // }
 }
 
-export const documentHisory = async (id, idTechnique) => {
+export const documentHisory = async (id, idTechnique,idCategory) => {
     // if (localStorage.getItem('token')) {
-    const {data} = await $authHost.post(DOCUMENT_HISTORY(id), {detailedTechniqueId:idTechnique})
+    const {data} = await $authHost.post(DOCUMENT_HISTORY(id), {detailedTechniqueId:idTechnique,categoryId:idCategory})
     return data
     // }
 }

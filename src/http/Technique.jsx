@@ -5,7 +5,7 @@ import {
         ADD_NEW_TECHNIQUE_OUTFIT,
         CREATE_ORDER,
         LOOK_TECHNIQUE,
-        SUBDIVISIONS_TECHNIQUES, TECHNIQUE_HISTORY, TECHNIQUE_INFORMATION
+        SUBDIVISIONS_TECHNIQUES, TECHNIQUE_ENSURING, TECHNIQUE_HISTORY, TECHNIQUE_INFORMATION
 } from "../utils/const";
 
 
@@ -43,18 +43,25 @@ export  const lookTechnique = async (id)=>{
         // }
 }
 
-export const techniqueInformation = async (id,idTechnique)=>{
+export const techniqueInformation = async (id,idTechnique,idCategory)=>{
         // if (localStorage.getItem('token')) {
-        const {data} = await $authHost.post(TECHNIQUE_INFORMATION(id),{detailedTechniqueId:idTechnique})
+        const {data} = await $authHost.post(TECHNIQUE_INFORMATION(id),{detailedTechniqueId:idTechnique,categoryId:idCategory})
         return data
         // }
 }
-export const techniqueHistory = async (id, idTechnique) => {
+export const techniqueHistory = async (id, idTechnique,idCategory) => {
         // if (localStorage.getItem('token')) {
-        const {data} = await $authHost.post(TECHNIQUE_HISTORY(id), {detailedTechniqueId:idTechnique})
+        const {data} = await $authHost.post(TECHNIQUE_HISTORY(id), {detailedTechniqueId:idTechnique,categoryId:idCategory})
         return data
         // }
 }
 
+
+export const techniqueEnsuring = async (id) => {
+        // if (localStorage.getItem('token')) {
+        const {data} = await $authHost.get(TECHNIQUE_ENSURING(id))
+        return data
+        // }
+}
 
 

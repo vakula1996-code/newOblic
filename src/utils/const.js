@@ -18,6 +18,7 @@ export const MOVE_CONFIRM_TRANSMISSION = '/moveConfirmTransmission'
 export const REPORT_FOR_SUBDIVISION = '/reportForSubdivision'
 export const DETAIL_LOOK_TECHNIQUE= '/detailLookTechnique'
 
+export const ENSURING = '/techniqueEnsuring'
 
 //Типи
 export const TYPE_DOCUMENT_NAME = (id)=> 'api/documentNames?type='+id
@@ -36,6 +37,7 @@ export const SUBDIVISIONS_TECHNIQUES =(id)=> 'api/subdivisions/'+id+'/techniques
 export const LOOK_TECHNIQUE = (id)=>'api/subdivisions/'+id+'/techniques'
 export const TECHNIQUE_INFORMATION=(id)=> 'api/subdivisions/+'+id+'+/techniques/info'
 export const TECHNIQUE_HISTORY = (id) => 'api/subdivisions/'+id+'/techniques/history'
+export const TECHNIQUE_ENSURING = (id) => 'api/subdivisions/'+id+'/techniques/ensuring'
 
 
 //Документи
