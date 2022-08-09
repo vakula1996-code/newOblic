@@ -111,7 +111,7 @@ const Table = observer(({type}) => {
                         )}
                         </tbody>
                     </table>
-                    <MyButton className={classes.button} onClick={addNewTeqchnique}>Виконати дію</MyButton>
+                    <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
                 </div>
 
                 :<h2>Добавте техніку в сиписок</h2>
