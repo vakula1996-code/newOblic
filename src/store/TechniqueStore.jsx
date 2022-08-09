@@ -4,6 +4,7 @@ import {techniqueHisory, techniqueInformation} from "../http/Technique";
 export default class TechniqueStore {
     constructor() {
         this._listTechnique = []
+        this._listTechniqueForTable = []
         this._typeTechnique = []
         this._typeEnsuring = []
         this._measurements = []
@@ -18,6 +19,9 @@ export default class TechniqueStore {
 
     setListTechnique(list) {
         this._listTechnique = list
+    }
+    setListTechniqueForTable(list) {
+        this._listTechniqueForTable = list
     }
 
     setTypeTechnique(type) {
@@ -56,6 +60,9 @@ export default class TechniqueStore {
 
     get listTechnique() {
         return toJS(this._listTechnique)
+    }
+    get listTechniqueForTable() {
+        return toJS(this._listTechniqueForTable)
     }
 
     get typeTechnique() {

@@ -10,10 +10,9 @@ import {nameCategory} from "../../../../http/Type";
 import MyButtonRemove from "../../button/MyButtonRemove";
 import MyButton from "../../button/MyButton";
 import DateNow from "../../calendar/dateNow";
-import MyInput from "../../input/MyInput";
 
 
-const FormTechnique = observer(() => {
+const FormTechnique = observer(({setVisible}) => {
         const {technique} = useContext(Context)
         const data = {
             techniqueTypeId: '',
@@ -30,26 +29,52 @@ const FormTechnique = observer(() => {
                 }
             ]
         }
-
+    const dataForTable = {
+        techniqueTypeId: '',
+        ensuringTypeId: '',
+        techniqueName: '',
+        measurementId: '',
+        details: [
+            {
+                serialNumber: 'Б/Н',
+                price: '',
+                categoryId: '',
+                count: 1,
+                dateOfManufacture: DateNow()
+            }
+        ]
+    }
+        const [stateAllTable, setStateAllTable] = useState(false)
 
         const [listTechnique, setListTechnique] = useState(data)
+        const [listTechniqueForTable, setListTechniqueForTable] = useState(dataForTable)
         const [errorTechniqueTypeId, setErrorTechniqueTypeId] = useState(false)
         const [errorTechniqueName, setErrorTechniqueName] = useState(false)
         const [errorEnsuringTypeId, setErrorEnsuringTypeId] = useState(false)
         const [errorMeasurementId, setErrorMeasurementId] = useState(false)
-        const [errorSerialNumber, setErrorSerialNumber] = useState([{state:false}])
-        const [errorPrice, setErrorPrice] = useState([{state:false}])
-        const [errorCount, setErrorCount] = useState([{state:false}])
-        const [errorCategoryId, setErrorCategoryId] = useState([{state:false}])
-        const [errorDateOfManufacture, setErrorDateOfManufacture] = useState([{state:false}])
+        const [errorSerialNumber, setErrorSerialNumber] = useState([{state: false}])
+        const [errorPrice, setErrorPrice] = useState([{state: false}])
+        const [errorCount, setErrorCount] = useState([{state: false}])
+        const [errorCategoryId, setErrorCategoryId] = useState([{state: false}])
+        const [errorDateOfManufacture, setErrorDateOfManufacture] = useState([{state: false}])
 
-        const handleTechniqueChange = (e, name) => {
+        const handleTechniqueChange = (e, name,data) => {
             const {value} = e.target;
             const list = {...listTechnique};
             list[name] = value
             setListTechnique(list)
+            if (data){
+                const listForTable = {...listTechniqueForTable};
+                listForTable[name]= data.props.children
+                setListTechniqueForTable(listForTable)
+            }
+            else {
+                const {value} = e.target;
+                const listForTable = {...listTechniqueForTable};
+                listForTable[name] = value
+                setListTechniqueForTable(listForTable)
+            }
         }
-
         const handleSerialNumberAdd = () => {
             setListTechnique({
                 ...listTechnique, details: [...listTechnique.details, {
@@ -60,29 +85,46 @@ const FormTechnique = observer(() => {
                     dateOfManufacture: DateNow()
                 }]
             })
-            setErrorSerialNumber([...errorSerialNumber, {state:false}])
-            setErrorPrice([...errorPrice, {state:false}])
-            setErrorCount([...errorCount, {state:false}])
-            setErrorDateOfManufacture([...errorDateOfManufacture, {state:false}])
-            setErrorCategoryId([...errorCategoryId, {state:false}])
+            setListTechniqueForTable({
+                ...listTechniqueForTable, details: [...listTechniqueForTable.details, {
+                    serialNumber: 'Б/Н',
+                    price: '',
+                    categoryId: '',
+                    count: 1,
+                    dateOfManufacture: DateNow()
+                }]
+            })
+            setErrorSerialNumber([...errorSerialNumber, {state: false}])
+            setErrorPrice([...errorPrice, {state: false}])
+            setErrorCount([...errorCount, {state: false}])
+            setErrorDateOfManufacture([...errorDateOfManufacture, {state: false}])
+            setErrorCategoryId([...errorCategoryId, {state: false}])
         }
-        const handleSerialNumberChange = (e, index, name) => {
+        const handleSerialNumberChange = (e, index, name,data) => {
 
             const {value} = e.target;
             const list = {...listTechnique};
             if (name === 'count') {
-                    if(value.length === 0)
-                    {
-                        list['details'][index][name] = 0;
-                    }
-                    else {
-                        list['details'][index][name] = parseInt(value);
-                    }
-            }
-            else {
+                if (value.length === 0) {
+                    list['details'][index][name] = 0;
+                } else {
+                    list['details'][index][name] = parseInt(value);
+                }
+            } else {
                 list['details'][index][name] = value;
             }
             setListTechnique(list);
+            if(data){
+                const listForTable = {...listTechniqueForTable}
+                listForTable['details'][index][name]= data.props.children
+                setListTechniqueForTable(listForTable)
+            }
+            else {
+                const {value} = e.target;
+                const listForTable = {...listTechniqueForTable}
+                listForTable['details'][index][name] = value
+                setListTechniqueForTable(listForTable)
+            }
 
 
         };
@@ -91,18 +133,21 @@ const FormTechnique = observer(() => {
             const list = {...listTechnique};
             list['details'].splice(index, 1);
             setListTechnique(list);
+            const listForTable = {...listTechniqueForTable}
+            listForTable['details'].splice(index, 1);
+            setListTechniqueForTable(listForTable);
             const listErrorSerialNumber = [...errorSerialNumber]
-            listErrorSerialNumber.splice(index,1)
+            listErrorSerialNumber.splice(index, 1)
             setErrorSerialNumber(listErrorSerialNumber)
             const listErrorPrice = [...errorPrice]
-            listErrorPrice.splice(index,1)
+            listErrorPrice.splice(index, 1)
             setErrorPrice(listErrorPrice)
             const listErrorCount = [...errorCount]
-            listErrorCount.splice(index,1)
+            listErrorCount.splice(index, 1)
             setErrorCount(listErrorCount)
 
             const listErrorDateOfManufacture = [...errorDateOfManufacture]
-            listErrorDateOfManufacture.splice(index,1)
+            listErrorDateOfManufacture.splice(index, 1)
             setErrorDateOfManufacture(listErrorDateOfManufacture)
         };
         const addInListTeqchnique = () => {
@@ -114,7 +159,7 @@ const FormTechnique = observer(() => {
                 listTechnique.measurementId !== ''
             ) {
 
-                listTechnique.details.map(({count,serialNumber, price, categoryId, dateOfManufacture}) => {
+                listTechnique.details.map(({count, serialNumber, price, categoryId, dateOfManufacture}) => {
                     if (
                         count !== '' &&
                         serialNumber !== '' &&
@@ -122,12 +167,11 @@ const FormTechnique = observer(() => {
                         categoryId !== '' &&
                         dateOfManufacture !== ''
                     ) {
-                        technique.setListTechnique([...technique.listTechnique, listTechnique])
-                        setListTechnique(data)
-
+                        setStateAllTable(true)
                     }
                 })
             } else {
+                setStateAllTable(false)
                 if (listTechnique.techniqueName === '') {
                     setErrorTechniqueName(true)
                 } else {
@@ -149,7 +193,7 @@ const FormTechnique = observer(() => {
                     setErrorMeasurementId(false)
                 }
 
-                listTechnique.details.map(({count,serialNumber, price, categoryId, dateOfManufacture}, index) => {
+                listTechnique.details.map(({count, serialNumber, price, categoryId, dateOfManufacture}, index) => {
                     if (serialNumber === '') {
                         const list = [...errorSerialNumber];
                         list[index]['state'] = true
@@ -207,6 +251,13 @@ const FormTechnique = observer(() => {
                 })
 
             }
+            if (stateAllTable === true){
+                technique.setListTechnique([...technique.listTechnique, listTechnique])
+                setListTechnique(data)
+                technique.setListTechniqueForTable([...technique.listTechniqueForTable, listTechniqueForTable])
+                setListTechniqueForTable(dataForTable)
+                setVisible(false)
+            }
 
         }
         const getCategory = () => {
@@ -229,9 +280,9 @@ const FormTechnique = observer(() => {
                         <th>Назва</th>
                         <th>Тип</th>
                         <th>Тип забезпечення</th>
-                        <th>Одиниці виміру</th>
+                        <th>Одиниця виміру</th>
                         <th>
-
+                            Додаткові дані
                         </th>
                     </tr>
                     </thead>
@@ -244,17 +295,17 @@ const FormTechnique = observer(() => {
                                     error={errorTechniqueTypeId}
 
                                     name='techniqueType'
-                                    getData={(e) => handleTechniqueChange(e, 'techniqueTypeId')}/></td>
+                                    getData={(e, data) => handleTechniqueChange(e, 'techniqueTypeId', data)}/></td>
                         <td><Select label='Тип забезпечення' nameSelect="typeEnsuring" value={listTechnique.ensuringTypeId}
                                     error={errorEnsuringTypeId}
 
                                     name='ensuringType'
-                                    getData={(e) => handleTechniqueChange(e, 'ensuringTypeId')}/></td>
+                                    getData={(e, data) => handleTechniqueChange(e, 'ensuringTypeId', data)}/></td>
                         <td><Select label='Одиниці виміру' nameSelect="measurements" value={listTechnique.measurementId}
                                     error={errorMeasurementId}
 
                                     name='measurement'
-                                    getData={(e) => handleTechniqueChange(e, 'measurementId')}/></td>
+                                    getData={(e, data) => handleTechniqueChange(e, 'measurementId', data)}/></td>
                         <td>
 
                             <table>
@@ -277,7 +328,7 @@ const FormTechnique = observer(() => {
                                                             }, index) => (
                                     <tr key={index}>
                                         <td><InputMui value={listTechnique.details[index].count}
-                                            error={errorCount[index]['state']}
+                                                      error={errorCount[index]['state']}
                                                       errorLabel='Кількість повина бути більше 0'
                                                       getData={(e) => handleSerialNumberChange(e, index, 'count')}/></td>
                                         <td><InputMui value={listTechnique.details[index].serialNumber}
@@ -285,19 +336,19 @@ const FormTechnique = observer(() => {
                                                       getData={(e) => handleSerialNumberChange(e, index, 'serialNumber')}/>
                                         </td>
                                         <td><InputMui value={listTechnique.details[index].price}
-                                            error={errorPrice[index]['state']}
+                                                      error={errorPrice[index]['state']}
                                                       getData={(e) => handleSerialNumberChange(e, index, 'price')}/>
 
                                         </td>
                                         <td><InputDate value={listTechnique.details[index].dateOfManufacture}
-                                            error={errorDateOfManufacture[index]['state']}
+                                                       error={errorDateOfManufacture[index]['state']}
                                                        getData={(e) => handleSerialNumberChange(e, index, 'dateOfManufacture')}/>
 
                                         </td>
                                         <td><Select nameSelect="category" value={listTechnique.details[index].categoryId}
                                                     name='categoryName'
-                                            error={errorCategoryId[index]['state']}
-                                                    getData={(e) => handleSerialNumberChange(e, index, 'categoryId')}/>
+                                                    error={errorCategoryId[index]['state']}
+                                                    getData={(e, data) => handleSerialNumberChange(e, index, 'categoryId', data)}/>
 
                                         </td>
                                         <td><MyButtonRemove

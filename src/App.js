@@ -4,7 +4,6 @@ import NavBar from "./components/NavBar/NavBar";
 import AppRouter from "./router/AppRouter";
 import MenuAppBar from "./components/NavBar/HeaderNavBar";
 import './App.css'
-import classes from "./components/UI/modal/MyModal.module.css";
 
 
 function App() {

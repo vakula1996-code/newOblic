@@ -34,7 +34,7 @@ const ComingOutfit = observer(() => {
         <div>
             <h1>По наряду </h1>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <FormTechnique/>
+                <FormTechnique setVisible={setModalTechnique}/>
             </MyModal>
 
             <FormDocumentOutfit/>

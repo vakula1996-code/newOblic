@@ -7,11 +7,17 @@
     height: 100%;
     width: max-content;
     min-width: max-content;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.5s, opacity 0.5s;
 }
 
 .container__navbar_hide {
-    display:  flex;
+    visibility:  visible;
+    opacity: 1;
+    display: flex;
+    transition: visibility 0.5s, opacity 0.5s;
+
 }
 
 .container__appRouter{

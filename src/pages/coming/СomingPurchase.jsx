@@ -35,7 +35,7 @@ const ComingPurchase = observer(() => {
             <h1>Закупка </h1>
             <FormDocument/>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <FormTechnique/>
+                <FormTechnique setVisible={setModalTechnique}/>
             </MyModal>
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonAdd>
 

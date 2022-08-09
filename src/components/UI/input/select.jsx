@@ -16,12 +16,13 @@ const MySelect = observer(({label, value = null, getData, nameSelect, name,error
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
                     value={value}
-                    onChange={(e) => getData(e)}
+
+                    onChange={(e,child) => getData(e,child)}
                 >
                     {(document[nameSelect] !== undefined)
                         ?
                         document[nameSelect].map(data =>
-                            <MenuItem key={data.id} value={data.id}>{data[name]}</MenuItem>)
+                            <MenuItem key={data.id} value={data.id} >{data[name]}</MenuItem>)
                         :
                         technique[nameSelect].map(data =>
                             <MenuItem key={data.id} value={data.id}>{data[name]}</MenuItem>)

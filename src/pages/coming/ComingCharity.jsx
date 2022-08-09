@@ -37,7 +37,7 @@ const ComingCharity = observer(() => {
             </h1>
 
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <FormTechnique/>
+                <FormTechnique setVisible={setModalTechnique}/>
             </MyModal>
 
             <FormDocument/>
