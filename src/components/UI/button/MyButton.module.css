@@ -1,30 +1,6 @@
 
 .buttonAdd {
-    /*align-items: center;*/
-    /*background-color: #fff;*/
-    /*border-radius: 12px;*/
-    /*box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .3) 0 6px 20px;*/
-    /*box-sizing: border-box;*/
-    /*color: #121212;*/
 
-    /*display: inline-flex;*/
-    /*flex: 1 1 auto;*/
-    /*font-family: Inter, sans-serif;*/
-    /*font-size: 1.2rem;*/
-    /*font-weight: 700;*/
-    /*justify-content: center;*/
-    /*line-height: 1;*/
-    /*margin: 0;*/
-    /*outline: none;*/
-    /*padding: 1rem 1.2rem;*/
-    /*text-align: center;*/
-    /*text-decoration: none;*/
-    /*transition: box-shadow .2s, -webkit-box-shadow .2s;*/
-    /*white-space: nowrap;*/
-    /*border: 0;*/
-    /*user-select: none;*/
-    /*-webkit-user-select: none;*/
-    /*touch-action: manipulation;*/
 
     align-items: center;
     font-family: inherit;
@@ -198,4 +174,22 @@
 .button-3:active {
     background-color: #298e46;
     box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
+
+.buttonNotActive {
+    align-items: center;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 12px;
+    background-color: #cbcbcb;
+    border: none;
+    color: black;
+    padding: 16px 32px;
+    text-align: center;
+    margin: 4px 2px;
+    transition: 0.3s;
+    opacity: 0.6;
+    cursor: not-allowed;
 }

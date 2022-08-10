@@ -151,14 +151,12 @@ const FormTechnique = observer(({setVisible}) => {
             setErrorDateOfManufacture(listErrorDateOfManufacture)
         };
         const addInListTeqchnique = () => {
-
             if (
                 listTechnique.techniqueTypeId !== '' &&
                 listTechnique.ensuringTypeId !== '' &&
                 listTechnique.techniqueName !== '' &&
                 listTechnique.measurementId !== ''
             ) {
-
                 listTechnique.details.map(({count, serialNumber, price, categoryId, dateOfManufacture}) => {
                     if (
                         count !== '' &&
@@ -169,9 +167,13 @@ const FormTechnique = observer(({setVisible}) => {
                     ) {
                         setStateAllTable(true)
                     }
+                    else {
+                        setStateAllTable(false)
+                    }
                 })
-            } else {
-                setStateAllTable(false)
+            }
+            if (stateAllTable===false) {
+
                 if (listTechnique.techniqueName === '') {
                     setErrorTechniqueName(true)
                 } else {
@@ -257,6 +259,7 @@ const FormTechnique = observer(({setVisible}) => {
                 technique.setListTechniqueForTable([...technique.listTechniqueForTable, listTechniqueForTable])
                 setListTechniqueForTable(dataForTable)
                 setVisible(false)
+                setStateAllTable(false)
             }
 
         }

@@ -6,14 +6,13 @@ import classes from '../table.module.css'
 import MyButtonChoice from "../../button/MyButtonChoice";
 
 
-const TableMoveChoice = observer(({idSubdivision}) => {
+const TableMoveChoice = observer(({idSubdivision,setData}) => {
     const {technique} = useContext(Context)
-
     const [dataList, setDataList] = useState([])
 
     useEffect(() => {
         if (idSubdivision) {
-            subdivisionsTechniques(idSubdivision).then(data => setDataList(data))
+            subdivisionsTechniques(idSubdivision).then(data => {setDataList(data);setData(data)})
         }
     }, [idSubdivision])
     const [listMove, setListMove] = useState([])

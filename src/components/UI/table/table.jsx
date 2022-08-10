@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import classes from "./table.module.css";
 import Box from "@mui/material/Box";
 import {observer} from "mobx-react-lite";
@@ -7,16 +7,15 @@ import MyButtonRemove from "../button/MyButtonRemove";
 import MyButton from "../button/MyButton";
 import {addNewTechniqueHttp} from "../../../http/Technique";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
-import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ErrorAddData from "../error/errorAddData";
 
 
 
 const Table = observer(({type}) => {
     const {document} = useContext(Context)
-
     const {technique} = useContext(Context)
-
+    const [error ,setError] = useState('')
     const  handleTechniqueRemove = (index) =>{
         const list = [...technique.listTechnique]
         list.splice(index, 1)
@@ -37,7 +36,9 @@ const Table = observer(({type}) => {
         technique.setListTechniqueForTable(listForTable)
     }
     const addNewTeqchnique = () => {
-        addNewTechniqueHttp(document.document,technique.listTechnique,type)
+        addNewTechniqueHttp(document.document,technique.listTechnique,type).catch(data=>{
+            setError(data.response.data.detail)
+        })
     }
     return (
         <Box className={classes.containerTable}>
@@ -117,6 +118,7 @@ const Table = observer(({type}) => {
                 :<h2>Добавте техніку в сиписок</h2>
 
             }
+            <ErrorAddData data={error}/>
         </Box>
     );
 });
