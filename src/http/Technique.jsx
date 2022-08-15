@@ -12,7 +12,7 @@ import {
 export const addNewTechniqueHttp = async (document,technique,type) => {
     // if (localStorage.getItem('token')) {
         const {data} = await $authHost.post(ADD_NEW_TECHNIQUE(type),({documents:document,techniques:technique}))
-        // return data
+        return data
     // }
 }
 export const addNewTechniqueOutfitHttp = async (document,technique) => {

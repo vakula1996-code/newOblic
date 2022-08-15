@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState,useMemo} from 'react';
 import Box from "@mui/material/Box";
 import {Modal} from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-function ErrorAddData({data})  {
+function ErrorAddData({error,setError,errorMessages,children},...props)  {
     const style = {
         position: 'absolute',
         top: '50%',
@@ -15,29 +15,66 @@ function ErrorAddData({data})  {
         boxShadow: 24,
         p: 4,
     };
-    const [open, setOpen] = useState(false);
-    const handleClose = () => setOpen(false);
-    if (data){
-        setOpen(true)
+    const [openError, setOpenError] = useState(false);
+    const [openNotError, setOpenNotError] = useState(false);
+    const handleClose = () => setOpenError(false);
+    const handleCloseNotError = () => setOpenNotError(false);
+    const requestStatus = () => {
+        if (error === 'Hello world'){
+            setOpenNotError(true)
+            setError('')
+        }
+        else if(error !== '' && error !== 'Hello world'){
+            setOpenError(true)
+            setError('')
+        }
     }
-    console.log(data)
+    useEffect(()=>{
+        requestStatus()
+    },[error])
     return (
-        <div><h2>qwe</h2></div>
-        // <Modal
-        //     open={open}
-        //     onClose={handleClose}
-        //     aria-labelledby="modal-modal-title"
-        //     aria-describedby="modal-modal-description"
-        // >
-        //     <Box sx={style}>
-        //         <Typography id="modal-modal-title" variant="h6" component="h2">
-        //             Text in a modal
-        //         </Typography>
-        //         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        //             {data}
-        //         </Typography>
-        //     </Box>
-        // </Modal>
+        <div>
+            {children}
+            {openError === true
+                ?
+                <Modal
+                    open={openError}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Помилка
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{mt: 2}}>
+                            {errorMessages}
+                        </Typography>
+                    </Box>
+                </Modal>
+                :<></>}
+            {openNotError === true
+                    ?
+                    <Modal
+                        open={openNotError}
+                        onClose={handleCloseNotError}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={style}>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Дані добавлено
+                            </Typography>
+
+                        </Box>
+                    </Modal>
+                    :<></>
+                }
+
+
+
+        </div>
+
     );
 };
 
