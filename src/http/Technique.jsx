@@ -31,7 +31,7 @@ export const subdivisionsTechniques = async (id) => {
 export const createOrder = async ({document, techniques})=>{
         // if (localStorage.getItem('token')) {
         const {data} = await $authHost.post(CREATE_ORDER,{document,techniques})
-        // return data
+        return data
         // }
 }
 

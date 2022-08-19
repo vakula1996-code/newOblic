@@ -9,7 +9,7 @@
 }
 
 .table {
-    width: 100%;
+    width: min-content;
     border: none;
     margin-bottom: 20px;
     border-collapse: separate;
@@ -18,9 +18,9 @@
 .table thead th {
     font-weight: bold;
     border: none;
-    padding: 10px 15px;
+    padding: 5px 8px;
     background: #EDEDED;
-    font-size: 14px;
+    font-size: 12px;
     border-top: 1px solid #ddd;
     text-align: center;
 
@@ -41,8 +41,8 @@
     text-align: center;
     vertical-align: center;
     border: none;
-    padding: 10px 15px;
-    font-size: 14px;
+    /*padding: 10px 15px;*/
+    font-size: 12px;
     border-right: 1px solid #ddd;
 
 }

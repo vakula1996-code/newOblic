@@ -20,6 +20,9 @@ export const DETAIL_LOOK_TECHNIQUE= '/detailLookTechnique'
 
 export const ENSURING = '/techniqueEnsuring'
 
+export const ADMIN_PANEL = '/admin'
+
+
 //Типи
 export const TYPE_DOCUMENT_NAME = (id)=> 'api/documentNames?type='+id
 export const TYPE_SUBDIVISION_NAME = 'api/subdivisions'

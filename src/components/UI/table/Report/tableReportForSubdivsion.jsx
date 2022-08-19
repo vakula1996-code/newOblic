@@ -6,6 +6,8 @@ import {nameSubdivisions} from "../../../../http/Type";
 import {lookTechnique} from "../../../../http/Technique";
 import {observer} from "mobx-react-lite";
 import classes from "../table.module.css"
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const TableReportForSubdivsion = observer(() => {
     const {document} = useContext(Context)
@@ -25,6 +27,7 @@ const TableReportForSubdivsion = observer(() => {
                     name='subdivisionName'
                     getData={e => setSubdivisionid(e.target.value)}/>
             <table className={classes.table}>
+
                 <thead>
                 <tr>
                     <th>№</th>
@@ -52,6 +55,14 @@ const TableReportForSubdivsion = observer(() => {
                         <td>{subdivision}</td>
                         <td>{measurement}</td>
                         <td>
+                            <Accordion>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon/>}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header">
+                                    <h4>Детальні данні</h4>
+                                </AccordionSummary>
+                                <AccordionDetails>
                             <table className={classes.table}>
                                 <thead>
                                 <tr>
@@ -76,6 +87,8 @@ const TableReportForSubdivsion = observer(() => {
                                 )}
                                 </tbody>
                             </table>
+                                </AccordionDetails>
+                            </Accordion>
                         </td>
                     </tr>
                 )}

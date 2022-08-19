@@ -3,7 +3,7 @@
 }
 
 .table {
-    width: 100%;
+    width: min-content;
     border: none;
     margin-bottom: 20px;
     border-collapse: separate;

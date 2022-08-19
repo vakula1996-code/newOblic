@@ -45,10 +45,9 @@ const TableLookMove = observer(({list}) => {
     useEffect(() => {
         list(moveId)
     }, [moveId])
-    console.log(listMove)
     return (
         <div>
-            <h1>Список техніки</h1>
+            <h3>Список вибраної техніки для передачі</h3>
             <table className={classes.table}>
                 <thead>
                 <tr>
@@ -113,6 +112,10 @@ const TableLookMove = observer(({list}) => {
                 )}
                 </tbody>
             </table>
+            {listMove.length
+                ?<></>
+                : <h2>Добавте техніку для передачі</h2>
+            }
         </div>);
 });
 

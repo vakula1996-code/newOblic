@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import {useState} from "react";
 
-export default function MenuAppBar({visibleNavbar, setVisibleNavbar}) {
+export default function MenuAppBar({visibleNavbar, setVisibleNavbar,className}) {
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
 

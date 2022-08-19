@@ -39,7 +39,6 @@ const FormDocumentMove = ({id,f}) => {
                         <td>
                             <Select label='Назва документа' nameSelect="typeDocumentCharity" value={document.documentNameId} name='documentName'
                                     getData={(data) => setDocument({...document, documentNameId: data.target.value})}/>
-
                         </td>
                         <td>
                             <InputDate value={document.documentDate}

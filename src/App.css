@@ -1,9 +1,31 @@
-
-.container {
-    display: flex;
+.sidebar {
+    grid-area: sidebar;
 }
 
-.container__navbar{
+.content {
+    grid-area: content;
+}
+
+.header {
+    grid-area: header;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-areas:
+    "header header header"
+    "sidebar content ......."
+    "footer  footer  footer";
+    grid-template-columns: min-content 1fr 250px;
+
+}
+
+.sidebar{
     height: 100%;
     width: max-content;
     min-width: max-content;
@@ -12,7 +34,7 @@
     transition: visibility 0.5s, opacity 0.5s;
 }
 
-.container__navbar_hide {
+.sidebar_hide {
     visibility:  visible;
     opacity: 1;
     display: flex;
@@ -20,12 +42,19 @@
 
 }
 
-.container__appRouter{
+.content{
     height: 100%;
+    width: min-content;
     position: center;
     text-align: center;
+    min-height: calc(100vh - 145px);
+    justify-content: center;
+    text-align: -webkit-center;
     margin: auto;
-    padding-right: 15%;
-    margin-top: 10px;
 }
 
+.footer{
+    background-color: #a9a9a95c;
+    padding: 1rem;
+    text-align: center;
+}

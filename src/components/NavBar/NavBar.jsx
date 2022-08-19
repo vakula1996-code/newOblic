@@ -12,9 +12,12 @@ import FolderDeleteIcon from '@mui/icons-material/FolderDelete';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
 import MoveUpIcon from '@mui/icons-material/MoveUp';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+
 import {NavLink} from "react-router-dom";
 import classes from "./NavBar.module.css";
 import {
+    ADMIN_PANEL,
     COMING_CHARITY,
     COMING_OUTFIT,
     COMING_PURCHASE, ENSURING,
@@ -29,6 +32,7 @@ export default function NavBar() {
     const [open3, setOpen3] = useState(false);
     const [open4, setOpen4] = useState(false);
     const [open5, setOpen5] = useState(false);
+    const [open6, setOpen6] = useState(false);
 
     const handleClick1 = () => {
         setOpen1(!open1);
@@ -44,6 +48,9 @@ export default function NavBar() {
     };
     const handleClick5 = () => {
         setOpen5(!open5);
+    };
+    const handleClick6 = () => {
+        setOpen6(!open6);
     };
 
     return (
@@ -196,6 +203,26 @@ export default function NavBar() {
                             </ListItemIcon>
                             <ListItemText primary="За підрозділ"/>
                         </ListItemButton>
+                    </List>
+                </Collapse>
+                <ListItemButton onClick={handleClick6}>
+                <ListItemIcon>
+                    <SupervisorAccountIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Адміністрування"/>
+                {open6 ? <ExpandLess/> : <ExpandMore/>}
+            </ListItemButton>
+                <Collapse in={open6} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <NavLink to={ADMIN_PANEL} className={classes.link}>
+
+                        <ListItemButton sx={{pl: 4}}>
+                            <ListItemIcon>
+                                <FiberManualRecordIcon fontSize='small'/>
+                            </ListItemIcon>
+                            <ListItemText primary="Редагування даних"/>
+                        </ListItemButton>
+                        </NavLink>
                     </List>
                 </Collapse>
             </List>

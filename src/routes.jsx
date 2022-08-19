@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    ADMIN_PANEL,
     COMING_CHARITY,
     COMING_OUTFIT,
     COMING_PURCHASE, DETAIL_LOOK_TECHNIQUE, ENSURING,
@@ -16,6 +17,7 @@ import MoveConfirmTransmission from "./pages/move/MoveConfirmTransmission";
 import ReportForSubdivision from "./pages/report/reportForSubdivision";
 import DetailLookTechnique from "./pages/report/detailLookTechnique";
 import ReportEnsuring from "./pages/report/reportEnsuring";
+import AdminPanelAddData from "./pages/adminPanel/adminPanelAddData";
 
 
 export const authRouter = [
@@ -54,5 +56,9 @@ export const authRouter = [
     {
         path: ENSURING,
         Component: <ReportEnsuring/>
+    },
+    {
+        path: ADMIN_PANEL,
+        Component: <AdminPanelAddData/>
     },
 ]

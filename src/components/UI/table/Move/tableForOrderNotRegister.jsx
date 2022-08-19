@@ -1,22 +1,38 @@
-import React,{useContext} from 'react';
+import React,{useContext,useState} from 'react';
 import classes from "../table.module.css";
 import {observer} from "mobx-react-lite";
 import {registerOrder} from "../../../../http/Documents";
 import MyButton from "../../button/MyButton";
 import {Context} from "../../../../index";
+import ErrorAddData from "../../error/errorAddData";
 
 const TableForOrderNotRegister = observer(({orderNotRegisterId, doc}) => {
     const {document} = useContext(Context)
+    const [errorMessages, setErrorMessages] = useState('')
     const register = () => {
         if (document.listOrderNotRegister[0]['id']) {
-            registerOrder({documentNumber: doc.documentNumber, orderId: document.listOrderNotRegister[0]['id']})
+            registerOrder({documentNumber: doc.documentNumber, orderId: document.listOrderNotRegister[0]['id']}).catch(data => {
+                if(data.response.data.detail){
+                    setError(data.response.data.detail)
+                    setErrorMessages(data.response.data.detail)
+                }
+                else if(data.response.status === 500){
+                    setError('Не опрацьовий запит')
+                    setErrorMessages('Не опрацьовий запит! Перевірте правельність ведених значень.')
+                }
+            }).then(data=>{
+                if (data !== undefined){
+                    setError(data)
+                    setErrorMessages(data)
+                }
+            })
         }
     }
+    const [error, setError] = useState('')
     return (
         orderNotRegisterId.length > 0
             ?
-            <div>
-
+            <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
                 <table className={classes.table}>
                     <thead>
                     <tr>
@@ -85,7 +101,7 @@ const TableForOrderNotRegister = observer(({orderNotRegisterId, doc}) => {
                 </table>
                 <MyButton onClick={register}>Зареєструвати наряд</MyButton>
 
-            </div>
+            </ErrorAddData>
 
             : <h2>Добавте не зареєстрований наряд</h2>
     );
