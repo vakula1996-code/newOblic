@@ -32,6 +32,16 @@ function ErrorAddData({error,setError,errorMessages,children},...props)  {
     useEffect(()=>{
         requestStatus()
     },[error])
+
+    const closeWindow = () => {
+      setOpenNotError(false)
+    }
+
+    if (openNotError === true){
+        console.log('qwe')
+        setTimeout(closeWindow,1500)
+    }
+
     return (
         <div>
             {children}

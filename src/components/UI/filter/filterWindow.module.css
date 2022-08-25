@@ -1,0 +1,14 @@
+.filterWindow{
+    position:absolute;
+    width: max-content;
+    height: auto;
+    border:1px solid #cbcbcb;
+    background: #ffffff;
+    display: none;
+}
+
+.filterWindow.active{
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}

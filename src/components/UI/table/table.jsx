@@ -1,21 +1,16 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import classes from "./table.module.css";
 import Box from "@mui/material/Box";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
 import MyButtonRemove from "../button/MyButtonRemove";
-import MyButton from "../button/MyButton";
-import {addNewTechniqueHttp} from "../../../http/Technique";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ErrorAddData from "../error/errorAddData";
 
 
-const Table = observer(({type}) => {
+const Table = observer(({error}) => {
     const {document} = useContext(Context)
     const {technique} = useContext(Context)
-    const [error, setError] = useState('')
-    const [errorMessages, setErrorMessages] = useState('')
     const handleTechniqueRemove = (index) => {
         const list = [...technique.listTechnique]
         list.splice(index, 1)
@@ -35,21 +30,12 @@ const Table = observer(({type}) => {
         listForTable[indexTechnique]['details'].splice(indexSerialNumber, 1)
         technique.setListTechniqueForTable(listForTable)
     }
-    const addNewTeqchnique = () => {
-        addNewTechniqueHttp(document.document, technique.listTechnique, type).catch(data => {
-            if(data.response.data.detail){
-                setError(data.response.data.detail)
-                setErrorMessages(data.response.data.detail)
-            }
-        }).then(data=>{
-            if (data !== undefined){
-                setError(data)
-                setErrorMessages(data)
-            }
-        })
-    }
+    useEffect(()=>{
+        if (error === 'Hello world'){
+            technique.setListTechniqueForTable([])
+        }
+    },[error])
     return (
-        <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <Box className={classes.containerTable}>
                 {technique.listTechniqueForTable.length > 0
                     ?
@@ -135,14 +121,12 @@ const Table = observer(({type}) => {
                             )}
                             </tbody>
                         </table>
-                        <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
                     </div>
 
                     : <h2>Добавте техніку в сиписок</h2>
 
                 }
             </Box>
-         </ErrorAddData>
     );
 });
 

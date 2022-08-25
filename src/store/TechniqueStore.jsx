@@ -82,7 +82,7 @@ export default class TechniqueStore {
     }
 
     get nameTechnique() {
-        return this._nameTechnique
+        return toJS(this._nameTechnique)
     }
 
 

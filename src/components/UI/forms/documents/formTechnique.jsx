@@ -10,6 +10,7 @@ import {nameCategory} from "../../../../http/Type";
 import MyButtonRemove from "../../button/MyButtonRemove";
 import MyButton from "../../button/MyButton";
 import DateNow from "../../calendar/dateNow";
+import InputAutocomplit from "../../input/InputAutocomplit";
 
 
 const FormTechnique = observer(({setVisible}) => {
@@ -29,21 +30,21 @@ const FormTechnique = observer(({setVisible}) => {
                 }
             ]
         }
-    const dataForTable = {
-        techniqueTypeId: '',
-        ensuringTypeId: '',
-        techniqueName: '',
-        measurementId: '',
-        details: [
-            {
-                serialNumber: 'Б/Н',
-                price: '',
-                categoryId: '',
-                count: 1,
-                dateOfManufacture: DateNow()
-            }
-        ]
-    }
+        const dataForTable = {
+            techniqueTypeId: '',
+            ensuringTypeId: '',
+            techniqueName: '',
+            measurementId: '',
+            details: [
+                {
+                    serialNumber: 'Б/Н',
+                    price: '',
+                    categoryId: '',
+                    count: 1,
+                    dateOfManufacture: DateNow()
+                }
+            ]
+        }
         const [stateAllTable, setStateAllTable] = useState(false)
 
         const [listTechnique, setListTechnique] = useState(data)
@@ -57,23 +58,38 @@ const FormTechnique = observer(({setVisible}) => {
         const [errorCount, setErrorCount] = useState([{state: false}])
         const [errorCategoryId, setErrorCategoryId] = useState([{state: false}])
         const [errorDateOfManufacture, setErrorDateOfManufacture] = useState([{state: false}])
-
-        const handleTechniqueChange = (e, name,data) => {
-            const {value} = e.target;
-            const list = {...listTechnique};
-            list[name] = value
-            setListTechnique(list)
-            if (data){
-                const listForTable = {...listTechniqueForTable};
-                listForTable[name]= data.props.children
-                setListTechniqueForTable(listForTable)
+        const handleTechniqueChange = (e, name, data) => {
+            if (e.target.innerHTML){
+                const list = {...listTechnique};
+                list[name] = e.target.innerHTML
+                setListTechnique(list)
+                if (data) {
+                    const listForTable = {...listTechniqueForTable};
+                    listForTable[name] = data.props.children
+                    setListTechniqueForTable(listForTable)
+                } else {
+                    const listForTable = {...listTechniqueForTable};
+                    listForTable[name] = e.target.innerHTML
+                    setListTechniqueForTable(listForTable)
+                }
             }
             else {
-                const {value} = e.target;
-                const listForTable = {...listTechniqueForTable};
-                listForTable[name] = value
-                setListTechniqueForTable(listForTable)
+                const {value} = e.target
+                const list = {...listTechnique};
+                list[name] = value
+                setListTechnique(list)
+                if (data) {
+                    const listForTable = {...listTechniqueForTable};
+                    listForTable[name] = data.props.children
+                    setListTechniqueForTable(listForTable)
+                } else {
+                    const {value} = e.target;
+                    const listForTable = {...listTechniqueForTable};
+                    listForTable[name] = value
+                    setListTechniqueForTable(listForTable)
+                }
             }
+
         }
         const handleSerialNumberAdd = () => {
             setListTechnique({
@@ -100,7 +116,7 @@ const FormTechnique = observer(({setVisible}) => {
             setErrorDateOfManufacture([...errorDateOfManufacture, {state: false}])
             setErrorCategoryId([...errorCategoryId, {state: false}])
         }
-        const handleSerialNumberChange = (e, index, name,data) => {
+        const handleSerialNumberChange = (e, index, name, data) => {
 
             const {value} = e.target;
             const list = {...listTechnique};
@@ -114,12 +130,11 @@ const FormTechnique = observer(({setVisible}) => {
                 list['details'][index][name] = value;
             }
             setListTechnique(list);
-            if(data){
+            if (data) {
                 const listForTable = {...listTechniqueForTable}
-                listForTable['details'][index][name]= data.props.children
+                listForTable['details'][index][name] = data.props.children
                 setListTechniqueForTable(listForTable)
-            }
-            else {
+            } else {
                 const {value} = e.target;
                 const listForTable = {...listTechniqueForTable}
                 listForTable['details'][index][name] = value
@@ -166,13 +181,12 @@ const FormTechnique = observer(({setVisible}) => {
                         dateOfManufacture !== ''
                     ) {
                         setStateAllTable(true)
-                    }
-                    else {
+                    } else {
                         setStateAllTable(false)
                     }
                 })
             }
-            if (stateAllTable===false) {
+            if (stateAllTable === false) {
 
                 if (listTechnique.techniqueName === '') {
                     setErrorTechniqueName(true)
@@ -253,7 +267,7 @@ const FormTechnique = observer(({setVisible}) => {
                 })
 
             }
-            if (stateAllTable === true){
+            if (stateAllTable === true) {
                 technique.setListTechnique([...technique.listTechnique, listTechnique])
                 setListTechnique(data)
                 technique.setListTechniqueForTable([...technique.listTechniqueForTable, listTechniqueForTable])
@@ -291,9 +305,13 @@ const FormTechnique = observer(({setVisible}) => {
                     </thead>
                     <tbody>
                     <tr>
-                        <td><InputMui label='Назва' value={listTechnique.techniqueName}
-                                      error={errorTechniqueName}
-                                      getData={(e) => handleTechniqueChange(e, 'techniqueName')}/></td>
+                        {/*<td><InputMui label='Назва' value={listTechnique.techniqueName}*/}
+                        {/*              error={errorTechniqueName}*/}
+                        {/*              getData={(e) => handleTechniqueChange(e, 'techniqueName')}/></td>*/}
+                        <td><InputAutocomplit value={listTechnique.techniqueName}
+                                              error={errorTechniqueName}
+                                              label='Назва'
+                                              getData={(e) => handleTechniqueChange(e, 'techniqueName')}/></td>
                         <td><Select label='Тип' nameSelect="typeTechnique" value={listTechnique.techniqueTypeId}
                                     error={errorTechniqueTypeId}
 

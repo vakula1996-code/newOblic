@@ -9,20 +9,27 @@ import {Context} from "../../../../index";
 import DateNow from "../../calendar/dateNow";
 
 
-const FormDocumentOutfit = observer(() => {
+const FormDocumentOutfit = observer(({error}) => {
     const {document} = useContext(Context)
 
     const data = {
         documentNameId: null,
         toSubdivisionId: null,
         fromSubdivisionId: null,
-        documentNumber: null,
+        documentNumber: '',
         documentDate: DateNow()
     }
     const [doc, setDoc] = useState(data)
+
     useEffect(()=>
             document.setDocument([doc])
         , [doc])
+    useEffect(()=>{
+        if (error === 'Hello world'){
+            setDoc(data)
+        }
+    },[error])
+
     return (
         <Box className={classes.containerForm}>
 

@@ -11,8 +11,8 @@ const AdminPanelAddData = () => {
     },[])
     return (
         <div>
-            <Select label='Назва документа' nameSelect="typeDocumentCharity" value={document.documentNameId} name='documentName'
-                    getData={(data) => setDocument({...document, documentNameId: data.target.value})}/>
+            <Select label='Назва документа' nameSelect="typeDocumentCharity" value={idDoc} name='documentName'
+                    getData={(data) => setIdDoc(data.target.value)}/>
             <TableNameDocument data={nameDoc} name='documentName'/>
         </div>
     );

@@ -1,3 +1,15 @@
 .blockTable{
     display: flex;
 }
+.bigTable {
+    overflow: auto;
+    position: relative;
+}
+.bigTable table {
+    display: inline-block;
+    vertical-align: top;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './MyModal.module.css';
+import MyButtonCloseWindow from "../button/MyButtonCloseWindow";
 
 function MyModal({children, visible, setVisible}) {
 
@@ -9,8 +10,9 @@ function MyModal({children, visible, setVisible}) {
         rootClasses.push(classes.active);
     }
     return (
-        <div className={rootClasses.join(' ')} onClick={()=> setVisible(false)}>
+        <div className={rootClasses.join(' ')} >
             <div className={classes.myModalContent} onClick={(e)=>e.stopPropagation()}>
+                <MyButtonCloseWindow onClick={()=> setVisible(false)}>Закрити вікно</MyButtonCloseWindow>
                 {children}
             </div>
         </div>

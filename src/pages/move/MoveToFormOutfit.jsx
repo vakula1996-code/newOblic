@@ -44,7 +44,6 @@ const MoveToFormOutfit = observer(() => {
             }
         })
     }
-    console.log(listMoveTechnique)
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <h1>Сформувати наряд</h1>
