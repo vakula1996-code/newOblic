@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import FormDocumentMove from "../../components/UI/forms/documents/formDocumentMove";
 import MyModal from "../../components/UI/modal/MyModal";
 import {nameDocument, nameSubdivisions} from "../../http/Type";
@@ -48,17 +48,16 @@ const MoveToFormOutfit = observer(() => {
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <h1>Сформувати наряд</h1>
 
-                <FormDocumentMove id={setIdSubdivision} f={setDoc}/>
-                <MyButton onClick={move} >Свормувати наряд</MyButton>
-
+            <FormDocumentMove id={setIdSubdivision} f={setDoc} error={error}/>
+            <MyButton onClick={move}>Свормувати наряд</MyButton>
             {data.length > 0
                 ? <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonAdd>
                 : <MyButtonNotActivated onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonNotActivated>
             }
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <div className={classes.blockTable}>
-                    <TableMoveChoice idSubdivision={idSubdivision} setData={setData}/>
-                    <TableLookMove list={setListMoveTechnique}/>
+                    <TableMoveChoice idSubdivision={idSubdivision} setData={setData} error={error}/>
+                    <TableLookMove list={setListMoveTechnique} error={error}/>
                 </div>
             </MyModal>
 

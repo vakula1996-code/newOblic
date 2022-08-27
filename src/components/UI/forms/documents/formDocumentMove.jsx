@@ -5,7 +5,7 @@ import InputDate from "../../input/inputDate";
 import Box from "@mui/material/Box";
 import DateNow from "../../calendar/dateNow";
 
-const FormDocumentMove = ({id,f}) => {
+const FormDocumentMove = ({id, f, error}) => {
     const data = {
         documentNameId: null,
         toSubdivisionId: null,
@@ -13,13 +13,17 @@ const FormDocumentMove = ({id,f}) => {
         documentDate: DateNow()
     }
     const [document, setDocument] = useState(data)
-    const [idSubdivision, setIdSubdivision] = useState()
-    useEffect(()=>{
+    useEffect(() => {
         id(document.fromSubdivisionId)
-    },[document.fromSubdivisionId])
-    useEffect(()=>{
+    }, [document.fromSubdivisionId])
+    useEffect(() => {
         f(document)
-    },[document])
+    }, [document])
+    useEffect(() => {
+        if (error === 'Hello world') {
+            setDocument(data)
+        }
+    }, [error])
     return (
         <div>
             <Box>
@@ -37,7 +41,8 @@ const FormDocumentMove = ({id,f}) => {
                     <tbody>
                     <tr>
                         <td>
-                            <Select label='Назва документа' nameSelect="typeDocumentCharity" value={document.documentNameId} name='documentName'
+                            <Select label='Назва документа' nameSelect="typeDocumentCharity"
+                                    value={document.documentNameId} name='documentName'
                                     getData={(data) => setDocument({...document, documentNameId: data.target.value})}/>
                         </td>
                         <td>
@@ -46,12 +51,17 @@ const FormDocumentMove = ({id,f}) => {
 
                         </td>
                         <td>
-                            <Select label="Частина з якої" nameSelect="numberSubdivisions" value={document.fromSubdivisionId} name='subdivisionName'
-                                    getData={(data) => setDocument({...document, fromSubdivisionId: data.target.value})}/>
+                            <Select label="Частина з якої" nameSelect="numberSubdivisions"
+                                    value={document.fromSubdivisionId} name='subdivisionName'
+                                    getData={(data) => setDocument({
+                                        ...document,
+                                        fromSubdivisionId: data.target.value
+                                    })}/>
 
                         </td>
                         <td>
-                            <Select label="Частина в яку" nameSelect="numberSubdivisions" value={document.toSubdivisionId} name='subdivisionName'
+                            <Select label="Частина в яку" nameSelect="numberSubdivisions"
+                                    value={document.toSubdivisionId} name='subdivisionName'
                                     getData={(data) => setDocument({...document, toSubdivisionId: data.target.value})}/>
                         </td>
 

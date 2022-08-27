@@ -1,13 +1,15 @@
-import React, {useEffect, useContext,useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import FormMoveRegistration from "../../components/UI/forms/documents/formMoveRegistration";
 import {nameDocument, nameSubdivisions} from "../../http/Type";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import TableOrderNotRegistration from "../../components/UI/table/tableOrderNotRegistration";
 import MyModal from "../../components/UI/modal/MyModal";
-import {orderNotRegister} from "../../http/Documents";
+import {orderNotRegister, registerOrder} from "../../http/Documents";
 import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
 import TableForOrderNotRegister from "../../components/UI/table/Move/tableForOrderNotRegister";
+import MyButton from "../../components/UI/button/MyButton";
+import ErrorAddData from "../../components/UI/error/errorAddData";
 
 const MoveRegistrationOutfit = observer(() => {
     const {document} = useContext(Context)
@@ -26,21 +28,54 @@ const MoveRegistrationOutfit = observer(() => {
     const [id, setId] = useState('')
 
     const addDocument = () => {
-        orderNotRegister({date:doc.date,toSubdivisionId:doc.toSubdivisionId},id).then(data=>document.setListOrderNotRegister(data))
+        orderNotRegister({
+            date: doc.date,
+            toSubdivisionId: doc.toSubdivisionId
+        }, id).then(data => document.setListOrderNotRegister(data))
         setModalTechnique(true)
     }
 
+    const [errorMessages, setErrorMessages] = useState('')
+    const [error, setError] = useState('')
+    console.log(document.listOrderNotRegister[0] !== undefined)
+    const register = () => {
+        if (document.listOrderNotRegister[0] !== undefined) {
+            registerOrder({
+                documentNumber: doc.documentNumber,
+                orderId: document.listOrderNotRegister[0]['id']
+            }).catch(data => {
+                if (data.response.data.detail) {
+                    setError(data.response.data.detail)
+                    setErrorMessages(data.response.data.detail)
+                } else if (data.response.status === 500) {
+                    setError('Не опрацьовий запит')
+                    setErrorMessages('Не опрацьовий запит! Перевірте правельність ведених значень.')
+                }
+            }).then(data => {
+                if (data !== undefined) {
+                    setError(data)
+                    setErrorMessages(data)
+                }
+            })
+        } else {
+            setError('Не опрацьовий запит')
+            setErrorMessages('Добавте документ')
+        }
+    }
+
     return (
-        <div>
+        <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <h1>Зареєструвати наряд</h1>
-            <FormMoveRegistration setDoc={setDoc} setId={setId} doc={doc} id={id} />
+            <FormMoveRegistration setDoc={setDoc} setId={setId} doc={doc} id={id}/>
+            <MyButton onClick={register}>Зареєструвати наряд</MyButton>
             <MyButtonAdd onClick={addDocument}>Отримати документ</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <TableOrderNotRegistration setVisible={setModalTechnique} setOrderNotRegisterId={setOrderNotRegisterId}/>
+                <TableOrderNotRegistration setVisible={setModalTechnique}
+                                           setOrderNotRegisterId={setOrderNotRegisterId}/>
             </MyModal>
             <TableForOrderNotRegister orderNotRegisterId={orderNotRegisterId} doc={doc}/>
 
-        </div>
+        </ErrorAddData>
     );
 });
 

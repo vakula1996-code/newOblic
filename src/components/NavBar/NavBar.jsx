@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -20,10 +20,14 @@ import {
     ADMIN_PANEL,
     COMING_CHARITY,
     COMING_OUTFIT,
-    COMING_PURCHASE, ENSURING,
+    COMING_PURCHASE,
+    DEREGISTRATION_MOVE,
+    DEREGISTRATION_REPAIR,
+    ENSURING,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_REGISTRATION,
-    MOVE_TO_FORM, REPORT_FOR_SUBDIVISION
+    MOVE_TO_FORM,
+    REPORT_FOR_SUBDIVISION
 } from "../../utils/const";
 
 export default function NavBar() {
@@ -53,8 +57,7 @@ export default function NavBar() {
         setOpen6(!open6);
     };
 
-    return (
-        <div>
+    return (<div>
             <List
                 sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
                 component="nav"
@@ -143,18 +146,22 @@ export default function NavBar() {
                 </ListItemButton>
                 <Collapse in={open3} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton sx={{pl: 4}}>
-                            <ListItemIcon>
-                                <FiberManualRecordIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText primary="Передача"/>
-                        </ListItemButton>
-                        <ListItemButton sx={{pl: 4}}>
-                            <ListItemIcon>
-                                <FiberManualRecordIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText primary="Модернізація (ремонт)"/>
-                        </ListItemButton>
+                        <NavLink to={DEREGISTRATION_MOVE} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Передача"/>
+                            </ListItemButton>
+                        </NavLink>
+                        <NavLink to={DEREGISTRATION_REPAIR} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Модернізація (ремонт)"/>
+                            </ListItemButton>
+                        </NavLink>
                     </List>
                 </Collapse>
                 <ListItemButton onClick={handleClick4}>
@@ -206,22 +213,22 @@ export default function NavBar() {
                     </List>
                 </Collapse>
                 <ListItemButton onClick={handleClick6}>
-                <ListItemIcon>
-                    <SupervisorAccountIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Адміністрування"/>
-                {open6 ? <ExpandLess/> : <ExpandMore/>}
-            </ListItemButton>
+                    <ListItemIcon>
+                        <SupervisorAccountIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Адміністрування"/>
+                    {open6 ? <ExpandLess/> : <ExpandMore/>}
+                </ListItemButton>
                 <Collapse in={open6} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         <NavLink to={ADMIN_PANEL} className={classes.link}>
 
-                        <ListItemButton sx={{pl: 4}}>
-                            <ListItemIcon>
-                                <FiberManualRecordIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText primary="Редагування даних"/>
-                        </ListItemButton>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Редагування даних"/>
+                            </ListItemButton>
                         </NavLink>
                     </List>
                 </Collapse>

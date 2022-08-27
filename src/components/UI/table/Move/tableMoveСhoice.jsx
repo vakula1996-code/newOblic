@@ -6,12 +6,11 @@ import classes from '../table.module.css'
 import MyButtonChoice from "../../button/MyButtonChoice";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MyButtonLookFilter from "../../button/MyButtonLookFilter";
 import FilterWindow from "../../filter/filterWindow";
 
 
-const TableMoveChoice = observer(({idSubdivision, setData}) => {
+const TableMoveChoice = observer(({idSubdivision, setData, error}) => {
     const {technique} = useContext(Context)
     const [dataList, setDataList] = useState([])
 
@@ -54,7 +53,11 @@ const TableMoveChoice = observer(({idSubdivision, setData}) => {
     useEffect(() => {
         setDataFilter(dataList)
     }, [dataList])
-
+    useEffect(() => {
+        if (error === 'Hello world') {
+            setDataFilter([])
+        }
+    }, [error])
     return (
         <div>
             <h3>Список вибраної техніки для передачі</h3>

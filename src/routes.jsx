@@ -3,10 +3,15 @@ import {
     ADMIN_PANEL,
     COMING_CHARITY,
     COMING_OUTFIT,
-    COMING_PURCHASE, DETAIL_LOOK_TECHNIQUE, ENSURING,
+    COMING_PURCHASE,
+    DEREGISTRATION_MOVE,
+    DEREGISTRATION_REPAIR,
+    DETAIL_LOOK_TECHNIQUE,
+    ENSURING,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_REGISTRATION,
-    MOVE_TO_FORM, REPORT_FOR_SUBDIVISION, TECHNIQUE_ENSURING
+    MOVE_TO_FORM,
+    REPORT_FOR_SUBDIVISION
 } from "./utils/const";
 import ComingCharity from "./pages/coming/ComingCharity";
 import ComingOutfit from "./pages/coming/ComingOutfit";
@@ -18,6 +23,8 @@ import ReportForSubdivision from "./pages/report/reportForSubdivision";
 import DetailLookTechnique from "./pages/report/detailLookTechnique";
 import ReportEnsuring from "./pages/report/reportEnsuring";
 import AdminPanelAddData from "./pages/adminPanel/adminPanelAddData";
+import DeregistrationRepair from "./pages/deregistration/DeregistrationRepair";
+import DeregistrationMove from "./pages/deregistration/DeregistrationMove";
 
 
 export const authRouter = [
@@ -56,6 +63,14 @@ export const authRouter = [
     {
         path: ENSURING,
         Component: <ReportEnsuring/>
+    },
+    {
+        path: DEREGISTRATION_REPAIR,
+        Component: <DeregistrationRepair/>
+    },
+    {
+        path: DEREGISTRATION_MOVE,
+        Component: <DeregistrationMove/>
     },
     {
         path: ADMIN_PANEL,

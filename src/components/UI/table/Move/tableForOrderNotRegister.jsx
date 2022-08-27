@@ -1,107 +1,82 @@
-import React,{useContext,useState} from 'react';
+import React, {useContext, useState} from 'react';
 import classes from "../table.module.css";
 import {observer} from "mobx-react-lite";
-import {registerOrder} from "../../../../http/Documents";
-import MyButton from "../../button/MyButton";
 import {Context} from "../../../../index";
-import ErrorAddData from "../../error/errorAddData";
 
 const TableForOrderNotRegister = observer(({orderNotRegisterId, doc}) => {
     const {document} = useContext(Context)
     const [errorMessages, setErrorMessages] = useState('')
-    const register = () => {
-        if (document.listOrderNotRegister[0]['id']) {
-            registerOrder({documentNumber: doc.documentNumber, orderId: document.listOrderNotRegister[0]['id']}).catch(data => {
-                if(data.response.data.detail){
-                    setError(data.response.data.detail)
-                    setErrorMessages(data.response.data.detail)
-                }
-                else if(data.response.status === 500){
-                    setError('Не опрацьовий запит')
-                    setErrorMessages('Не опрацьовий запит! Перевірте правельність ведених значень.')
-                }
-            }).then(data=>{
-                if (data !== undefined){
-                    setError(data)
-                    setErrorMessages(data)
-                }
-            })
-        }
-    }
-    const [error, setError] = useState('')
+
     return (
         orderNotRegisterId.length > 0
             ?
-            <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
-                <table className={classes.table}>
-                    <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>
-                            Назва документа
-                        </th>
-                        <th>
-                            Від кого
-                        </th>
-                        <th>
-                            До кого
-                        </th>
-                        <th>
-                            Дата документа
-                        </th>
-                        <th>
-                            Список техніки
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {orderNotRegisterId.map(({
-                                                 documentName,
-                                                 fromSubdivision,
-                                                 toSubdivision,
-                                                 date,
-                                                 techniques
-                                             }, index) =>
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{documentName}</td>
-                            <td>{fromSubdivision}</td>
-                            <td>{toSubdivision}</td>
-                            <td>{date}</td>
-                            <td>
-                                <table className={classes.table}>
-                                    <thead>
-                                    <tr>
-                                        <th>№</th>
-                                        <th>Назва техніки</th>
-                                        <th>Тип техніки</th>
-                                        <th>Серійний номер</th>
-                                        <th>Ціна</th>
-                                        <th>Дата створення</th>
+            <table className={classes.table}>
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>
+                        Назва документа
+                    </th>
+                    <th>
+                        Від кого
+                    </th>
+                    <th>
+                        До кого
+                    </th>
+                    <th>
+                        Дата документа
+                    </th>
+                    <th>
+                        Список техніки
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {orderNotRegisterId.map(({
+                                             documentName,
+                                             fromSubdivision,
+                                             toSubdivision,
+                                             date,
+                                             techniques
+                                         }, index) =>
+                    <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{documentName}</td>
+                        <td>{fromSubdivision}</td>
+                        <td>{toSubdivision}</td>
+                        <td>{date}</td>
+                        <td>
+                            <table className={classes.table}>
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Назва техніки</th>
+                                    <th>Тип техніки</th>
+                                    <th>Серійний номер</th>
+                                    <th>Ціна</th>
+                                    <th>Дата створення</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {techniques.map(({techniqueName, techniqueType, techniqueDetail}, indexTechnique) =>
+                                    <tr key={indexTechnique}>
+                                        <td>{indexTechnique + 1}</td>
+                                        <td>{techniqueName}</td>
+                                        <td>{techniqueType}</td>
+                                        <td>{techniqueDetail.serialNumber}</td>
+                                        <td>{techniqueDetail.price}</td>
+                                        <td>{techniqueDetail.dateOfManufacture}</td>
                                     </tr>
-                                    </thead>
-                                    <tbody>
-                                    {techniques.map(({techniqueName, techniqueType, techniqueDetail}, indexTechnique) =>
-                                        <tr key={indexTechnique}>
-                                            <td>{indexTechnique + 1}</td>
-                                            <td>{techniqueName}</td>
-                                            <td>{techniqueType}</td>
-                                            <td>{techniqueDetail.serialNumber}</td>
-                                            <td>{techniqueDetail.price}</td>
-                                            <td>{techniqueDetail.dateOfManufacture}</td>
-                                        </tr>
-                                    )}
-                                    </tbody>
-                                </table>
+                                )}
+                                </tbody>
+                            </table>
 
-                            </td>
-                        </tr>
-                    )}
-                    </tbody>
-                </table>
-                <MyButton onClick={register}>Зареєструвати наряд</MyButton>
+                        </td>
+                    </tr>
+                )}
+                </tbody>
+            </table>
 
-            </ErrorAddData>
 
             : <h2>Добавте не зареєстрований наряд</h2>
     );
