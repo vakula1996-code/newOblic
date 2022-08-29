@@ -55,9 +55,9 @@ const TableEnsuring = observer(() => {
                     <tr>
                         <td>3</td>
                         <td>Техніка зв'язку</td>
-                        <td>{listEnsuring["Техніка зв'зяку"].inTheRow}</td>
-                        <td>{listEnsuring["Техніка зв'зяку"].inThePresence}</td>
-                        <td>{listEnsuring["Техніка зв'зяку"].ensuring}</td>
+                        <td>{listEnsuring["Техніка зв'зку"].inTheRow}</td>
+                        <td>{listEnsuring["Техніка зв'зку"].inThePresence}</td>
+                        <td>{listEnsuring["Техніка зв'зку"].ensuring}</td>
                     </tr>
                     <tr>
                         <td colSpan='5'>Загальна забезпеченість: {listEnsuring.ensuring}</td>

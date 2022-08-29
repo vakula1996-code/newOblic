@@ -40,6 +40,11 @@ export default function NavBar() {
 
     const handleClick1 = () => {
         setOpen1(!open1);
+        setOpen2(!open2);
+        setOpen3(!open3);
+        setOpen4(!open4);
+        setOpen5(!open5);
+        setOpen6(!open6);
     };
     const handleClick2 = () => {
         setOpen2(!open2);
