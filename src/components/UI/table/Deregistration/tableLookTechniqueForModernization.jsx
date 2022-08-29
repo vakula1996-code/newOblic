@@ -1,17 +1,17 @@
 import React,{useContext, useEffect, useState} from 'react';
-import {observer} from "mobx-react-lite";
+import {Context} from "../../../../index";
+import {nameSubdivisions} from "../../../../http/Type";
+import {subdivisionsTechniques} from "../../../../http/Technique";
 import Select from "../../input/select";
 import classes from "../table.module.css";
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {Context} from "../../../../index";
-import {lookTechnique, subdivisionsTechniques} from "../../../../http/Technique";
 import MyButtonLookFilter from "../../button/MyButtonLookFilter";
 import FilterWindow from "../../filter/filterWindow";
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MyButtonChoice from "../../button/MyButtonChoice";
-import {nameDocument, nameSubdivisions} from "../../../../http/Type";
+import {observer} from "mobx-react-lite";
 
-const TableDeregistrationForSubdivision = observer(() => {
+const TableLookTechniqueForModernization = observer(() => {
     const {technique} = useContext(Context)
     const {document} = useContext(Context)
     const [dataList, setDataList] = useState([])
@@ -32,7 +32,7 @@ const TableDeregistrationForSubdivision = observer(() => {
     }, [idSubdivision])
     const [listMove, setListMove] = useState([])
     const addInList = (indexTechnique, indexSerialNumber) => {
-        technique.setListDeregistrationTechnique([...technique.listDeregistrationTechnique, {
+        technique.setListModernizationTechnique([...technique.listModernizationTechnique, {
             typeTechnique: dataList[indexTechnique].typeTechnique,
             nameTechniques: dataList[indexTechnique].nameTechniques,
             measurement: dataList[indexTechnique].measurement,
@@ -40,7 +40,7 @@ const TableDeregistrationForSubdivision = observer(() => {
             techniqueDetails: dataList[indexTechnique]["techniqueDetails"][indexSerialNumber]
 
         }])
-        technique.setListDeregistrationTechniqueId([...technique.listDeregistrationTechniqueId, {
+        technique.setListModernizationTechniqueId([...technique.listModernizationTechniqueId, {
             techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
             count: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].count,
             howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId
@@ -61,8 +61,6 @@ const TableDeregistrationForSubdivision = observer(() => {
     useEffect(() => {
         setDataFilter(dataList)
     }, [dataList])
-
-
     return (
         <div>
             <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
@@ -185,4 +183,4 @@ const TableDeregistrationForSubdivision = observer(() => {
     );
 });
 
-export default TableDeregistrationForSubdivision;
+export default TableLookTechniqueForModernization;

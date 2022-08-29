@@ -5,6 +5,9 @@ export default class TechniqueStore {
     constructor() {
         this._listTechnique = []
         this._listTechniqueForTable = []
+        this._listTechniqueDeregistration = []
+        this._listTechniqueForExcluded = []
+        this._listTechniqueForExcludedId = []
         this._typeTechnique = []
         this._typeEnsuring = []
         this._measurements = []
@@ -14,14 +17,23 @@ export default class TechniqueStore {
         this._moveTechniqueId = []
         this._techniqueInformation = []
         this._techniqueHisory = []
+        this._listDeregistrationTechnique = []
+        this._listDeregistrationTechniqueId = []
+        this._listModernizationTechnique = []
+        this._listModernizationTechniqueId = []
         makeAutoObservable(this)
     }
 
     setListTechnique(list) {
         this._listTechnique = list
     }
+
     setListTechniqueForTable(list) {
         this._listTechniqueForTable = list
+    }
+
+    setListTechniqueDeregistration(list) {
+        this._listTechniqueDeregistration = list
     }
 
     setTypeTechnique(type) {
@@ -56,13 +68,39 @@ export default class TechniqueStore {
         this._moveTechniqueId = techniqueId
     }
 
+    setListDeregistrationTechnique(technique) {
+        this._listDeregistrationTechnique = technique
+    }
 
+    setListDeregistrationTechniqueId(techniqueId) {
+        this._listDeregistrationTechniqueId = techniqueId
+    }
+
+    setListModernizationTechnique(technique) {
+        this._listModernizationTechnique = technique
+    }
+
+    setListModernizationTechniqueId(techniqueId) {
+        this._listModernizationTechniqueId = techniqueId
+    }
+
+    setListTechniqueForExcluded(technique){
+        this._listTechniqueForExcluded = technique
+    }
+    setListTechniqueForExcludeId(techniqueId){
+        this._listTechniqueForExcludedId = techniqueId
+    }
 
     get listTechnique() {
         return toJS(this._listTechnique)
     }
+
     get listTechniqueForTable() {
         return toJS(this._listTechniqueForTable)
+    }
+
+    get listTechniqueDeregistration(){
+        return toJS(this._listTechniqueDeregistration)
     }
 
     get typeTechnique() {
@@ -92,6 +130,30 @@ export default class TechniqueStore {
 
     get moveTechniqueId() {
         return toJS(this._moveTechniqueId)
+    }
+
+    get listDeregistrationTechnique() {
+        return toJS(this._listDeregistrationTechnique)
+    }
+
+    get listDeregistrationTechniqueId() {
+        return toJS(this._listDeregistrationTechnique)
+    }
+
+    get listModernizationTechnique() {
+        return toJS(this._listModernizationTechnique)
+    }
+
+    get listModernizationTechniqueId() {
+        return toJS(this._listModernizationTechniqueId)
+    }
+
+    get listTechniqueForExcluded(){
+        return toJS(this._listTechniqueForExcluded)
+    }
+
+    get listTechniqueForExcludedId() {
+        return toJS(this._listTechniqueForExcludedId)
     }
 
 }
