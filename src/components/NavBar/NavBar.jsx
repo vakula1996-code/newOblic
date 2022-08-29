@@ -40,26 +40,52 @@ export default function NavBar() {
 
     const handleClick1 = () => {
         setOpen1(!open1);
-        setOpen2(!open2);
-        setOpen3(!open3);
-        setOpen4(!open4);
-        setOpen5(!open5);
-        setOpen6(!open6);
+        setOpen2(false);
+        setOpen3(false);
+        setOpen4(false);
+        setOpen5(false);
+        setOpen6(false);
     };
     const handleClick2 = () => {
+        setOpen1(false);
         setOpen2(!open2);
+        setOpen3(false);
+        setOpen4(false);
+        setOpen5(false);
+        setOpen6(false);
     };
     const handleClick3 = () => {
+        setOpen1(false);
+        setOpen2(false);
         setOpen3(!open3);
+        setOpen4(false);
+        setOpen5(false);
+        setOpen6(false);
     };
     const handleClick4 = () => {
+        setOpen1(false);
+        setOpen2(false);
+        setOpen3(false);
         setOpen4(!open4);
+        setOpen5(false);
+        setOpen6(false);
     };
     const handleClick5 = () => {
+        setOpen1(false);
+        setOpen2(false);
+        setOpen3(false);
+        setOpen4(false);
         setOpen5(!open5);
+        setOpen6(false);
     };
     const handleClick6 = () => {
+        setOpen1(false);
+        setOpen2(false);
+        setOpen3(false);
+        setOpen4(false);
+        setOpen5(false);
         setOpen6(!open6);
+
     };
 
     return (<div>
