@@ -6,9 +6,11 @@ import classes from "../table.module.css";
 
 const TableLookTechniqueForDeregistration = observer(() => {
     const [listMove, setListMove] = useState([])
+    const [moveId, setMoveId] = useState([])
     const {technique} = useContext(Context)
     useEffect(() => {
         setListMove(technique.listDeregistrationTechnique)
+        setMoveId(technique.listDeregistrationTechniqueId)
     }, [technique.listDeregistrationTechnique])
     const handleRemove = (index) => {
         const list = [...technique.listDeregistrationTechnique]
@@ -18,6 +20,7 @@ const TableLookTechniqueForDeregistration = observer(() => {
         technique.setListDeregistrationTechnique(list)
         technique.setListDeregistrationTechniqueId(listId)
     }
+   
     return (
         <div>
             <table className={classes.table}>

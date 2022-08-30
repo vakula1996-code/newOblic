@@ -1,15 +1,15 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import Select from "../../input/select";
 import classes from "../table.module.css";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {Context} from "../../../../index";
-import {lookTechnique, subdivisionsTechniques} from "../../../../http/Technique";
+import {subdivisionsTechniques} from "../../../../http/Technique";
 import MyButtonLookFilter from "../../button/MyButtonLookFilter";
 import FilterWindow from "../../filter/filterWindow";
 import MyButtonChoice from "../../button/MyButtonChoice";
-import {nameDocument, nameSubdivisions} from "../../../../http/Type";
+import {nameSubdivisions} from "../../../../http/Type";
 
 const TableDeregistrationForSubdivision = observer(({setTechniqueDeregistration}) => {
     const {technique} = useContext(Context)
@@ -43,7 +43,8 @@ const TableDeregistrationForSubdivision = observer(({setTechniqueDeregistration}
         technique.setListDeregistrationTechniqueId([...technique.listDeregistrationTechniqueId, {
             techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
             count: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].count,
-            howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId
+            howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId,
+            typeTechniqueId: dataList[indexTechnique].typeTechniqueId
         }])
         setTechniqueDeregistration({
             techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,

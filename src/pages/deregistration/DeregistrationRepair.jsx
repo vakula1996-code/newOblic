@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import TableDeregistrationForSubdivision
     from "../../components/UI/table/Deregistration/tableDeregistrationForSubdivision";
@@ -15,19 +15,12 @@ import TableLookTechniqueForModernization
     from "../../components/UI/table/Deregistration/tableLookTechniqueForModernization";
 import TableTechniqueForModernization from "../../components/UI/table/Deregistration/tableTechniqueForModernization";
 import FormDeregistrationNewTechnique from "../../components/UI/forms/deregistration/formDeregistrationNewTechnique";
-import {
-    nameDocument,
-    nameEnsuring,
-    nameMeasurements,
-    nameSubdivisions,
-    nameTechnique,
-    nameTechniqueType
-} from "../../http/Type";
-import TableDeregastrationNewTechnique from "../../components/UI/table/Deregistration/tableDeregastrationNewTechnique";
+import {nameEnsuring, nameMeasurements, nameTechnique, nameTechniqueType} from "../../http/Type";
 import TableLookTechniqueForExcluded from "../../components/UI/table/Deregistration/tableLookTechniqueForExcluded";
 import TableTechniqueExcluded from "../../components/UI/table/Deregistration/tableTechniqueExcluded";
 import MyButton from "../../components/UI/button/MyButton";
-import DateNow from "../../components/UI/calendar/dateNow";
+import TableDeregastrationNewTechnique from "../../components/UI/table/Deregistration/tableDeregastrationNewTechnique";
+import FormNewNamaAndCategory from "../../components/UI/forms/deregistration/formNewNamaAndCategory";
 
 
 const DeregistrationRepair = observer(() => {
@@ -44,12 +37,12 @@ const DeregistrationRepair = observer(() => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    useEffect(()=>{
-        nameTechniqueType().then(data=> technique.setTypeTechnique(data))
+    useEffect(() => {
+        nameTechniqueType().then(data => technique.setTypeTechnique(data))
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
-        nameTechnique().then(data=> technique.setNameTechnique(data))
-        nameMeasurements().then(data=> technique.setMeasurements(data))
-    },[])
+        nameTechnique().then(data => technique.setNameTechnique(data))
+        nameMeasurements().then(data => technique.setMeasurements(data))
+    }, [])
 
     function a11yProps(index) {
         return {
@@ -88,38 +81,26 @@ const DeregistrationRepair = observer(() => {
         index: PropTypes.number.isRequired,
         value: PropTypes.number.isRequired,
     };
-    const [techniqueDeregistration , setTechniqueDeregistration] = useState({
+    const [techniqueDeregistration, setTechniqueDeregistration] = useState({
         techniqueDetailId: '',
         howCategoryId: '',
         newName: '',
         newCategoryId: '',
     })
-    const [newDetail , setNewDetail] = useState([{
+    const [newDetail, setNewDetail] = useState([{
         techniqueDetailId: '',
         howCategoryId: '',
         count: ''
     }])
-    const [techniqueWithdrawal, setTechniqueWithdrawal] = useState([{
-        techniqueTypeId: '',
-        ensuringTypeId: '',
-        techniqueName: '',
-        measurementId: '',
-        subdivisionId: '',
-        details:
-            {
-                serialNumber: 'Б/Н',
-                price: '',
-                categoryId: '',
-                count: 1,
-                dateOfManufacture: DateNow()
-            }
-    }])
+
+
     const [techniqueExcluded, setTechniqueExcluded] = useState([{
         techniqueDetailId: '',
         howCategoryId: '',
         count: '',
         subdivisionId: ''
     }])
+
 
     return (
         <div>
@@ -139,10 +120,12 @@ const DeregistrationRepair = observer(() => {
                                 <Tab label="Модернізувати" {...a11yProps(0)} />
                                 <Tab label="Вилучити" {...a11yProps(1)} />
                                 <Tab label="Списати розхідні матеріали" {...a11yProps(2)} />
+                                <Tab label="Змінити (назву, категорію)" {...a11yProps(3)} />
                             </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>
-                            <MyButtonAdd onClick={() => setModalModernization(true)}>Додати техніку для модернізації</MyButtonAdd>
+                            <MyButtonAdd onClick={() => setModalModernization(true)}>Додати техніку для
+                                модернізації</MyButtonAdd>
                             <MyModal visible={modalModernization} setVisible={setModalModernization}>
                                 <TableLookTechniqueForModernization/>
                             </MyModal>
@@ -156,11 +139,15 @@ const DeregistrationRepair = observer(() => {
                             <TableDeregastrationNewTechnique/>
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            <MyButtonAdd onClick={() => setModalExcluded(true)}>Витратні матеріали для списання</MyButtonAdd>
+                            <MyButtonAdd onClick={() => setModalExcluded(true)}>Витратні матеріали для
+                                списання</MyButtonAdd>
                             <MyModal visible={modalExcluded} setVisible={setModalExcluded}>
                                 <TableLookTechniqueForExcluded/>
                             </MyModal>
                             <TableTechniqueExcluded/>
+                        </TabPanel>
+                        <TabPanel value={value} index={3}>
+                            <FormNewNamaAndCategory/>
                         </TabPanel>
                     </Box>
                 </div>

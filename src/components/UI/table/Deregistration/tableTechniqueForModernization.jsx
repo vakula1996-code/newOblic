@@ -3,12 +3,15 @@ import {Context} from "../../../../index";
 import {observer} from "mobx-react-lite";
 import classes from "../table.module.css";
 import MyButtonRemove from "../../button/MyButtonRemove";
+import MyInput from "../../input/MyInput";
 
 const TableTechniqueForModernization = observer(() => {
     const [listMove, setListMove] = useState([])
+    const [moveId, setMoveId] = useState([])
     const {technique} = useContext(Context)
     useEffect(() => {
         setListMove(technique.listModernizationTechnique)
+        setMoveId(technique.listModernizationTechniqueId)
     }, [technique.listModernizationTechnique])
     const handleRemove = (index) => {
         const list = [...technique.listModernizationTechnique]
@@ -17,6 +20,25 @@ const TableTechniqueForModernization = observer(() => {
         listId.splice(index, 1)
         technique.setListModernizationTechnique(list)
         technique.setListModernizationTechniqueId(listId)
+    }
+    const handleCountChange = (e, index) => {
+        if (e.target.value.length === 0) {
+            const list = [...moveId]
+            list[index]['count'] = null
+            setMoveId(list)
+        } else if (listMove[index].techniqueDetails.count < e.target.value) {
+            const {value} = e.target
+            const list = [...moveId]
+            list[index]['count'] = parseInt(listMove[index].techniqueDetails.count)
+            setMoveId(list)
+        } else {
+            const {value} = e.target
+            const list = [...moveId]
+            list[index]['count'] = parseInt(value)
+            setMoveId(list)
+        }
+
+
     }
     return (
         listMove.length > 0
@@ -42,6 +64,9 @@ const TableTechniqueForModernization = observer(() => {
                         <th>
                             Кількість
                         </th>
+                        <th>
+                            Кількість яку передати
+                        </th>
                         <th>Серійний номер</th>
                         <th>Ціна</th>
                         <th>Категорія</th>
@@ -65,6 +90,15 @@ const TableTechniqueForModernization = observer(() => {
                             <td>{subdivision}</td>
                             <td>{measurement}</td>
                             <td>{techniqueDetails.count}</td>
+                            <td>
+                                {techniqueDetails.count > 1
+                                    ?
+                                    <MyInput value={moveId[indexTechnique].count}
+                                             style={{textAlign: 'center', width: '80%'}}
+                                             onChange={(e) => handleCountChange(e, indexTechnique)}/>
+                                    : techniqueDetails.count
+                                }
+                            </td>
                             <td>{techniqueDetails.serialNumber}</td>
                             <td>{techniqueDetails.price}</td>
                             <td>{techniqueDetails.category}</td>
@@ -76,7 +110,7 @@ const TableTechniqueForModernization = observer(() => {
                     </tbody>
                 </table>
             </div>
-            :<></>
+            : <></>
     );
 });
 

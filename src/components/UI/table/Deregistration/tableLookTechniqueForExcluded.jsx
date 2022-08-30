@@ -1,4 +1,4 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
 import {nameSubdivisions} from "../../../../http/Type";
 import {subdivisionsTechniques} from "../../../../http/Technique";
@@ -24,7 +24,7 @@ const TableLookTechniqueForExcluded = observer(() => {
     }, [idSubdivision])
 
     useEffect(() => {
-        if (idSubdivision) {
+        if (idSubdivision.length !== 0) {
             subdivisionsTechniques(idSubdivision).then(data => {
                 setDataList(data);
             })
@@ -43,7 +43,8 @@ const TableLookTechniqueForExcluded = observer(() => {
         technique.setListTechniqueForExcludeId([...technique.listTechniqueForExcludedId, {
             techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
             count: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].count,
-            howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId
+            howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId,
+            subdivisionId: idSubdivision
         }])
         const list = [...dataList]
         const listSerialNumber = list[indexTechnique]["techniqueDetails"].splice(indexSerialNumber, 1)
@@ -87,7 +88,7 @@ const TableLookTechniqueForExcluded = observer(() => {
                         <th>
                             Одиниці виміру
                         </th>
-                        <th>
+                        <th style={{zIndex: '999'}}>
                             Детальна інформація
                         </th>
                     </tr>

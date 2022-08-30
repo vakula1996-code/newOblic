@@ -1,4 +1,4 @@
-import React,{useContext, useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Context} from "../../../../index";
 import Box from "@mui/material/Box";
 import classes from "../table.module.css";
@@ -28,14 +28,14 @@ const TableDeregastrationNewTechnique = ({error}) => {
         listForTable[indexTechnique]['details'].splice(indexSerialNumber, 1)
         technique.setListTechniqueForTable(listForTable)
     }
-    useEffect(()=>{
-        if (error === 'Hello world'){
+    useEffect(() => {
+        if (error === 'Hello world') {
             technique.setListTechniqueForTable([])
         }
-    },[error])
+    }, [error])
     return (
         <Box className={classes.containerTable}>
-            {technique.listTechniqueDeregistration.length > 0
+            {technique.listTechniqueModernization.length > 0
                 ?
                 <div>
                     <table className={classes.table}>
@@ -43,6 +43,7 @@ const TableDeregastrationNewTechnique = ({error}) => {
                         <thead>
                         <tr>
                             <th>№</th>
+                            <th>Підрозділ</th>
                             <th>Назва</th>
                             <th>Тип</th>
                             <th>Тип забезпечення</th>
@@ -52,15 +53,17 @@ const TableDeregastrationNewTechnique = ({error}) => {
                         </tr>
                         </thead>
                         <tbody>
-                        {technique.listTechniqueDeregistration.map(({
-                                                                  techniqueTypeId,
-                                                                  techniqueName,
-                                                                  measurementId,
-                                                                  details,
-                                                                  ensuringTypeId
-                                                              }, indexTechnique) =>
+                        {technique.listTechniqueModernization.map(({
+                                                                       subdivisionId,
+                                                                       techniqueTypeId,
+                                                                       techniqueName,
+                                                                       measurementId,
+                                                                       details,
+                                                                       ensuringTypeId
+                                                                   }, indexTechnique) =>
                             <tr key={indexTechnique}>
                                 <td>{indexTechnique + 1}</td>
+                                <td>{subdivisionId}</td>
                                 <td>{techniqueName}</td>
                                 <td>{techniqueTypeId}</td>
                                 <td>{ensuringTypeId}</td>

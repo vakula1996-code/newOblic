@@ -14,6 +14,7 @@
     margin-bottom: 20px;
     border-collapse: separate;
 }
+
 .table thead th {
     font-weight: bold;
     border: none;
@@ -29,15 +30,19 @@
     border-left: 1px solid #ddd;
     height: 48px;
 }
+
 .table tr th:last-child, .table tr td:last-child {
     border-right: 1px solid #ddd;
 }
+
 .table thead tr th:first-child {
     border-radius: 20px 0 0 0;
 }
+
 .table thead tr th:last-child {
     border-radius: 0 20px 0 0;
 }
+
 .table tbody td {
     text-align: center;
     vertical-align: center;
@@ -47,10 +52,12 @@
     border-right: 1px solid #ddd;
 
 }
+
 .table tbody tr:nth-child(even) {
     background: #F8F8F8;
 }
-.table tbody tr:last-child td{
+
+.table tbody tr:last-child td {
     border-bottom: 1px solid #ddd;
 }
 
@@ -71,14 +78,13 @@
 }
 
 
-
-
 .tableNested {
     width: min-content;
     border: none;
     margin-bottom: 20px;
     border-collapse: separate;
 }
+
 .tableNested thead th {
     font-weight: bold;
     border: none;
@@ -89,18 +95,23 @@
     text-align: center;
 
 }
+
 .tableNested tr th:first-child, .tableNested tr td:first-child {
     border-left: 1px solid #ddd;
 }
+
 .tableNested tr th:last-child, .tableNested tr td:last-child {
     border-right: 1px solid #ddd;
 }
+
 .tableNested thead tr th:first-child {
     border-radius: 20px 0 0 0;
 }
+
 .tableNested thead tr th:last-child {
     border-radius: 0 20px 0 0;
 }
+
 .tableNested tbody td {
     text-align: center;
     vertical-align: center;
@@ -110,16 +121,17 @@
     border-right: 1px solid #ddd;
 
 }
+
 .tableNested tbody tr:nth-child(even) {
     background: #F8F8F8;
 }
-.tableNested tbody tr:last-child td{
+
+.tableNested tbody tr:last-child td {
     border-bottom: 1px solid #ddd;
 }
 
 
-
-.tableScroll{
+.tableScroll {
     overflow-x: scroll;
     width: calc(45vw);
     height: 500px;
@@ -131,6 +143,7 @@
     margin-bottom: 20px;
     border-collapse: separate;
 }
+
 .tableScroll thead th {
     font-weight: bold;
     border: none;
@@ -144,6 +157,7 @@
     top: -3px;
     z-index: 2;
 }
+
 .tableScroll tbody td {
     text-align: center;
     border-left: 1px solid #ddd;
@@ -152,7 +166,8 @@
     font-size: 12px;
     vertical-align: center;
 }
-.tableScroll tbody tr:nth-child(even){
+
+.tableScroll tbody tr:nth-child(even) {
     background: #f3f3f3;
 }
 
@@ -161,15 +176,19 @@
     height: 49px;
     border-left: 1px solid #ddd;
 }
+
 .tableScroll tr th:last-child, .tableScroll tr td:last-child {
     border-right: 1px solid #ddd;
 }
+
 .tableScroll thead tr th:first-child {
     border-radius: 20px 0 0 0;
 }
+
 .tableScroll thead tr th:last-child {
     border-radius: 0 20px 0 0;
 }
+
 .tableScroll tbody td {
     text-align: center;
     vertical-align: center;
@@ -179,10 +198,12 @@
     border-right: 1px solid #ddd;
 
 }
+
 .tableScroll tbody tr:nth-child(even) {
     background: #F8F8F8;
 }
-.tableScroll tbody tr:last-child td{
+
+.tableScroll tbody tr:last-child td {
     border-bottom: 1px solid #ddd;
 }
 
@@ -190,9 +211,11 @@
 ::-webkit-scrollbar {
     width: 6px;
 }
+
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 ::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }

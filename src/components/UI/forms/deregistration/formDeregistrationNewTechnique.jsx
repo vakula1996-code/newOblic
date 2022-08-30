@@ -1,19 +1,18 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
 import DateNow from "../../calendar/dateNow";
-import {nameCategory} from "../../../../http/Type";
 import Box from "@mui/material/Box";
 import classes from "../documents/form.module.css";
-import MyButton from "../../button/MyButton";
 import InputAutocomplit from "../../input/InputAutocomplit";
 import Select from "../../input/select";
 import InputMui from "../../input/inputMui";
 import InputDate from "../../input/inputDate";
+import {nameCategory} from "../../../../http/Type";
+import MyButton from "../../button/MyButton";
 import MyButtonRemove from "../../button/MyButtonRemove";
 
 const FormDeregistrationNewTechnique = observer(() => {
-    const {technique} = useContext(Context)
     const data = {
         techniqueTypeId: '',
         ensuringTypeId: '',
@@ -29,24 +28,25 @@ const FormDeregistrationNewTechnique = observer(() => {
             }
         ]
     }
+    const {technique} = useContext(Context)
     const dataForTable = {
         techniqueTypeId: '',
         ensuringTypeId: '',
         techniqueName: '',
         measurementId: '',
         subdivisionId: '',
-        details: [
-            {
+        details:
+            [{
                 serialNumber: 'Б/Н',
                 price: '',
                 categoryId: '',
                 count: 1,
                 dateOfManufacture: DateNow()
-            }
-        ]
-    }
-    const [stateAllTable, setStateAllTable] = useState(false)
+            }]
 
+    }
+
+    const [stateAllTable, setStateAllTable] = useState(false)
     const [listTechnique, setListTechnique] = useState(data)
     const [listTechniqueForTable, setListTechniqueForTable] = useState(dataForTable)
     const [errorTechniqueTypeId, setErrorTechniqueTypeId] = useState(false)
@@ -119,7 +119,7 @@ const FormDeregistrationNewTechnique = observer(() => {
 
         const {value} = e.target;
         const list = {...listTechnique};
-        if (name === 'count') {
+        if (name === 'count' || name === 'price') {
             if (value.length === 0) {
                 list['details'][index][name] = 0;
             } else {
@@ -267,7 +267,7 @@ const FormDeregistrationNewTechnique = observer(() => {
 
         }
         if (stateAllTable === true) {
-            technique.setListTechniqueDeregistration([...technique.listTechniqueForTable, listTechniqueForTable])
+            technique.setListTechniqueModernization([...technique.listTechniqueModernization, listTechniqueForTable])
             setListTechniqueForTable(dataForTable)
             // setVisible(false)
             setStateAllTable(false)
@@ -275,7 +275,7 @@ const FormDeregistrationNewTechnique = observer(() => {
 
     }
     const getCategory = () => {
-        if (listTechnique.techniqueTypeId) {
+        if (listTechnique.techniqueTypeId !== '') {
             nameCategory(listTechnique.techniqueTypeId).then(data => technique.setCategory(data))
         }
     }
@@ -303,9 +303,10 @@ const FormDeregistrationNewTechnique = observer(() => {
                 </thead>
                 <tbody>
                 <tr>
-                    <td><Select label="Частина в яку" nameSelect="numberSubdivisions" value={listTechnique.subdivisionId}
+                    <td><Select label="Частина в яку" nameSelect="numberSubdivisions"
+                                value={listTechnique.subdivisionId}
                                 name='subdivisionName'
-                                getData={(e,data) => handleTechniqueChange(e, 'subdivisionId',data)}/>
+                                getData={(e, data) => handleTechniqueChange(e, 'subdivisionId', data)}/>
                     </td>
                     <td><InputAutocomplit value={listTechnique.techniqueName}
                                           error={errorTechniqueName}
@@ -323,7 +324,6 @@ const FormDeregistrationNewTechnique = observer(() => {
                                 getData={(e, data) => handleTechniqueChange(e, 'ensuringTypeId', data)}/></td>
                     <td><Select label='Одиниці виміру' nameSelect="measurements" value={listTechnique.measurementId}
                                 error={errorMeasurementId}
-
                                 name='measurement'
                                 getData={(e, data) => handleTechniqueChange(e, 'measurementId', data)}/></td>
                     <td>
@@ -391,5 +391,4 @@ const FormDeregistrationNewTechnique = observer(() => {
         </Box>
     );
 });
-
 export default FormDeregistrationNewTechnique;
