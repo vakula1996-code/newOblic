@@ -27,6 +27,7 @@ import TableDeregastrationNewTechnique from "../../components/UI/table/Deregistr
 import TableLookTechniqueForExcluded from "../../components/UI/table/Deregistration/tableLookTechniqueForExcluded";
 import TableTechniqueExcluded from "../../components/UI/table/Deregistration/tableTechniqueExcluded";
 import MyButton from "../../components/UI/button/MyButton";
+import DateNow from "../../components/UI/calendar/dateNow";
 
 
 const DeregistrationRepair = observer(() => {
@@ -44,7 +45,6 @@ const DeregistrationRepair = observer(() => {
         setValue(newValue);
     };
     useEffect(()=>{
-        nameSubdivisions().then(data=> document.setTypeNumberSubdivisions(data))
         nameTechniqueType().then(data=> technique.setTypeTechnique(data))
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
         nameTechnique().then(data=> technique.setNameTechnique(data))
@@ -88,13 +88,45 @@ const DeregistrationRepair = observer(() => {
         index: PropTypes.number.isRequired,
         value: PropTypes.number.isRequired,
     };
+    const [techniqueDeregistration , setTechniqueDeregistration] = useState({
+        techniqueDetailId: '',
+        howCategoryId: '',
+        newName: '',
+        newCategoryId: '',
+    })
+    const [newDetail , setNewDetail] = useState([{
+        techniqueDetailId: '',
+        howCategoryId: '',
+        count: ''
+    }])
+    const [techniqueWithdrawal, setTechniqueWithdrawal] = useState([{
+        techniqueTypeId: '',
+        ensuringTypeId: '',
+        techniqueName: '',
+        measurementId: '',
+        subdivisionId: '',
+        details:
+            {
+                serialNumber: 'Б/Н',
+                price: '',
+                categoryId: '',
+                count: 1,
+                dateOfManufacture: DateNow()
+            }
+    }])
+    const [techniqueExcluded, setTechniqueExcluded] = useState([{
+        techniqueDetailId: '',
+        howCategoryId: '',
+        count: '',
+        subdivisionId: ''
+    }])
 
     return (
         <div>
             <h2>Модернізація</h2>
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку для модернізації(ремонту)</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <TableDeregistrationForSubdivision/>
+                <TableDeregistrationForSubdivision setTechniqueDeregistration={setTechniqueDeregistration}/>
             </MyModal>
             {listMove.length > 0
                 ?

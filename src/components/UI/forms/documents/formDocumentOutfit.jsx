@@ -69,7 +69,6 @@ const FormDocumentOutfit = observer(({error}) => {
                     <td>
                         <Select label="Частина в яку" nameSelect="numberSubdivisions" value={doc.toSubdivisionId} name='subdivisionName'
                                 getData={(data) => setDoc({...doc, toSubdivisionId: data.target.value})}/>
-
                     </td>
 
 

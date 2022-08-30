@@ -11,7 +11,7 @@ import FilterWindow from "../../filter/filterWindow";
 import MyButtonChoice from "../../button/MyButtonChoice";
 import {nameDocument, nameSubdivisions} from "../../../../http/Type";
 
-const TableDeregistrationForSubdivision = observer(() => {
+const TableDeregistrationForSubdivision = observer(({setTechniqueDeregistration}) => {
     const {technique} = useContext(Context)
     const {document} = useContext(Context)
     const [dataList, setDataList] = useState([])
@@ -24,7 +24,7 @@ const TableDeregistrationForSubdivision = observer(() => {
     }, [idSubdivision])
 
     useEffect(() => {
-        if (idSubdivision) {
+        if (idSubdivision.length !== 0) {
             subdivisionsTechniques(idSubdivision).then(data => {
                 setDataList(data);
             })
@@ -45,6 +45,12 @@ const TableDeregistrationForSubdivision = observer(() => {
             count: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].count,
             howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId
         }])
+        setTechniqueDeregistration({
+            techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
+            howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId,
+            newName: dataList[indexTechnique].nameTechniques,
+            newCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId
+        })
         const list = [...dataList]
         const listSerialNumber = list[indexTechnique]["techniqueDetails"].splice(indexSerialNumber, 1)
         setListMove(listSerialNumber)

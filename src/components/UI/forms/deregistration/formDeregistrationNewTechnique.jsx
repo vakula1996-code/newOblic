@@ -34,6 +34,7 @@ const FormDeregistrationNewTechnique = observer(() => {
         ensuringTypeId: '',
         techniqueName: '',
         measurementId: '',
+        subdivisionId: '',
         details: [
             {
                 serialNumber: 'Б/Н',
@@ -290,6 +291,7 @@ const FormDeregistrationNewTechnique = observer(() => {
             <table className={classes.table}>
                 <thead>
                 <tr>
+                    <th>Підрозділ</th>
                     <th>Назва</th>
                     <th>Тип</th>
                     <th>Тип забезпечення</th>
@@ -301,9 +303,10 @@ const FormDeregistrationNewTechnique = observer(() => {
                 </thead>
                 <tbody>
                 <tr>
-                    {/*<td><InputMui label='Назва' value={listTechnique.techniqueName}*/}
-                    {/*              error={errorTechniqueName}*/}
-                    {/*              getData={(e) => handleTechniqueChange(e, 'techniqueName')}/></td>*/}
+                    <td><Select label="Частина в яку" nameSelect="numberSubdivisions" value={listTechnique.subdivisionId}
+                                name='subdivisionName'
+                                getData={(e,data) => handleTechniqueChange(e, 'subdivisionId',data)}/>
+                    </td>
                     <td><InputAutocomplit value={listTechnique.techniqueName}
                                           error={errorTechniqueName}
                                           label='Назва'

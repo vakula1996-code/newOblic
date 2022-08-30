@@ -24,7 +24,7 @@ const TableLookTechniqueForModernization = observer(() => {
     }, [idSubdivision])
 
     useEffect(() => {
-        if (idSubdivision) {
+        if (idSubdivision.length !==0) {
             subdivisionsTechniques(idSubdivision).then(data => {
                 setDataList(data);
             })
