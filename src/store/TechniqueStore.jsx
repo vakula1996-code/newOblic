@@ -8,6 +8,8 @@ export default class TechniqueStore {
         this._listTechniqueForExcluded = []
         this._listTechniqueForExcludedId = []
         this._listTechniqueModernization = []
+        this._listNewTechniqueFromModernization = []
+        this._listNewTechniqueFromModernizationForTable = []
         this._typeTechnique = []
         this._typeEnsuring = []
         this._measurements = []
@@ -38,6 +40,14 @@ export default class TechniqueStore {
 
     get listTechniqueModernization() {
         return toJS(this._listTechniqueModernization)
+    }
+
+    get listNewTechniqueFromModernization() {
+        return toJS(this._listNewTechniqueFromModernization)
+    }
+
+    get listNewTechniqueFromModernizationForTable() {
+        return toJS(this._listNewTechniqueFromModernizationForTable)
     }
 
     get typeTechnique() {
@@ -106,6 +116,14 @@ export default class TechniqueStore {
 
     setListTechniqueModernization(list) {
         this._listTechniqueModernization = list
+    }
+
+    setListNewTechniqueFromModernization(list) {
+        this._listNewTechniqueFromModernization = list
+    }
+
+    setListNewTechniqueFromModernizationForTable(list) {
+        this._listNewTechniqueFromModernizationForTable = list
     }
 
     setTypeTechnique(type) {

@@ -11,16 +11,18 @@ import {Tab, Tabs} from "@mui/material";
 import * as PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import {Context} from "../../index";
-import TableLookTechniqueForModernization
-    from "../../components/UI/table/Deregistration/tableLookTechniqueForModernization";
 import TableTechniqueForModernization from "../../components/UI/table/Deregistration/tableTechniqueForModernization";
 import FormDeregistrationNewTechnique from "../../components/UI/forms/deregistration/formDeregistrationNewTechnique";
-import {nameEnsuring, nameMeasurements, nameTechnique, nameTechniqueType} from "../../http/Type";
+import {modernization, nameEnsuring, nameMeasurements, nameTechnique, nameTechniqueType} from "../../http/Type";
 import TableLookTechniqueForExcluded from "../../components/UI/table/Deregistration/tableLookTechniqueForExcluded";
 import TableTechniqueExcluded from "../../components/UI/table/Deregistration/tableTechniqueExcluded";
 import MyButton from "../../components/UI/button/MyButton";
 import TableDeregastrationNewTechnique from "../../components/UI/table/Deregistration/tableDeregastrationNewTechnique";
 import FormNewNamaAndCategory from "../../components/UI/forms/deregistration/formNewNamaAndCategory";
+import {toJS} from "mobx";
+import ErrorAddData from "../../components/UI/error/errorAddData";
+import TableLookTechniqueForModernization
+    from "../../components/UI/table/Deregistration/tableLookTechniqueForModernization";
 
 
 const DeregistrationRepair = observer(() => {
@@ -81,12 +83,7 @@ const DeregistrationRepair = observer(() => {
         index: PropTypes.number.isRequired,
         value: PropTypes.number.isRequired,
     };
-    const [techniqueDeregistration, setTechniqueDeregistration] = useState({
-        techniqueDetailId: '',
-        howCategoryId: '',
-        newName: '',
-        newCategoryId: '',
-    })
+
     const [newDetail, setNewDetail] = useState([{
         techniqueDetailId: '',
         howCategoryId: '',
@@ -101,19 +98,43 @@ const DeregistrationRepair = observer(() => {
         subdivisionId: ''
     }])
 
-
+    const [error, setError] = useState('')
+    const [errorMessages, setErrorMessages] = useState('')
+    const modernizationTechnique = () => {
+        const data = {
+            techniqueDetailId: technique.listDeregistrationTechniqueId[0].techniqueDetailId,
+            howCategoryId: technique.listDeregistrationTechniqueId[0].howCategoryId,
+            newName: technique.listDeregistrationTechniqueId[0].newName,
+            newCategoryId: technique.listDeregistrationTechniqueId[0].newCategoryId,
+            input: technique.listModernizationTechniqueId,
+            output: toJS(technique.listNewTechniqueFromModernization),
+            expendables: technique.listTechniqueForExcludedId
+        }
+        console.log(data)
+        modernization(data).catch(data => {
+            if (data.response.data.detail) {
+                setError(data.response.data.detail)
+                setErrorMessages(data.response.data.detail)
+            }
+        }).then(data => {
+            if (data !== undefined) {
+                setError(data)
+                setErrorMessages(data)
+            }
+        })
+    }
     return (
-        <div>
+        <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <h2>Модернізація</h2>
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку для модернізації(ремонту)</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <TableDeregistrationForSubdivision setTechniqueDeregistration={setTechniqueDeregistration}/>
+                <TableDeregistrationForSubdivision/>
             </MyModal>
             {listMove.length > 0
                 ?
                 <div>
                     <TableLookTechniqueForDeregistration/>
-                    <MyButton>Здійснити модернізацію</MyButton>
+                    <MyButton onClick={modernizationTechnique}>Здійснити модернізацію</MyButton>
                     <Box sx={{width: '100%'}}>
                         <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
@@ -134,7 +155,7 @@ const DeregistrationRepair = observer(() => {
                         <TabPanel value={value} index={1}>
                             <MyButtonAdd onClick={() => setModalWithdrawal(true)}>Вилучена техніка</MyButtonAdd>
                             <MyModal visible={modalWithdrawal} setVisible={setModalWithdrawal}>
-                                <FormDeregistrationNewTechnique/>
+                                <FormDeregistrationNewTechnique setVisible={setModalWithdrawal}/>
                             </MyModal>
                             <TableDeregastrationNewTechnique/>
                         </TabPanel>
@@ -154,7 +175,7 @@ const DeregistrationRepair = observer(() => {
                 : <></>
             }
 
-        </div>
+        </ErrorAddData>
     );
 });
 

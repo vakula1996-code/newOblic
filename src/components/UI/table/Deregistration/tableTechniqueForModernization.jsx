@@ -7,11 +7,11 @@ import MyInput from "../../input/MyInput";
 
 const TableTechniqueForModernization = observer(() => {
     const [listMove, setListMove] = useState([])
-    const [moveId, setMoveId] = useState([])
+    const [listMoveId, setListMoveId] = useState([])
     const {technique} = useContext(Context)
     useEffect(() => {
+        setListMoveId(technique.listModernizationTechniqueId)
         setListMove(technique.listModernizationTechnique)
-        setMoveId(technique.listModernizationTechniqueId)
     }, [technique.listModernizationTechnique])
     const handleRemove = (index) => {
         const list = [...technique.listModernizationTechnique]
@@ -23,19 +23,19 @@ const TableTechniqueForModernization = observer(() => {
     }
     const handleCountChange = (e, index) => {
         if (e.target.value.length === 0) {
-            const list = [...moveId]
+            const list = [...technique.listModernizationTechniqueId]
             list[index]['count'] = null
-            setMoveId(list)
+            technique.setListModernizationTechniqueId(list)
         } else if (listMove[index].techniqueDetails.count < e.target.value) {
             const {value} = e.target
-            const list = [...moveId]
+            const list = [...technique.listModernizationTechniqueId]
             list[index]['count'] = parseInt(listMove[index].techniqueDetails.count)
-            setMoveId(list)
+            technique.setListModernizationTechniqueId(list)
         } else {
             const {value} = e.target
-            const list = [...moveId]
+            const list = [...technique.listModernizationTechniqueId]
             list[index]['count'] = parseInt(value)
-            setMoveId(list)
+            technique.setListModernizationTechniqueId(list)
         }
 
 
@@ -93,9 +93,10 @@ const TableTechniqueForModernization = observer(() => {
                             <td>
                                 {techniqueDetails.count > 1
                                     ?
-                                    <MyInput value={moveId[indexTechnique].count}
+                                    <MyInput value={listMoveId[indexTechnique].count}
                                              style={{textAlign: 'center', width: '80%'}}
-                                             onChange={(e) => handleCountChange(e, indexTechnique)}/>
+                                             onChange={(e) => handleCountChange(e, indexTechnique)}
+                                    />
                                     : techniqueDetails.count
                                 }
                             </td>

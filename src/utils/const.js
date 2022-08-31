@@ -44,7 +44,7 @@ export const LOOK_TECHNIQUE = (id) => 'api/subdivisions/' + id + '/techniques'
 export const TECHNIQUE_INFORMATION = (id) => 'api/subdivisions/+' + id + '+/techniques/info'
 export const TECHNIQUE_HISTORY = (id) => 'api/subdivisions/' + id + '/techniques/history'
 export const TECHNIQUE_ENSURING = (id) => 'api/subdivisions/' + id + '/techniques/ensuring'
-
+export const MODERNIZATION = 'api/modernization'
 
 //Документи
 export const ORDER_NOT_REGISTER = (id) => 'api/subdivisions/' + id + '/documents/orderNotRegister'

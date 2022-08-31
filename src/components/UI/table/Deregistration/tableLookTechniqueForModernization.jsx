@@ -1,4 +1,4 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
 import {nameSubdivisions} from "../../../../http/Type";
 import {subdivisionsTechniques} from "../../../../http/Technique";
@@ -24,7 +24,7 @@ const TableLookTechniqueForModernization = observer(() => {
     }, [idSubdivision])
 
     useEffect(() => {
-        if (idSubdivision.length !==0) {
+        if (idSubdivision.length !== 0) {
             subdivisionsTechniques(idSubdivision).then(data => {
                 setDataList(data);
             })

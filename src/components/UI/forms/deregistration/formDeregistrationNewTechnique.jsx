@@ -12,7 +12,7 @@ import {nameCategory} from "../../../../http/Type";
 import MyButton from "../../button/MyButton";
 import MyButtonRemove from "../../button/MyButtonRemove";
 
-const FormDeregistrationNewTechnique = observer(() => {
+const FormDeregistrationNewTechnique = observer(({setVisible}) => {
     const data = {
         techniqueTypeId: '',
         ensuringTypeId: '',
@@ -267,9 +267,11 @@ const FormDeregistrationNewTechnique = observer(() => {
 
         }
         if (stateAllTable === true) {
-            technique.setListTechniqueModernization([...technique.listTechniqueModernization, listTechniqueForTable])
+            technique.setListNewTechniqueFromModernization([...technique.listNewTechniqueFromModernization, listTechnique])
+            technique.setListNewTechniqueFromModernizationForTable([...technique.listNewTechniqueFromModernizationForTable, listTechniqueForTable])
+            setListTechnique(data)
             setListTechniqueForTable(dataForTable)
-            // setVisible(false)
+            setVisible(false)
             setStateAllTable(false)
         }
 

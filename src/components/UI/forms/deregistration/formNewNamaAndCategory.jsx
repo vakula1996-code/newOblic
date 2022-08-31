@@ -12,8 +12,8 @@ const FormNewNamaAndCategory = observer(() => {
     const [category, setCategory] = useState('')
     const [categoryForTable, setCategoryForTable] = useState('')
     const getCategory = () => {
-        if (technique.listDeregistrationTechniqueId) {
-            nameCategory(technique.listDeregistrationTechniqueId[0].typeTechniqueId).then(data => technique.setCategory(data))
+        if (technique.listDeregistrationTechnique[0].typeTechniqueId) {
+            nameCategory(technique.listDeregistrationTechnique[0].typeTechniqueId).then(data => technique.setCategory(data))
         }
     }
     useEffect(() => {
@@ -21,20 +21,33 @@ const FormNewNamaAndCategory = observer(() => {
     }, [technique.listDeregistrationTechniqueId])
 
     const changeNameAndCategory = () => {
-        technique.setListDeregistrationTechnique([...technique.listDeregistrationTechnique,])
-        const list = {...technique.listDeregistrationTechnique}
-        list[0]['categoryName'] = categoryForTable
-        technique.setListDeregistrationTechnique(list)
-        list[0]['nameTechniques'] = name
-        technique.setListDeregistrationTechnique(list)
-        console.log('asd')
+        const list = [...technique.listDeregistrationTechnique]
+        const listId = [...technique.listDeregistrationTechniqueId]
+        if (category !== '') {
+            list[0]['techniqueDetails']['category'] = categoryForTable
+            listId[0]['newCategoryId'] = category
+            technique.setListDeregistrationTechnique(list)
+            technique.setListDeregistrationTechniqueId(listId)
+        }
+        if (name !== '') {
+            list[0]['nameTechniques'] = name
+            listId[0]['newName'] = name
+            technique.setListDeregistrationTechnique(list)
+            technique.setListDeregistrationTechniqueId(listId)
+        }
     }
-    console.log(technique.listDeregistrationTechnique)
+    const handleChange = (e) => {
+        if (e.target.innerHTML) {
+            setName(e.target.innerHTML)
+        } else {
+            setName(e.target.value)
+        }
+    }
     return (
         <div>
             <InputAutocomplit value={name}
                               label='Назва'
-                              getData={(e) => setName(e.target.innerHTML)}/>
+                              getData={(e) => handleChange(e)}/>
             <Select nameSelect="category" value={category}
                     name='categoryName'
                     label='Категорія'

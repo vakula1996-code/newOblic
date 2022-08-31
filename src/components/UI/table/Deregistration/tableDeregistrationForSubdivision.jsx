@@ -11,7 +11,7 @@ import FilterWindow from "../../filter/filterWindow";
 import MyButtonChoice from "../../button/MyButtonChoice";
 import {nameSubdivisions} from "../../../../http/Type";
 
-const TableDeregistrationForSubdivision = observer(({setTechniqueDeregistration}) => {
+const TableDeregistrationForSubdivision = observer(() => {
     const {technique} = useContext(Context)
     const {document} = useContext(Context)
     const [dataList, setDataList] = useState([])
@@ -37,21 +37,17 @@ const TableDeregistrationForSubdivision = observer(({setTechniqueDeregistration}
             nameTechniques: dataList[indexTechnique].nameTechniques,
             measurement: dataList[indexTechnique].measurement,
             subdivision: dataList[indexTechnique].subdivision,
-            techniqueDetails: dataList[indexTechnique]["techniqueDetails"][indexSerialNumber]
+            techniqueDetails: dataList[indexTechnique]["techniqueDetails"][indexSerialNumber],
+            typeTechniqueId: dataList[indexTechnique].typeTechniqueId,
 
         }])
         technique.setListDeregistrationTechniqueId([...technique.listDeregistrationTechniqueId, {
             techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
-            count: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].count,
             howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId,
-            typeTechniqueId: dataList[indexTechnique].typeTechniqueId
+            newName: '',
+            newCategoryId: '',
         }])
-        setTechniqueDeregistration({
-            techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
-            howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId,
-            newName: dataList[indexTechnique].nameTechniques,
-            newCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId
-        })
+
         const list = [...dataList]
         const listSerialNumber = list[indexTechnique]["techniqueDetails"].splice(indexSerialNumber, 1)
         setListMove(listSerialNumber)

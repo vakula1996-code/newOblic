@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
 import Box from "@mui/material/Box";
 import classes from "../table.module.css";
@@ -10,32 +10,44 @@ const TableDeregastrationNewTechnique = ({error}) => {
     const {document} = useContext(Context)
     const {technique} = useContext(Context)
     const handleTechniqueRemove = (index) => {
-        const list = [...technique.listTechnique]
+        const list = [...technique.listNewTechniqueFromModernization]
         list.splice(index, 1)
-        technique.setListTechnique(list)
+        technique.setListNewTechniqueFromModernization(list)
 
-        const listForTable = [...technique.listTechniqueForTable]
+
+        const listForTable = [...technique.listNewTechniqueFromModernizationForTable]
         listForTable.splice(index, 1)
-        technique.setListTechniqueForTable(listForTable)
+        technique.setListNewTechniqueFromModernizationForTable(listForTable)
 
+        const l = [...listTechnique]
+        l.splice(index, 1)
+        setListTechnique(l)
     }
     const handleSerialNumberRemove = (indexSerialNumber, indexTechnique) => {
-        const list = [...technique.listTechnique]
+        const list = [...technique.listNewTechniqueFromModernization]
         list[indexTechnique]['details'].splice(indexSerialNumber, 1)
-        technique.setListTechnique(list)
+        technique.setListNewTechniqueFromModernization(list)
 
-        const listForTable = [...technique.listTechniqueForTable]
+        const listForTable = [...technique.listNewTechniqueFromModernizationForTable]
         listForTable[indexTechnique]['details'].splice(indexSerialNumber, 1)
-        technique.setListTechniqueForTable(listForTable)
+        technique.setListNewTechniqueFromModernizationForTable(listForTable)
+
+        const l = [...listTechnique]
+        l[indexTechnique]['details'].splice(indexSerialNumber, 1)
+        setListTechnique(l)
     }
     useEffect(() => {
         if (error === 'Hello world') {
-            technique.setListTechniqueForTable([])
+            technique.setListNewTechniqueFromModernizationForTable([])
         }
     }, [error])
+    const [listTechnique, setListTechnique] = useState([])
+    useEffect(() => {
+        setListTechnique(technique.listNewTechniqueFromModernizationForTable)
+    }, [])
     return (
         <Box className={classes.containerTable}>
-            {technique.listTechniqueModernization.length > 0
+            {technique.listNewTechniqueFromModernizationForTable.length > 0
                 ?
                 <div>
                     <table className={classes.table}>
@@ -53,14 +65,14 @@ const TableDeregastrationNewTechnique = ({error}) => {
                         </tr>
                         </thead>
                         <tbody>
-                        {technique.listTechniqueModernization.map(({
-                                                                       subdivisionId,
-                                                                       techniqueTypeId,
-                                                                       techniqueName,
-                                                                       measurementId,
-                                                                       details,
-                                                                       ensuringTypeId
-                                                                   }, indexTechnique) =>
+                        {listTechnique.map(({
+                                                subdivisionId,
+                                                techniqueTypeId,
+                                                techniqueName,
+                                                measurementId,
+                                                details,
+                                                ensuringTypeId
+                                            }, indexTechnique) =>
                             <tr key={indexTechnique}>
                                 <td>{indexTechnique + 1}</td>
                                 <td>{subdivisionId}</td>

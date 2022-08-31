@@ -1,5 +1,6 @@
 import {$authHost} from "./index";
 import {
+    MODERNIZATION,
     TYPE_CATEGORY_NAME,
     TYPE_DOCUMENT_NAME,
     TYPE_ENSURING,
@@ -51,6 +52,13 @@ export const nameCategory = async (id) => {
 export const nameEnsuring = async () => {
     // if (localStorage.getItem('token')) {
     const {data} = await $authHost.get(TYPE_ENSURING)
+    return data
+    // }
+}
+
+export const modernization = async (technique) => {
+    // if (localStorage.getItem('token')) {
+    const {data} = await $authHost.post(MODERNIZATION, technique)
     return data
     // }
 }
