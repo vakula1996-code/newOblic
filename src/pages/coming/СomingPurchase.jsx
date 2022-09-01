@@ -22,28 +22,30 @@ import classes from "../../components/UI/table/table.module.css";
 const ComingPurchase = observer(() => {
     const {document} = useContext(Context)
     const {technique} = useContext(Context)
-    useEffect(()=>{
-        nameSubdivisions().then(data=> document.setTypeNumberSubdivisions(data))
-        nameDocument(2).then(data=> document.setTypeDocumentComing(data))
-        nameTechniqueType().then(data=> technique.setTypeTechnique(data))
+    useEffect(() => {
+        nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
+        nameDocument(2).then(data => document.setTypeDocumentComing(data))
+        nameTechniqueType().then(data => technique.setTypeTechnique(data))
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
 
-        nameTechnique().then(data=> technique.setNameTechnique(data))
-        nameMeasurements().then(data=> technique.setMeasurements(data))
-    },[])
+        nameTechnique().then(data => technique.setNameTechnique(data))
+        nameMeasurements().then(data => technique.setMeasurements(data))
+    }, [])
 
     const [modalTechnique, setModalTechnique] = useState(false)
 
     const [error, setError] = useState('')
     const [errorMessages, setErrorMessages] = useState('')
     const addNewTeqchnique = () => {
-        addNewTechniqueHttp(document.document, technique.listTechnique,  'doc').catch(data => {
-            if(data.response.data.detail){
+        addNewTechniqueHttp(document.document, technique.listTechnique, 'doc').catch(data => {
+            if (data.response.data.detail) {
                 setError(data.response.data.detail)
                 setErrorMessages(data.response.data.detail)
+            } else if (data.response.status === 200) {
+                console.log(data)
             }
-        }).then(data=>{
-            if (data !== undefined){
+        }).then(data => {
+            if (data !== undefined) {
                 setError(data)
                 setErrorMessages(data)
             }
@@ -59,7 +61,7 @@ const ComingPurchase = observer(() => {
                 <FormTechnique setVisible={setModalTechnique}/>
             </MyModal>
 
-            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonAdd>
+            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
             <Table error={error}/>
         </ErrorAddData>
     );

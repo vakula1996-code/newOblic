@@ -59,7 +59,7 @@ const FormTechnique = observer(({setVisible}) => {
         const [errorCategoryId, setErrorCategoryId] = useState([{state: false}])
         const [errorDateOfManufacture, setErrorDateOfManufacture] = useState([{state: false}])
         const handleTechniqueChange = (e, name, data) => {
-            if (e.target.innerHTML){
+            if (e.target.innerHTML) {
                 const list = {...listTechnique};
                 list[name] = e.target.innerHTML
                 setListTechnique(list)
@@ -72,8 +72,7 @@ const FormTechnique = observer(({setVisible}) => {
                     listForTable[name] = e.target.innerHTML
                     setListTechniqueForTable(listForTable)
                 }
-            }
-            else {
+            } else {
                 const {value} = e.target
                 const list = {...listTechnique};
                 list[name] = value
@@ -286,7 +285,7 @@ const FormTechnique = observer(({setVisible}) => {
             getCategory()
         }, [listTechnique.techniqueTypeId])
         return (
-            <Box className={classes.containerForm}><h2>Техніка</h2>
+            <Box className={classes.containerForm}><h2>Майно</h2>
                 <MyButton className={classes.button}
                           style={{marginBottom: '10px'}}
                           onClick={addInListTeqchnique}>
@@ -294,7 +293,7 @@ const FormTechnique = observer(({setVisible}) => {
                 <table className={classes.table}>
                     <thead>
                     <tr>
-                        <th>Назва</th>
+                        <th>Найменування</th>
                         <th>Тип</th>
                         <th>Тип забезпечення</th>
                         <th>Одиниця виміру</th>
@@ -305,12 +304,9 @@ const FormTechnique = observer(({setVisible}) => {
                     </thead>
                     <tbody>
                     <tr>
-                        {/*<td><InputMui label='Назва' value={listTechnique.techniqueName}*/}
-                        {/*              error={errorTechniqueName}*/}
-                        {/*              getData={(e) => handleTechniqueChange(e, 'techniqueName')}/></td>*/}
                         <td><InputAutocomplit value={listTechnique.techniqueName}
                                               error={errorTechniqueName}
-                                              label='Назва'
+                                              label='Найменування'
                                               getData={(e) => handleTechniqueChange(e, 'techniqueName')}/></td>
                         <td><Select label='Тип' nameSelect="typeTechnique" value={listTechnique.techniqueTypeId}
                                     error={errorTechniqueTypeId}
@@ -334,7 +330,7 @@ const FormTechnique = observer(({setVisible}) => {
                                 <tr>
                                     <th>Кількість</th>
                                     <th>Серійний номер</th>
-                                    <th>Ціна</th>
+                                    <th>Ціна за одниницю</th>
                                     <th>Дата створення</th>
                                     <th>Категорія</th>
                                     <th></th>

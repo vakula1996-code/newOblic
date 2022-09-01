@@ -36,6 +36,9 @@ const MoveToFormOutfit = observer(() => {
             } else if (data.response.status === 500) {
                 setError('Не опрацьовий запит')
                 setErrorMessages('Не опрацьовий запит! Перевірте правельність ведених значень.')
+            } else if (data.response.status === 200) {
+                console.log(data)
+                console.log('OK 200')
             }
         }).then(data => {
             if (data !== undefined) {
@@ -46,18 +49,20 @@ const MoveToFormOutfit = observer(() => {
     }
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
-            <h1>Сформувати наряд</h1>
+            <h1>Формування наряду</h1>
 
             <FormDocumentMove id={setIdSubdivision} f={setDoc} error={error}/>
-            <MyButton onClick={move}>Свормувати наряд</MyButton>
+            <MyButton onClick={move}>Сформувати наряд</MyButton>
             {data.length > 0
-                ? <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonAdd>
-                : <MyButtonNotActivated onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonNotActivated>
+                ? <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
+                : <MyButtonNotActivated onClick={() => setModalTechnique(true)}>Додати майно</MyButtonNotActivated>
             }
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <div className={classes.blockTable}>
                     <TableMoveChoice idSubdivision={idSubdivision} setData={setData} error={error}/>
                     <TableLookMove list={setListMoveTechnique} error={error}/>
+
+
                 </div>
             </MyModal>
 

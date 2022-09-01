@@ -52,23 +52,20 @@ const TableLookMove = observer(({list, error}) => {
     }, [error])
     return (
         <div>
-            <h3>Список вибраної техніки для передачі</h3>
+            <h3>Список обраного майна для передачі</h3>
             <div className={classes.tableScroll}>
                 <table>
                     <thead>
                     <tr>
                         <th>№</th>
                         <th>
-                            Тип техніки
+                            Тип майна
                         </th>
                         <th>
-                            Назва техніки
+                            Найменування
                         </th>
                         <th>
-                            Підрозділ де знаходиться
-                        </th>
-                        <th>
-                            Одиниці виміру
+                            Одиниця виміру
                         </th>
                         <th>
                             Кількість
@@ -97,7 +94,6 @@ const TableLookMove = observer(({list, error}) => {
                             <td>{indexTechnique + 1}</td>
                             <td>{typeTechnique}</td>
                             <td>{nameTechniques}</td>
-                            <td>{subdivision}</td>
                             <td>{measurement}</td>
                             <td>{techniqueDetails.count}</td>
                             <td>
@@ -122,7 +118,7 @@ const TableLookMove = observer(({list, error}) => {
 
                 {listMove.length
                     ? <></>
-                    : <h2>Добавте техніку для передачі</h2>
+                    : <h2>Добавте майно для передачі</h2>
                 }
             </div>
 

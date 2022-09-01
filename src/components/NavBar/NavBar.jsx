@@ -146,7 +146,7 @@ export default function NavBar() {
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
                                 </ListItemIcon>
-                                <ListItemText primary="Сформувати наряд"/>
+                                <ListItemText primary="Формування наряду"/>
                             </ListItemButton>
                         </NavLink>
                         <NavLink to={MOVE_REGISTRATION} className={classes.link}>
@@ -154,7 +154,7 @@ export default function NavBar() {
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
                                 </ListItemIcon>
-                                <ListItemText primary="Зареєструвати наряд"/>
+                                <ListItemText primary="Реєстрація наряду"/>
                             </ListItemButton>
                         </NavLink>
                         <NavLink to={MOVE_CONFIRM_TRANSMISSION} className={classes.link}>
@@ -162,7 +162,7 @@ export default function NavBar() {
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
                                 </ListItemIcon>
-                                <ListItemText primary="Підтвердити передачу"/>
+                                <ListItemText primary="Підтвердження передачі"/>
                             </ListItemButton>
                         </NavLink>
                     </List>

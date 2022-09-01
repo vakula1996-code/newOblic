@@ -1,4 +1,4 @@
-import React,{useState,useContext,useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import classes from "../../../../pages/coming/coming.module.css";
 import Select from "../../input/select";
@@ -21,14 +21,14 @@ const FormDocumentOutfit = observer(({error}) => {
     }
     const [doc, setDoc] = useState(data)
 
-    useEffect(()=>
+    useEffect(() =>
             document.setDocument([doc])
         , [doc])
-    useEffect(()=>{
-        if (error === 'Hello world'){
+    useEffect(() => {
+        if (error === 'Hello world') {
             setDoc(data)
         }
-    },[error])
+    }, [error])
 
     return (
         <Box className={classes.containerForm}>
@@ -37,17 +37,18 @@ const FormDocumentOutfit = observer(({error}) => {
             <table className={classes.table}>
                 <thead>
                 <tr>
-                    <th>Назва </th>
-                    <th>Дата </th>
-                    <th>Реєстраційний номер </th>
+                    <th>Назва</th>
+                    <th>Дата</th>
+                    <th>Реєстраційний номер</th>
                     <th>Відправник</th>
-                    <th>Отримувач</th>
+                    <th>Одержувач</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td>
-                        <Select label='Назва документа' nameSelect="typeDocumentCharity" value={doc.documentNameId} name='documentName'
+                        <Select label='Назва документа' nameSelect="typeDocumentCharity" value={doc.documentNameId}
+                                name='documentName'
                                 getData={(data) => setDoc({...doc, documentNameId: data.target.value})}/>
 
                     </td>
@@ -62,12 +63,14 @@ const FormDocumentOutfit = observer(({error}) => {
 
                     </td>
                     <td>
-                        <Select label="Частина з якої" nameSelect="numberSubdivisions" value={doc.fromSubdivisionId} name='subdivisionName'
+                        <Select label="Частина з якої" nameSelect="numberSubdivisions" value={doc.fromSubdivisionId}
+                                name='subdivisionName'
                                 getData={(data) => setDoc({...doc, fromSubdivisionId: data.target.value})}/>
 
                     </td>
                     <td>
-                        <Select label="Частина в яку" nameSelect="numberSubdivisions" value={doc.toSubdivisionId} name='subdivisionName'
+                        <Select label="Частина в яку" nameSelect="numberSubdivisions" value={doc.toSubdivisionId}
+                                name='subdivisionName'
                                 getData={(data) => setDoc({...doc, toSubdivisionId: data.target.value})}/>
                     </td>
 

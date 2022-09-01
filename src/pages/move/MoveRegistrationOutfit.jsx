@@ -65,10 +65,10 @@ const MoveRegistrationOutfit = observer(() => {
 
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
-            <h1>Зареєструвати наряд</h1>
+            <h1>Реєстрація наряду</h1>
             <FormMoveRegistration setDoc={setDoc} setId={setId} doc={doc} id={id}/>
             <MyButton onClick={register}>Зареєструвати наряд</MyButton>
-            <MyButtonAdd onClick={addDocument}>Отримати документ</MyButtonAdd>
+            <MyButtonAdd onClick={addDocument}>Вибрати наряд</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <TableOrderNotRegistration setVisible={setModalTechnique}
                                            setOrderNotRegisterId={setOrderNotRegisterId}/>

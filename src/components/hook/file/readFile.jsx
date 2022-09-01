@@ -1,12 +1,14 @@
 import React, {useState} from 'react'
 // Import the main component
 // Worker
-import {Viewer, Worker} from '@react-pdf-viewer/core'; // install this library // install this library
 // Plugins
 import {defaultLayoutPlugin} from '@react-pdf-viewer/default-layout'; // install this library
 // Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import MyModalForFile from "../../UI/modal/MyModalForFile";
+import DocViewer from "react-doc-viewer";
+
 
 export const ReadFile = () => {
 
@@ -50,6 +52,7 @@ export const ReadFile = () => {
             setViewPdf(null);
         }
     }
+    const [modal, setModal] = useState(false)
 
     return (
         <div className='container'>
@@ -62,23 +65,13 @@ export const ReadFile = () => {
                 />
                 {pdfFileError && <div className='error-msg'>{pdfFileError}</div>}
                 <br></br>
-                <button type="submit" className='btn btn-success btn-lg'>
-                    UPLOAD
+                <button type="submit" className='btn btn-success btn-lg' onClick={() => setModal(true)}>
+                    Переглянути вибраний файл
                 </button>
             </form>
-            <br></br>
-            <h4>View PDF</h4>
-            <div className='pdf-container'>
-                {/* show pdf conditionally (if we have one)  */}
-                {viewPdf && <><Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-                    <Viewer fileUrl={viewPdf}
-                            plugins={[defaultLayoutPluginInstance]}/>
-                </Worker></>}
-
-                {/* if we dont have pdf or viewPdf state is null */}
-                {!viewPdf && <>No pdf file selected</>}
-            </div>
-
+            <MyModalForFile visible={modal} setVisible={setModal}>
+                <DocViewer documents={pdfFile}/>
+            </MyModalForFile>
         </div>
     )
 }

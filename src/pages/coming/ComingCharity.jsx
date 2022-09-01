@@ -11,7 +11,13 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 import {addNewTechniqueHttp} from "../../http/Technique";
 import ErrorAddData from "../../components/UI/error/errorAddData";
-import ReadFile from "../../components/hook/file/readFile";
+import MyModal from "../../components/UI/modal/MyModal";
+import FormTechnique from "../../components/UI/forms/documents/formTechnique";
+import FormDocument from "../../components/UI/forms/documents/formDocument";
+import MyButton from "../../components/UI/button/MyButton";
+import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
+import {Table} from "@mui/material";
+import classes from './coming.module.css'
 
 const ComingCharity = observer(() => {
     const {document} = useContext(Context)
@@ -33,6 +39,8 @@ const ComingCharity = observer(() => {
             if (data.response.data.detail) {
                 setError(data.response.data.detail)
                 setErrorMessages(data.response.data.detail)
+            } else if (data.response.status === 200) {
+                console.log(data)
             }
         }).then(data => {
             if (data !== undefined) {
@@ -45,17 +53,17 @@ const ComingCharity = observer(() => {
 
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
-            <ReadFile/>
-            {/*<h1>Шефська допомога*/}
-            {/*</h1>*/}
+            {/*<ReadFile/>*/}
+            <h1>Шефська допомога
+            </h1>
 
-            {/*<MyModal visible={modalTechnique} setVisible={setModalTechnique}>*/}
-            {/*    <FormTechnique setVisible={setModalTechnique}/>*/}
-            {/*</MyModal>*/}
-            {/*<FormDocument error={error}/>*/}
-            {/*<MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>*/}
-            {/*<MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonAdd>*/}
-            {/*<Table error={error}/>*/}
+            <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
+                <FormTechnique setVisible={setModalTechnique}/>
+            </MyModal>
+            <FormDocument error={error}/>
+            <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
+            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonAdd>
+            <Table error={error}/>
         </ErrorAddData>
 
     );

@@ -20,16 +20,15 @@ const TableMoveExecution = observer(() => {
             date: dateConfirm,
             documents: toJS(document.documentConfirm)
         }).catch(data => {
-            if(data.response.data.detail){
+            if (data.response.data.detail) {
                 setError(data.response.data.detail)
                 setErrorMessages(data.response.data.detail)
-            }
-            else if(data.response.status === 500){
+            } else if (data.response.status === 500) {
                 setError('Не опрацьовий запит')
                 setErrorMessages('Не опрацьовий запит! Перевірте правельність ведених значень.')
             }
-        }).then(data=>{
-            if (data !== undefined){
+        }).then(data => {
+            if (data !== undefined) {
                 setError(data)
                 setErrorMessages(data)
             }
@@ -47,16 +46,16 @@ const TableMoveExecution = observer(() => {
                             Назва документа
                         </th>
                         <th>
-                            Від кого
+                            Відправник
                         </th>
                         <th>
-                            До кого
+                            Одержувач
                         </th>
                         <th>
                             Дата документа
                         </th>
                         <th>
-                            Список техніки
+                            Список майна
                         </th>
                     </tr>
                     </thead>
@@ -77,10 +76,10 @@ const TableMoveExecution = observer(() => {
                                 <table>
                                     <thead>
                                     <tr>
-                                        <th>Назва техніки</th>
-                                        <th>Тип техніки</th>
+                                        <th>Найменування</th>
+                                        <th>Тип майна</th>
                                         <th>Серійний номер</th>
-                                        <th>Ціна</th>
+                                        <th>Ціна за одиницю</th>
                                         <th>Дата створення</th>
                                     </tr>
                                     </thead>

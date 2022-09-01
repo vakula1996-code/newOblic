@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import classes from "../../../../pages/coming/coming.module.css";
 import InputDate from "../../input/inputDate";
@@ -20,14 +20,14 @@ const FormDocument = observer(({error}) => {
 
     const [doc, setDoc] = useState(data)
 
-    useEffect(()=>
-        document.setDocument([doc])
+    useEffect(() =>
+            document.setDocument([doc])
         , [doc])
-    useEffect(()=>{
-        if (error === 'Hello world'){
+    useEffect(() => {
+        if (error === 'Hello world') {
             setDoc(data)
         }
-    },[error])
+    }, [error])
     return (
         <Box className={classes.containerForm}>
 
@@ -35,34 +35,36 @@ const FormDocument = observer(({error}) => {
             <table className={classes.table}>
                 <thead>
                 <tr>
-                    <th>Назва </th>
-                    <th>Дата </th>
+                    <th>Назва</th>
+                    <th>Дата</th>
                     <th>Реєстраційний номер</th>
-                    <th>Отримувач</th>
+                    <th>Одержувач</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                <td>
-                    <Select label='Назва документа' nameSelect="typeDocumentCharity" value={doc.documentNameId} name='documentName'
-                              getData={(data) => setDoc({...doc, documentNameId: data.target.value})}/>
+                    <td>
+                        <Select label='Назва документа' nameSelect="typeDocumentCharity" value={doc.documentNameId}
+                                name='documentName'
+                                getData={(data) => setDoc({...doc, documentNameId: data.target.value})}/>
 
-                </td>
-                <td>
-                    <InputDate value={doc.documentDate}
-                               getData={(data) => setDoc({...doc, documentDate: data.target.value})}/>
+                    </td>
+                    <td>
+                        <InputDate value={doc.documentDate}
+                                   getData={(data) => setDoc({...doc, documentDate: data.target.value})}/>
 
-                </td>
-                <td>
-                    <InputMui label="Номер документа" value={doc.documentNumber}
-                              getData={(data) => setDoc({...doc, documentNumber: data.target.value})}/>
+                    </td>
+                    <td>
+                        <InputMui label="Номер документа" value={doc.documentNumber}
+                                  getData={(data) => setDoc({...doc, documentNumber: data.target.value})}/>
 
-                </td>
-                <td>
-                    <Select label="Частина в яку" nameSelect="numberSubdivisions" value={doc.toSubdivisionId} name='subdivisionName'
-                              getData={(data) => setDoc({...doc, toSubdivisionId: data.target.value})}/>
+                    </td>
+                    <td>
+                        <Select label="Частина в яку" nameSelect="numberSubdivisions" value={doc.toSubdivisionId}
+                                name='subdivisionName'
+                                getData={(data) => setDoc({...doc, toSubdivisionId: data.target.value})}/>
 
-                </td>
+                    </td>
                 </tr>
 
                 </tbody>

@@ -140,7 +140,7 @@ const DeregistrationRepair = observer(() => {
                             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
                                 <Tab label="Модернізувати" {...a11yProps(0)} />
                                 <Tab label="Вилучити" {...a11yProps(1)} />
-                                <Tab label="Списати розхідні матеріали" {...a11yProps(2)} />
+                                <Tab label="Списати витратні матеріали" {...a11yProps(2)} />
                                 <Tab label="Змінити (назву, категорію)" {...a11yProps(3)} />
                             </Tabs>
                         </Box>

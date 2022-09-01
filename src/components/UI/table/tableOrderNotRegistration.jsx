@@ -4,16 +4,16 @@ import {Context} from "../../../index";
 import classes from './table.module.css'
 import MyButtonChoice from "../button/MyButtonChoice";
 
-const TableOrderNotRegistration = observer(({setVisible,setOrderNotRegisterId}) => {
+const TableOrderNotRegistration = observer(({setVisible, setOrderNotRegisterId}) => {
     const {document} = useContext(Context)
     const [listDocument, setListDocument] = useState([])
 
-    useEffect(()=>{
+    useEffect(() => {
         setListDocument(document.listOrderNotRegister)
-    },[document.listOrderNotRegister])
-    const handleChoice = (index)=>{
+    }, [document.listOrderNotRegister])
+    const handleChoice = (index) => {
         const list = [...document.listOrderNotRegister]
-        const dataRemove = list.splice(index,1)
+        const dataRemove = list.splice(index, 1)
         setOrderNotRegisterId(dataRemove)
         setVisible(false)
     }
@@ -28,30 +28,30 @@ const TableOrderNotRegistration = observer(({setVisible,setOrderNotRegisterId}) 
                         Назва документа
                     </th>
                     <th>
-                        Від кого
+                        Відправник
                     </th>
                     <th>
-                        До кого
+                        Одержувач
                     </th>
                     <th>
                         Дата документа
                     </th>
                     <th>
-                        Список техніки
+                        Список майна
                     </th>
                     <th>Вибрати</th>
                 </tr>
                 </thead>
                 <tbody>
                 {listDocument.map(({
-                                                         documentName,
-                                                         fromSubdivision,
-                                                         toSubdivision,
-                                                         date,
-                                                         techniques
-                                                     }, index) =>
+                                       documentName,
+                                       fromSubdivision,
+                                       toSubdivision,
+                                       date,
+                                       techniques
+                                   }, index) =>
                     <tr key={index}>
-                        <td>{index+1}</td>
+                        <td>{index + 1}</td>
                         <td>{documentName}</td>
                         <td>{fromSubdivision}</td>
                         <td>{toSubdivision}</td>
@@ -61,17 +61,17 @@ const TableOrderNotRegistration = observer(({setVisible,setOrderNotRegisterId}) 
                                 <thead>
                                 <tr>
                                     <th>№</th>
-                                    <th>Назва техніки</th>
-                                    <th>Тип техніки</th>
+                                    <th>Найменування</th>
+                                    <th>Тип майна</th>
                                     <th>Серійний номер</th>
-                                    <th>Ціна</th>
+                                    <th>Ціна за одиницю</th>
                                     <th>Дата створення</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {techniques.map(({techniqueName, techniqueType, techniqueDetail}, indexTechnique) =>
                                     <tr key={indexTechnique}>
-                                        <td>{indexTechnique+1}</td>
+                                        <td>{indexTechnique + 1}</td>
                                         <td>{techniqueName}</td>
                                         <td>{techniqueType}</td>
                                         <td>{techniqueDetail.serialNumber}</td>
@@ -83,7 +83,7 @@ const TableOrderNotRegistration = observer(({setVisible,setOrderNotRegisterId}) 
                             </table>
 
                         </td>
-                        <td><MyButtonChoice onClick={()=>handleChoice(index)}>Вибрати</MyButtonChoice></td>
+                        <td><MyButtonChoice onClick={() => handleChoice(index)}>Вибрати</MyButtonChoice></td>
                     </tr>
                 )}
                 </tbody>

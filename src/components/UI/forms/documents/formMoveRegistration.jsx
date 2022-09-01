@@ -1,5 +1,4 @@
-import React,{useContext} from 'react';
-import Box from "@mui/material/Box";
+import React, {useContext} from 'react';
 import classes from "../../../../pages/coming/coming.module.css";
 import Select from "../../input/select";
 import InputDate from "../../input/inputDate";
@@ -9,46 +8,47 @@ import InputMui from "../../input/inputMui";
 import {Context} from "../../../../index";
 
 
-const FormMoveRegistration = observer(({setDoc,setId,doc,id}) => {
+const FormMoveRegistration = observer(({setDoc, setId, doc, id}) => {
     const {document} = useContext(Context)
 
     return (
         <div>
-                <table className={classes.table}>
-                    <thead>
-                    <tr>
-                        <th>Дата документа</th>
-                        <th>Частина з якої</th>
-                        <th>Частина в яку</th>
-                        <th>Номер документа</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
+            <table className={classes.table}>
+                <thead>
+                <tr>
+                    <th>Дата документа</th>
+                    <th>Відправник</th>
+                    <th>Одержувач</th>
+                    <th>Номер документа</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
 
-                        <td>
-                            <InputDate value={document.date}
-                                       getData={(data) => setDoc({...doc, date: data.target.value})}/>
+                    <td>
+                        <InputDate value={document.date}
+                                   getData={(data) => setDoc({...doc, date: data.target.value})}/>
 
-                        </td>
-                        <td>
-                            <Select label="Частина з якої" nameSelect="numberSubdivisions" value={id} name='subdivisionName'
-                                    getData={e => setId(e.target.value)}/>
-                        </td>
-                        <td>
-                            <Select label="Частина в яку" nameSelect="numberSubdivisions" value={doc.toSubdivisionId} name='subdivisionName'
-                                    getData={(data) => setDoc({...doc, toSubdivisionId: data.target.value})}/>
-                        </td>
+                    </td>
+                    <td>
+                        <Select label="Частина з якої" nameSelect="numberSubdivisions" value={id} name='subdivisionName'
+                                getData={e => setId(e.target.value)}/>
+                    </td>
+                    <td>
+                        <Select label="Частина в яку" nameSelect="numberSubdivisions" value={doc.toSubdivisionId}
+                                name='subdivisionName'
+                                getData={(data) => setDoc({...doc, toSubdivisionId: data.target.value})}/>
+                    </td>
 
-                        <td>
-                            <InputMui label="Номер документа" value={doc.documentNumber}
-                                      getData={(data) => setDoc({...doc, documentNumber: data.target.value})}/>
+                    <td>
+                        <InputMui label="Номер документа" value={doc.documentNumber}
+                                  getData={(data) => setDoc({...doc, documentNumber: data.target.value})}/>
 
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
 
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
         </div>
     );
 });

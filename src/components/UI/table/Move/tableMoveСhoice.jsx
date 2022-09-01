@@ -14,6 +14,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error}) => {
     const {technique} = useContext(Context)
     const [dataList, setDataList] = useState([])
 
+
     useEffect(() => {
         if (idSubdivision) {
             subdivisionsTechniques(idSubdivision).then(data => {
@@ -41,6 +42,8 @@ const TableMoveChoice = observer(({idSubdivision, setData, error}) => {
         const listSerialNumber = list[indexTechnique]["techniqueDetails"].splice(indexSerialNumber, 1)
         setListMove(listSerialNumber)
     }
+
+
     const [visible, setVisible] = useState(false)
     const hendleVisible = () => {
         if (visible === true) {
@@ -60,7 +63,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error}) => {
     }, [error])
     return (
         <div>
-            <h3>Список вибраної техніки для передачі</h3>
+            <h3>Список майна</h3>
             <div className={classes.tableScroll}>
                 <table>
                     <thead>
@@ -70,17 +73,13 @@ const TableMoveChoice = observer(({idSubdivision, setData, error}) => {
                             №
                         </th>
                         <th>
-                            Тип техніки
+                            Тип майна
                         </th>
                         <th>
-                            Назва техніки
-                        </th>
-
-                        <th>
-                            Підрозділ де знаходиться
+                            Найменування
                         </th>
                         <th>
-                            Одиниці виміру
+                            Одиниця виміру
                         </th>
                         <th>
                             Детальна інформація
@@ -112,7 +111,6 @@ const TableMoveChoice = observer(({idSubdivision, setData, error}) => {
                                 <td>{indexTechnique + 1}</td>
                                 <td>{typeTechnique}</td>
                                 <td>{nameTechniques}</td>
-                                <td>{subdivision}</td>
                                 <td>{measurement}</td>
                                 <td>
                                     <Accordion>
@@ -120,7 +118,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error}) => {
                                             expandIcon={<ExpandMoreIcon/>}
                                             aria-controls="panel1a-content"
                                             id="panel1a-header">
-                                            <h4>Детальні данні</h4>
+                                            <h4>Додаткові дані</h4>
                                         </AccordionSummary>
                                         <AccordionDetails>
                                             <table className={classes.table}>
@@ -128,7 +126,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error}) => {
                                                 <tr>
                                                     <th>№</th>
                                                     <th>Серійний номер</th>
-                                                    <th>Ціна</th>
+                                                    <th>Ціна за одиницю</th>
                                                     <th>Категорія</th>
                                                     <th>Кількість</th>
                                                     <th>Дата створення</th>

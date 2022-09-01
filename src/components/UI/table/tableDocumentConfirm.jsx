@@ -15,7 +15,7 @@ const TableDocumentConfirm = observer(() => {
         document.documentConfirm.length > 0
             ?
             <div>
-                <h2>Список добавлених документів</h2>
+                <h2>Список доданих документів</h2>
 
                 <table className={classes.table}>
                     <thead>
@@ -34,7 +34,7 @@ const TableDocumentConfirm = observer(() => {
                                                        documentDate
                                                    }, index) =>
                         <tr key={index}>
-                            <td>{index+1}</td>
+                            <td>{index + 1}</td>
                             <td>{documentNameId}</td>
                             <td>{documentNumber}</td>
                             <td>{documentDate}</td>

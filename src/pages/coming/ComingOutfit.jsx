@@ -60,7 +60,7 @@ const ComingOutfit = observer(() => {
             <FormDocumentOutfit error={error}/>
             <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
 
-            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonAdd>
+            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
 
             <Table error={error}/>
         </ErrorAddData>

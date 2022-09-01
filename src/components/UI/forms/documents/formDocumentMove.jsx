@@ -34,8 +34,8 @@ const FormDocumentMove = ({id, f, error}) => {
                     <tr>
                         <th>Назва документа</th>
                         <th>Дата документа</th>
-                        <th>Частина з якої</th>
-                        <th>Частина в яку</th>
+                        <th>Відправник</th>
+                        <th>Одержувач</th>
                     </tr>
                     </thead>
                     <tbody>

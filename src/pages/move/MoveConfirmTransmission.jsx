@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {nameDocument, nameSubdivisions} from "../../http/Type";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
@@ -16,20 +16,20 @@ const MoveConfirmTransmission = observer(() => {
     const [modalDocument, setModalDocument] = useState(false)
     useEffect(() => {
         nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
-        nameDocument(4).then(data=> document.setTypeDocumentComing(data))
+        nameDocument(4).then(data => document.setTypeDocumentComing(data))
 
     }, [])
 
     return (
-        <div >
-            <h1>Підтвердити передачу</h1>
-            <MyButtonAdd style={{margin:'5px'}} onClick={() => setModalDocument(true)}>Додати документ</MyButtonAdd>
+        <div>
+            <h1>Підтвердження передачі</h1>
+            <MyButtonAdd style={{margin: '5px'}} onClick={() => setModalDocument(true)}>Додати документ</MyButtonAdd>
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати зареєстрований наряд</MyButtonAdd>
             <MyModal visible={modalDocument} setVisible={setModalDocument}>
                 <FormDocumentConfirm/>
             </MyModal>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <FormDocumentRegistration  setVisible={setModalTechnique}/>
+                <FormDocumentRegistration setVisible={setModalTechnique}/>
             </MyModal>
             <TableDocumentConfirm/>
             <TableMoveExecution/>
