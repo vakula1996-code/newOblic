@@ -11,7 +11,7 @@ import FilterWindow from "../../filter/filterWindow";
 import MyButtonChoice from "../../button/MyButtonChoice";
 import {nameSubdivisions} from "../../../../http/Type";
 
-const TableDeregistrationForSubdivision = observer(() => {
+const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
     const {technique} = useContext(Context)
     const {document} = useContext(Context)
     const [dataList, setDataList] = useState([])
@@ -32,7 +32,7 @@ const TableDeregistrationForSubdivision = observer(() => {
     }, [idSubdivision])
     const [listMove, setListMove] = useState([])
     const addInList = (indexTechnique, indexSerialNumber) => {
-        technique.setListDeregistrationTechnique([...technique.listDeregistrationTechnique, {
+        technique.setListDeregistrationTechnique([{
             typeTechnique: dataList[indexTechnique].typeTechnique,
             nameTechniques: dataList[indexTechnique].nameTechniques,
             measurement: dataList[indexTechnique].measurement,
@@ -47,10 +47,8 @@ const TableDeregistrationForSubdivision = observer(() => {
             newName: '',
             newCategoryId: '',
         }])
+        setVisibleWindow(false)
 
-        const list = [...dataList]
-        const listSerialNumber = list[indexTechnique]["techniqueDetails"].splice(indexSerialNumber, 1)
-        setListMove(listSerialNumber)
     }
     const [visible, setVisible] = useState(false)
     const hendleVisible = () => {

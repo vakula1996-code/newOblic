@@ -23,19 +23,19 @@ const TableTechniqueForModernization = observer(() => {
     }
     const handleCountChange = (e, index) => {
         if (e.target.value.length === 0) {
-            const list = [...technique.listModernizationTechniqueId]
-            list[index]['count'] = null
-            technique.setListModernizationTechniqueId(list)
+            const list = [...listMoveId]
+            list[index]['count'] = 1
+            setListMoveId(list)
         } else if (listMove[index].techniqueDetails.count < e.target.value) {
             const {value} = e.target
-            const list = [...technique.listModernizationTechniqueId]
+            const list = [...listMoveId]
             list[index]['count'] = parseInt(listMove[index].techniqueDetails.count)
-            technique.setListModernizationTechniqueId(list)
+            setListMoveId(list)
         } else {
             const {value} = e.target
-            const list = [...technique.listModernizationTechniqueId]
+            const list = [...listMoveId]
             list[index]['count'] = parseInt(value)
-            technique.setListModernizationTechniqueId(list)
+            setListMoveId(list)
         }
 
 

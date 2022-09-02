@@ -52,3 +52,6 @@ export const ORDER_NOT_EXECUTION = (id) => 'api/subdivisions/' + id + '/document
 export const REGISTER_ORDER = 'api/registerOrder'
 export const EXECUTION_ORDER = 'api/executionOrder'
 export const DOCUMENT_HISTORY = (id) => 'api/subdivisions/' + id + '/documents/history'
+
+
+export const UPLOAD = 'api/upload'

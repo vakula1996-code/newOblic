@@ -110,7 +110,6 @@ const DeregistrationRepair = observer(() => {
             output: toJS(technique.listNewTechniqueFromModernization),
             expendables: technique.listTechniqueForExcludedId
         }
-        console.log(data)
         modernization(data).catch(data => {
             if (data.response.data.detail) {
                 setError(data.response.data.detail)
@@ -128,7 +127,7 @@ const DeregistrationRepair = observer(() => {
             <h2>Модернізація</h2>
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку для модернізації(ремонту)</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <TableDeregistrationForSubdivision/>
+                <TableDeregistrationForSubdivision setVisibleWindow={setModalTechnique}/>
             </MyModal>
             {listMove.length > 0
                 ?

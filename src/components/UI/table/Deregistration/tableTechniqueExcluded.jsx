@@ -24,7 +24,7 @@ const TableTechniqueExcluded = observer(() => {
     const handleCountChange = (e, index) => {
         if (e.target.value.length === 0) {
             const list = [...moveId]
-            list[index]['count'] = null
+            list[index]['count'] = 1
             setMoveId(list)
         } else if (listMove[index].techniqueDetails.count < e.target.value) {
             const {value} = e.target
