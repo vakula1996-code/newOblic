@@ -29,7 +29,7 @@ const TableEnsuring = observer(() => {
                     <thead>
                     <tr>
                         <th>№</th>
-                        <th>Тип техніки</th>
+                        <th>Тип абезпечення</th>
                         <th>Потреба</th>
                         <th>В наявності</th>
                         <th>Забезпечення</th>
@@ -51,27 +51,6 @@ const TableEnsuring = observer(() => {
                         </tr>
                     )}
 
-                    {/*<tr>*/}
-                    {/*    <td>1</td>*/}
-                    {/*    <td>АРМ</td>*/}
-                    {/*    <td>{listEnsuring["АРМ"].inTheRow}</td>*/}
-                    {/*    <td>{listEnsuring["АРМ"].inThePresence}</td>*/}
-                    {/*    <td>{listEnsuring["АРМ"].ensuring}</td>*/}
-                    {/*</tr>*/}
-                    {/*<tr>*/}
-                    {/*    <td>2</td>*/}
-                    {/*    <td>Друкарські пристрої</td>*/}
-                    {/*    <td>{listEnsuring["Друкарські пристрої"].inTheRow}</td>*/}
-                    {/*    <td>{listEnsuring["Друкарські пристрої"].inThePresence}</td>*/}
-                    {/*    <td>{listEnsuring["Друкарські пристрої"].ensuring}</td>*/}
-                    {/*</tr>*/}
-                    {/*<tr>*/}
-                    {/*    <td>3</td>*/}
-                    {/*    <td>Техніка зв'язку</td>*/}
-                    {/*    <td>{listEnsuring["Техніка зв'зку"].inTheRow}</td>*/}
-                    {/*    <td>{listEnsuring["Техніка зв'зку"].inThePresence}</td>*/}
-                    {/*    <td>{listEnsuring["Техніка зв'зку"].ensuring}</td>*/}
-                    {/*</tr>*/}
                     <tr>
                         <td colSpan='5'>Загальна забезпеченість: {listEnsuring.ensuring}</td>
                     </tr>

@@ -60,12 +60,14 @@ const MoveToFormOutfit = observer(() => {
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <div className={classes.blockTable}>
                     <TableMoveChoice idSubdivision={idSubdivision} setData={setData} error={error}/>
-                    <TableLookMove list={setListMoveTechnique} error={error}/>
 
 
                 </div>
             </MyModal>
-
+            {listMoveTechnique.length > 0
+                ? <TableLookMove list={setListMoveTechnique} error={error}/>
+                : <></>
+            }
 
         </ErrorAddData>
     );

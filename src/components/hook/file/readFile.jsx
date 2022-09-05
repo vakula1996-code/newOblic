@@ -62,6 +62,9 @@ export const ReadFile = () => {
     //
     //
     // }
+
+    const [idFile, setIfFile] = useState('')
+
     const OnSumbit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.target.form);
@@ -73,31 +76,41 @@ export const ReadFile = () => {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 },
-                
+
             })
             .then((res) => {
-                console.log(`Success` + res.data);
+                setIfFile(res.data)
             })
             .catch((err) => {
                 console.log(err);
             });
     };
-    return (
-        <div className='container'>
-            {/*<button onClick={downLoadDocument}>Cкачать</button>*/}
-            <form onSubmit={OnSumbit}>
-                <h1>Зона тестов</h1>
-                <input
-                    id="contained-button-content"
-                    name="file"
-                    type="file"
-                />
-                <button>
-                    Сохранить и закрыть
-                </button>
-            </form>
-        </div>
-    )
+
+    const openFile = (id) => {
+        const link = document.createElement('a');
+        link.href = LOCAL_URLS + 'api/upload/id/' + idFile
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link)
+    }
+
+    return (<div className='container'>
+        {/*<button onClick={downLoadDocument}>Cкачать</button>*/}
+        <form onSubmit={OnSumbit}>
+            <h1>Зона тестов</h1>
+            <input
+                id="contained-button-content"
+                name="file"
+                type="file"
+            />
+            <button>
+                Сохранить и закрыть
+            </button>
+        </form>
+        <button onClick={openFile}>
+            Відкрити
+        </button>
+    </div>)
 }
 
 export default ReadFile;
