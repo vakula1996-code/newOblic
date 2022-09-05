@@ -1,10 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
 import {nameSubdivisions} from "../../../../http/Type";
-import {lookTechnique, techniqueEnsuring} from "../../../../http/Technique";
+import {techniqueEnsuring} from "../../../../http/Technique";
 import Select from "../../input/select";
 import classes from "../table.module.css";
-import {Link} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 
 const TableEnsuring = observer(() => {
@@ -33,32 +32,46 @@ const TableEnsuring = observer(() => {
                         <th>Тип техніки</th>
                         <th>Потреба</th>
                         <th>В наявності</th>
-
                         <th>Забезпечення</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>АРМ</td>
-                        <td>{listEnsuring["АРМ"].inTheRow}</td>
-                        <td>{listEnsuring["АРМ"].inThePresence}</td>
-                        <td>{listEnsuring["АРМ"].ensuring}</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Друкарські пристрої</td>
-                        <td>{listEnsuring["Друкарські пристрої"].inTheRow}</td>
-                        <td>{listEnsuring["Друкарські пристрої"].inThePresence}</td>
-                        <td>{listEnsuring["Друкарські пристрої"].ensuring}</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Техніка зв'язку</td>
-                        <td>{listEnsuring["Техніка зв'зку"].inTheRow}</td>
-                        <td>{listEnsuring["Техніка зв'зку"].inThePresence}</td>
-                        <td>{listEnsuring["Техніка зв'зку"].ensuring}</td>
-                    </tr>
+                    {listEnsuring.type.map(({
+                                                ensuring,
+                                                inThePresence,
+                                                inTheRow,
+                                                name
+                                            }, index) =>
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{name}</td>
+                            <td>{inTheRow}</td>
+                            <td>{inThePresence}</td>
+                            <td>{ensuring}</td>
+                        </tr>
+                    )}
+
+                    {/*<tr>*/}
+                    {/*    <td>1</td>*/}
+                    {/*    <td>АРМ</td>*/}
+                    {/*    <td>{listEnsuring["АРМ"].inTheRow}</td>*/}
+                    {/*    <td>{listEnsuring["АРМ"].inThePresence}</td>*/}
+                    {/*    <td>{listEnsuring["АРМ"].ensuring}</td>*/}
+                    {/*</tr>*/}
+                    {/*<tr>*/}
+                    {/*    <td>2</td>*/}
+                    {/*    <td>Друкарські пристрої</td>*/}
+                    {/*    <td>{listEnsuring["Друкарські пристрої"].inTheRow}</td>*/}
+                    {/*    <td>{listEnsuring["Друкарські пристрої"].inThePresence}</td>*/}
+                    {/*    <td>{listEnsuring["Друкарські пристрої"].ensuring}</td>*/}
+                    {/*</tr>*/}
+                    {/*<tr>*/}
+                    {/*    <td>3</td>*/}
+                    {/*    <td>Техніка зв'язку</td>*/}
+                    {/*    <td>{listEnsuring["Техніка зв'зку"].inTheRow}</td>*/}
+                    {/*    <td>{listEnsuring["Техніка зв'зку"].inThePresence}</td>*/}
+                    {/*    <td>{listEnsuring["Техніка зв'зку"].ensuring}</td>*/}
+                    {/*</tr>*/}
                     <tr>
                         <td colSpan='5'>Загальна забезпеченість: {listEnsuring.ensuring}</td>
                     </tr>
