@@ -4,9 +4,18 @@ import MenuItem from "@mui/material/MenuItem";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
 
-const MySelect = observer(({label, value = null, getData, nameSelect, name,error = false, errorLabel='*Обов`язкове поле'}) => {
+const MySelect = observer(({
+                               label,
+                               value = null,
+                               getData,
+                               nameSelect,
+                               selectName,
+                               name,
+                               error = false,
+                               errorLabel = '*Обов`язкове поле'
+                           }) => {
 
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     const {technique} = useContext(Context)
     return (
         <div>
@@ -16,13 +25,13 @@ const MySelect = observer(({label, value = null, getData, nameSelect, name,error
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
                     value={value}
-
-                    onChange={(e,child) => getData(e,child)}
+                    name={selectName}
+                    onChange={(e, child) => getData(e, child)}
                 >
-                    {(document[nameSelect] !== undefined)
+                    {(documents[nameSelect] !== undefined)
                         ?
-                        document[nameSelect].map(data =>
-                            <MenuItem key={data.id} value={data.id} >{data[name]}</MenuItem>)
+                        documents[nameSelect].map(data =>
+                            <MenuItem key={data.id} value={data.id}>{data[name]}</MenuItem>)
                         :
                         technique[nameSelect].map(data =>
                             <MenuItem key={data.id} value={data.id}>{data[name]}</MenuItem>)
@@ -35,7 +44,7 @@ const MySelect = observer(({label, value = null, getData, nameSelect, name,error
                     ? <FormHelperText id="component-error-text" style={{color: '#d32f2f'}}>{errorLabel}</FormHelperText>
                     : <></>
                 }
-                </FormControl>
+            </FormControl>
 
         </div>
     );

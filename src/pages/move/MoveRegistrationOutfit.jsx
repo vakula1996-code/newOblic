@@ -12,11 +12,11 @@ import MyButton from "../../components/UI/button/MyButton";
 import ErrorAddData from "../../components/UI/error/errorAddData";
 
 const MoveRegistrationOutfit = observer(() => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     const [orderNotRegisterId, setOrderNotRegisterId] = useState([])
     useEffect(() => {
-        nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
-        nameDocument(4).then(data => document.setTypeDocumentComing(data))
+        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
+        nameDocument(4).then(data => documents.setTypeDocumentComing(data))
     }, [])
     const [modalTechnique, setModalTechnique] = useState(false)
     const data = {
@@ -31,18 +31,17 @@ const MoveRegistrationOutfit = observer(() => {
         orderNotRegister({
             date: doc.date,
             toSubdivisionId: doc.toSubdivisionId
-        }, id).then(data => document.setListOrderNotRegister(data))
+        }, id).then(data => documents.setListOrderNotRegister(data))
         setModalTechnique(true)
     }
 
     const [errorMessages, setErrorMessages] = useState('')
     const [error, setError] = useState('')
-    console.log(document.listOrderNotRegister[0] !== undefined)
     const register = () => {
-        if (document.listOrderNotRegister[0] !== undefined) {
+        if (documents.listOrderNotRegister[0] !== undefined) {
             registerOrder({
                 documentNumber: doc.documentNumber,
-                orderId: document.listOrderNotRegister[0]['id']
+                orderId: documents.listOrderNotRegister[0]['id']
             }).catch(data => {
                 if (data.response.data.detail) {
                     setError(data.response.data.detail)
@@ -55,6 +54,8 @@ const MoveRegistrationOutfit = observer(() => {
                 if (data !== undefined) {
                     setError(data)
                     setErrorMessages(data)
+                    setDoc(data)
+                    documents.setListOrderNotRegister([])
                 }
             })
         } else {
@@ -73,7 +74,8 @@ const MoveRegistrationOutfit = observer(() => {
                 <TableOrderNotRegistration setVisible={setModalTechnique}
                                            setOrderNotRegisterId={setOrderNotRegisterId}/>
             </MyModal>
-            <TableForOrderNotRegister orderNotRegisterId={orderNotRegisterId} doc={doc}/>
+            <TableForOrderNotRegister orderNotRegisterId={orderNotRegisterId}
+                                      setOrderNotRegisterId={setOrderNotRegisterId} doc={doc}/>
 
         </ErrorAddData>
     );

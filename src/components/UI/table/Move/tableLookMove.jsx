@@ -5,7 +5,7 @@ import classes from "../table.module.css";
 import MyButtonRemove from "../../button/MyButtonRemove";
 import MyInput from "../../input/MyInput";
 
-const TableLookMove = observer(({list, error}) => {
+const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
     const [listMove, setListMove] = useState([])
     const [moveId, setMoveId] = useState([])
     const {technique} = useContext(Context)
@@ -20,7 +20,6 @@ const TableLookMove = observer(({list, error}) => {
             list[index]['count'] = null
             setMoveId(list)
         } else if (listMove[index].techniqueDetails.count < e.target.value) {
-            const {value} = e.target
             const list = [...moveId]
             list[index]['count'] = parseInt(listMove[index].techniqueDetails.count)
             setMoveId(list)
@@ -31,21 +30,25 @@ const TableLookMove = observer(({list, error}) => {
             setMoveId(list)
         }
 
-
     }
-    const handleRemove = (index) => {
-        const list = [...technique.moveTechnique]
-        const listId = [...technique.moveTechniqueId]
+    console.log(moveId)
+
+    const handleRemove = (index, id) => {
+        const list = [...listMove]
+        const listId = [...moveId]
         list.splice(index, 1)
         listId.splice(index, 1)
         technique.setMoveTechnique(list)
         technique.setMoveTechniqueId(listId)
+        const filterList = [...filterId]
+        filterList.splice(index, 1)
+        setFilterId(filterList)
     }
     useEffect(() => {
         list(moveId)
     }, [moveId])
     useEffect(() => {
-        if (error === 'Hello world') {
+        if (error === '200') {
             setListMove([])
             setMoveId([])
         }
@@ -83,6 +86,7 @@ const TableLookMove = observer(({list, error}) => {
                     </thead>
                     <tbody>
                     {listMove.map(({
+                                       id,
                                        typeTechnique,
                                        nameTechniques,
                                        measurement,
@@ -90,7 +94,7 @@ const TableLookMove = observer(({list, error}) => {
                                        techniqueDetails,
                                        count
                                    }, indexTechnique) =>
-                        <tr key={indexTechnique}>
+                        <tr key={id}>
                             <td>{indexTechnique + 1}</td>
                             <td>{typeTechnique}</td>
                             <td>{nameTechniques}</td>
@@ -110,7 +114,7 @@ const TableLookMove = observer(({list, error}) => {
                             <td>{techniqueDetails.category}</td>
                             <td>{techniqueDetails.dateOfManufacture}</td>
                             <td><MyButtonRemove
-                                onClick={() => handleRemove(indexTechnique)}>Видалити</MyButtonRemove></td>
+                                onClick={() => handleRemove(indexTechnique, id)}>Видалити</MyButtonRemove></td>
                         </tr>
                     )}
                     </tbody>

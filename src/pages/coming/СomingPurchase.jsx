@@ -20,11 +20,11 @@ import MyButton from "../../components/UI/button/MyButton";
 import classes from "../../components/UI/table/table.module.css";
 
 const ComingPurchase = observer(() => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     const {technique} = useContext(Context)
     useEffect(() => {
-        nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
-        nameDocument(2).then(data => document.setTypeDocumentComing(data))
+        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
+        nameDocument(2).then(data => documents.setTypeDocumentComing(data))
         nameTechniqueType().then(data => technique.setTypeTechnique(data))
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
 
@@ -37,7 +37,7 @@ const ComingPurchase = observer(() => {
     const [error, setError] = useState('')
     const [errorMessages, setErrorMessages] = useState('')
     const addNewTeqchnique = () => {
-        addNewTechniqueHttp(document.document, technique.listTechnique, 'doc').catch(data => {
+        addNewTechniqueHttp(documents.document, technique.listTechnique, 'doc').catch(data => {
             if (data.response.data.detail) {
                 setError(data.response.data.detail)
                 setErrorMessages(data.response.data.detail)
@@ -55,7 +55,6 @@ const ComingPurchase = observer(() => {
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <h1>Закупка </h1>
             <FormDocument error={error}/>
-            <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
 
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <FormTechnique setVisible={setModalTechnique}/>
@@ -63,6 +62,7 @@ const ComingPurchase = observer(() => {
 
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
             <Table error={error}/>
+            <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
         </ErrorAddData>
     );
 });

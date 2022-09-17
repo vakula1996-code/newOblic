@@ -9,7 +9,7 @@ import {Context} from "../../../../index";
 
 
 const FormMoveRegistration = observer(({setDoc, setId, doc, id}) => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
 
     return (
         <div>
@@ -26,7 +26,7 @@ const FormMoveRegistration = observer(({setDoc, setId, doc, id}) => {
                 <tr>
 
                     <td>
-                        <InputDate value={document.date}
+                        <InputDate value={documents.date}
                                    getData={(data) => setDoc({...doc, date: data.target.value})}/>
 
                     </td>

@@ -29,18 +29,36 @@ export const registerOrder = async (document) => {
     // }
 }
 
-export const executionOrder = async (document) => {
+export const executionOrder = async (document, file, files) => {
     // if (localStorage.getItem('token')) {
-    const {data} = await $authHost.post(EXECUTION_ORDER, document)
+    // console.log(Object.keys(files[0]))
+    const formData = new FormData()
+    if (file !== null && files !== null) {
+        formData.append('file', file)
+        formData.append('data', JSON.stringify(document))
+        files.map((file, index) => {
+            const key = Object.keys(file)
+            const data = Object.values(file)
+            formData.append(`${key[0]}`, data[0])
+        })
+    }
+    const {data} = await $authHost.post(
+        EXECUTION_ORDER,
+        formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
     return data
-    // }
 }
+
 
 export const documentHisory = async (id, idTechnique, idCategory) => {
     // if (localStorage.getItem('token')) {
     const {data} = await $authHost.post(DOCUMENT_HISTORY(id), {
         detailedTechniqueId: idTechnique,
-        categoryId: idCategory
+        categoryId: idCategory,
+        orderScanName: "file"
     })
     return data
     // }

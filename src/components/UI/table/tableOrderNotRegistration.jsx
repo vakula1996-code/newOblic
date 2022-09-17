@@ -5,14 +5,14 @@ import classes from './table.module.css'
 import MyButtonChoice from "../button/MyButtonChoice";
 
 const TableOrderNotRegistration = observer(({setVisible, setOrderNotRegisterId}) => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     const [listDocument, setListDocument] = useState([])
 
     useEffect(() => {
-        setListDocument(document.listOrderNotRegister)
-    }, [document.listOrderNotRegister])
+        setListDocument(documents.listOrderNotRegister)
+    }, [documents.listOrderNotRegister])
     const handleChoice = (index) => {
-        const list = [...document.listOrderNotRegister]
+        const list = [...documents.listOrderNotRegister]
         const dataRemove = list.splice(index, 1)
         setOrderNotRegisterId(dataRemove)
         setVisible(false)

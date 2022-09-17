@@ -9,7 +9,7 @@ import {Context} from "../../../../index";
 import MyButton from "../../button/MyButton";
 
 const FormDocumentRegistration = observer(({setVisible}) => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
 
     const data = {
         orderNumber: null,
@@ -19,7 +19,7 @@ const FormDocumentRegistration = observer(({setVisible}) => {
     const [id, setId] = useState('')
 
     const addDocument = () => {
-        orderNotExecution(doc, id).then(data => document.setListOrderNotExecution(data))
+        orderNotExecution(doc, id).then(data => documents.setListOrderNotExecution(data))
         setVisible(false)
     }
 
@@ -37,7 +37,7 @@ const FormDocumentRegistration = observer(({setVisible}) => {
                 <tr>
 
                     <td>
-                        <InputDate value={document.date}
+                        <InputDate value={documents.date}
                                    getData={(data) => setDoc({...doc, date: data.target.value})}/>
 
                     </td>

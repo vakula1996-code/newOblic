@@ -2,6 +2,7 @@ import {makeAutoObservable, toJS} from "mobx";
 
 export default class DocumentStore {
     constructor() {
+        this._files = []
         this._document = []
         this._typeDocumentComing = []
         this._typeNumberSubdivisions = []
@@ -11,33 +12,11 @@ export default class DocumentStore {
         makeAutoObservable(this)
     }
 
-    setDocument(doc){
-        this._document = doc
+    get Myfiles() {
+        return toJS(this._files)
     }
 
-    setTypeDocumentComing(type) {
-        this._typeDocumentComing = type
-    }
-
-    setTypeNumberSubdivisions(number){
-        this._typeNumberSubdivisions = number
-    }
-
-
-
-    setListOrderNotRegister(list){
-        this._listOrderNotRegister = list
-    }
-
-    setListOrderNotExecution(list) {
-        this._listOrderNotExecution = list
-    }
-
-    setDocumentConfirm(doc){
-        this._documentConfirm = doc
-    }
-
-    get document(){
+    get document() {
         return toJS(this._document)
     }
 
@@ -45,13 +24,11 @@ export default class DocumentStore {
         return this._typeDocumentComing
     }
 
-
-
-    get numberSubdivisions(){
+    get numberSubdivisions() {
         return this._typeNumberSubdivisions
     }
 
-    get listOrderNotRegister(){
+    get listOrderNotRegister() {
         return this._listOrderNotRegister
     }
 
@@ -59,8 +36,36 @@ export default class DocumentStore {
         return this._listOrderNotExecution
     }
 
-    get documentConfirm(){
+    get documentConfirm() {
         return this._documentConfirm
+    }
+
+    setFiles(files) {
+        this._files = files
+    }
+
+    setDocument(doc) {
+        this._document = doc
+    }
+
+    setTypeDocumentComing(type) {
+        this._typeDocumentComing = type
+    }
+
+    setTypeNumberSubdivisions(number) {
+        this._typeNumberSubdivisions = number
+    }
+
+    setListOrderNotRegister(list) {
+        this._listOrderNotRegister = list
+    }
+
+    setListOrderNotExecution(list) {
+        this._listOrderNotExecution = list
+    }
+
+    setDocumentConfirm(doc) {
+        this._documentConfirm = doc
     }
 
 }

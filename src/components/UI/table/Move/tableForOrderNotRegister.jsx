@@ -1,12 +1,14 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import classes from "../table.module.css";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
+import MyButtonRemove from "../../button/MyButtonRemove";
 
-const TableForOrderNotRegister = observer(({orderNotRegisterId, doc}) => {
+const TableForOrderNotRegister = observer(({orderNotRegisterId, doc, setOrderNotRegisterId}) => {
     const {document} = useContext(Context)
-    const [errorMessages, setErrorMessages] = useState('')
-
+    const onDelete = () => {
+        setOrderNotRegisterId([])
+    }
     return (
         orderNotRegisterId.length > 0
             ?
@@ -29,6 +31,7 @@ const TableForOrderNotRegister = observer(({orderNotRegisterId, doc}) => {
                     <th>
                         Список техніки
                     </th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -70,8 +73,11 @@ const TableForOrderNotRegister = observer(({orderNotRegisterId, doc}) => {
                                 )}
                                 </tbody>
                             </table>
-
                         </td>
+                        <td>
+                            <MyButtonRemove onClick={onDelete}>
+                                Видалити
+                            </MyButtonRemove></td>
                     </tr>
                 )}
                 </tbody>

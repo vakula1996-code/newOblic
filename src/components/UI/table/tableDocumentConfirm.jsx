@@ -5,14 +5,14 @@ import classes from './table.module.css'
 import MyButtonRemove from "../button/MyButtonRemove";
 
 const TableDocumentConfirm = observer(() => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     const handleRemoveDocument = (index) => {
-        const list = [...document.documentConfirm]
+        const list = [...documents.documentConfirm]
         list.splice(index, 1)
-        document.setDocumentConfirm(list)
+        documents.setDocumentConfirm(list)
     }
     return (
-        document.documentConfirm.length > 0
+        documents.documentConfirm.length > 0
             ?
             <div>
                 <h2>Список доданих документів</h2>
@@ -28,16 +28,16 @@ const TableDocumentConfirm = observer(() => {
                     </tr>
                     </thead>
                     <tbody>
-                    {document.documentConfirm.map(({
-                                                       documentNameId,
-                                                       documentNumber,
-                                                       documentDate
-                                                   }, index) =>
+                    {documents.documentConfirm.map(({
+                                                        documentNameId,
+                                                        documentNumber,
+                                                        documentDate
+                                                    }, index) =>
                         <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{documentNameId}</td>
-                            <td>{documentNumber}</td>
                             <td>{documentDate}</td>
+                            <td>{documentNumber}</td>
                             <td>
                                 <MyButtonRemove onClick={() => handleRemoveDocument(index)}>Видалити</MyButtonRemove>
                             </td>

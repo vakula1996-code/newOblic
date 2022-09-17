@@ -13,7 +13,14 @@ import Typography from "@mui/material/Typography";
 import {Context} from "../../index";
 import TableTechniqueForModernization from "../../components/UI/table/Deregistration/tableTechniqueForModernization";
 import FormDeregistrationNewTechnique from "../../components/UI/forms/deregistration/formDeregistrationNewTechnique";
-import {modernization, nameEnsuring, nameMeasurements, nameTechnique, nameTechniqueType} from "../../http/Type";
+import {
+    modernization,
+    nameEnsuring,
+    nameMeasurements,
+    nameSubdivisions,
+    nameTechnique,
+    nameTechniqueType
+} from "../../http/Type";
 import TableLookTechniqueForExcluded from "../../components/UI/table/Deregistration/tableLookTechniqueForExcluded";
 import TableTechniqueExcluded from "../../components/UI/table/Deregistration/tableTechniqueExcluded";
 import MyButton from "../../components/UI/button/MyButton";
@@ -28,6 +35,8 @@ import TableLookTechniqueForModernization
 const DeregistrationRepair = observer(() => {
     const [listMove, setListMove] = useState([])
     const {technique} = useContext(Context)
+    const {documents} = useContext(Context)
+
     useEffect(() => {
         setListMove(technique.listDeregistrationTechnique)
     }, [technique.listDeregistrationTechnique])
@@ -44,6 +53,7 @@ const DeregistrationRepair = observer(() => {
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
         nameTechnique().then(data => technique.setNameTechnique(data))
         nameMeasurements().then(data => technique.setMeasurements(data))
+        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
     }, [])
 
     function a11yProps(index) {

@@ -8,26 +8,34 @@ import MyButton from "../../button/MyButton";
 import classes from "../table.module.css"
 import DateNow from "../../calendar/dateNow";
 import ErrorAddData from "../../error/errorAddData";
+import InputFile from "../../input/inputFile";
 
 const TableMoveExecution = observer(() => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     const [dateConfirm, setDateConfirm] = useState(DateNow())
     const [error, setError] = useState('')
     const [errorMessages, setErrorMessages] = useState('')
+    const [file, setFile] = useState(null)
     const documentConfim = () => {
-        executionOrder({
-            orderId: toJS(document.listOrderNotExecution['id']),
-            date: dateConfirm,
-            documents: toJS(document.documentConfirm)
-        }).catch(data => {
-            if (data.response.data.detail) {
-                setError(data.response.data.detail)
-                setErrorMessages(data.response.data.detail)
-            } else if (data.response.status === 500) {
-                setError('Не опрацьовий запит')
-                setErrorMessages('Не опрацьовий запит! Перевірте правельність ведених значень.')
-            }
-        }).then(data => {
+        executionOrder(
+            {
+                orderId: toJS(documents.listOrderNotExecution['id']),
+                date: dateConfirm,
+                orderScanName: "file",
+                documents: toJS(documents.documentConfirm)
+            },
+            file,
+            documents.Myfiles
+        )
+            .catch(data => {
+                if (data.response.data.detail) {
+                    setError(data.response.data.detail)
+                    setErrorMessages(data.response.data.detail)
+                } else if (data.response.status === 500) {
+                    setError('Не опрацьовий запит')
+                    setErrorMessages('Не опрацьовий запит! Перевірте правельність ведених значень.')
+                }
+            }).then(data => {
             if (data !== undefined) {
                 setError(data)
                 setErrorMessages(data)
@@ -35,7 +43,7 @@ const TableMoveExecution = observer(() => {
         })
     }
     return (
-        toJS(document.listOrderNotExecution).length !== 0
+        toJS(documents.listOrderNotExecution).length !== 0
             ?
             <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
                 <h2>Список не підтвердженої передачі</h2>
@@ -60,13 +68,13 @@ const TableMoveExecution = observer(() => {
                     </tr>
                     </thead>
                     <tbody>
-                    {[document.listOrderNotExecution].map(({
-                                                               documentName,
-                                                               fromSubdivision,
-                                                               toSubdivision,
-                                                               date,
-                                                               techniques
-                                                           }, index) =>
+                    {[documents.listOrderNotExecution].map(({
+                                                                documentName,
+                                                                fromSubdivision,
+                                                                toSubdivision,
+                                                                date,
+                                                                techniques
+                                                            }, index) =>
                         <tr key={index}>
                             <td>{documentName}</td>
                             <td>{fromSubdivision}</td>
@@ -118,6 +126,9 @@ const TableMoveExecution = observer(() => {
                         getData={(e) => setDateConfirm(e.target.value)}
                         style={{marginTop: '-25px'}}
                     />
+                    <div style={{marginLeft: '80%', marginBottom: 10}}>
+                        <InputFile onChange={(e) => setFile(e.target.files[0])} value={file}/>
+                    </div>
                 </div>
                 <MyButton onClick={documentConfim}>Підтвердити передачу</MyButton>
 

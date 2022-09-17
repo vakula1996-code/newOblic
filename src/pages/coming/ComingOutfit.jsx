@@ -20,11 +20,11 @@ import MyButton from "../../components/UI/button/MyButton";
 import classes from "../../components/UI/table/table.module.css";
 
 const ComingOutfit = observer(() => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     const {technique} = useContext(Context)
     useEffect(() => {
-        nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
-        nameDocument(3).then(data => document.setTypeDocumentComing(data))
+        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
+        nameDocument(3).then(data => documents.setTypeDocumentComing(data))
         nameTechniqueType().then(data => technique.setTypeTechnique(data))
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
 
@@ -37,7 +37,7 @@ const ComingOutfit = observer(() => {
     const [error, setError] = useState('')
     const [errorMessages, setErrorMessages] = useState('')
     const addNewTeqchnique = () => {
-        addNewTechniqueHttp(document.document, technique.listTechnique, 'order').catch(data => {
+        addNewTechniqueHttp(documents.document, technique.listTechnique, 'order').catch(data => {
             if (data.response.data.detail) {
                 setError(data.response.data.detail)
                 setErrorMessages(data.response.data.detail)
@@ -58,11 +58,11 @@ const ComingOutfit = observer(() => {
             </MyModal>
 
             <FormDocumentOutfit error={error}/>
-            <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
 
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
 
             <Table error={error}/>
+            <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
         </ErrorAddData>
     );
 });
