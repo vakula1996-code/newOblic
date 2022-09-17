@@ -11,7 +11,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MyButtonChoice from "../../button/MyButtonChoice";
 import {observer} from "mobx-react-lite";
 
-const TableLookTechniqueForModernization = observer(() => {
+const TableLookTechniqueForModernization = observer(({filterId, setFilterId}) => {
     const {technique} = useContext(Context)
     const {document} = useContext(Context)
     const [dataList, setDataList] = useState([])
@@ -19,35 +19,41 @@ const TableLookTechniqueForModernization = observer(() => {
     useEffect(() => {
         nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
     }, [])
-    useEffect(() => {
-        setIdSubivision(idSubdivision)
-    }, [idSubdivision])
+
 
     useEffect(() => {
-        if (idSubdivision.length !== 0) {
+        if (idSubdivision) {
             subdivisionsTechniques(idSubdivision).then(data => {
                 setDataList(data);
             })
         }
     }, [idSubdivision])
     const [listMove, setListMove] = useState([])
-    const addInList = (indexTechnique, indexSerialNumber) => {
-        technique.setListModernizationTechnique([...technique.listModernizationTechnique, {
-            typeTechnique: dataList[indexTechnique].typeTechnique,
-            nameTechniques: dataList[indexTechnique].nameTechniques,
-            measurement: dataList[indexTechnique].measurement,
-            subdivision: dataList[indexTechnique].subdivision,
-            techniqueDetails: dataList[indexTechnique]["techniqueDetails"][indexSerialNumber]
-
-        }])
-        technique.setListModernizationTechniqueId([...technique.listModernizationTechniqueId, {
-            techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
-            count: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].count,
-            howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId
-        }])
-        const list = [...dataList]
-        const listSerialNumber = list[indexTechnique]["techniqueDetails"].splice(indexSerialNumber, 1)
-        setListMove(listSerialNumber)
+    const addInList = (id) => {
+        dataList.filter(dataItem =>
+            dataItem.techniqueDetails.filter(detailItem =>
+                detailItem.id === id
+                    ?
+                    technique.setMoveTechnique([...technique.moveTechnique, {
+                        id: dataItem.id,
+                        typeTechnique: dataItem.typeTechnique,
+                        nameTechniques: dataItem.nameTechniques,
+                        measurement: dataItem.measurement,
+                        subdivision: dataItem.subdivision,
+                        techniqueDetails: detailItem
+                    }])
+                    ||
+                    technique.setMoveTechniqueId([...technique.moveTechniqueId, {
+                        techniqueDetailId: detailItem.id,
+                        count: detailItem.count,
+                        howCategoryId: detailItem.categoryId
+                    }])
+                    ||
+                    setFilterId([...filterId, {idTechnique: dataItem.id, idTechniqueDetail: detailItem.id}])
+                    :
+                    detailItem
+            )
+        )
     }
     const [visible, setVisible] = useState(false)
     const hendleVisible = () => {
@@ -113,7 +119,7 @@ const TableLookTechniqueForModernization = observer(() => {
                                      }, indexTechnique) =>
                         techniqueDetails.length > 0
                             ?
-                            <tr key={indexTechnique}>
+                            <tr key={id}>
                                 <td>{indexTechnique + 1}</td>
                                 <td>{typeTechnique}</td>
                                 <td>{nameTechniques}</td>
@@ -153,20 +159,23 @@ const TableLookTechniqueForModernization = observer(() => {
                                                                            count,
                                                                            dateOfManufacture
                                                                        }, indexSerialNumber) =>
-                                                    <tr key={indexSerialNumber}>
-                                                        <td>{indexSerialNumber + 1}</td>
-                                                        <td>{serialNumber}</td>
-                                                        <td>{price}</td>
-                                                        <td>{category}</td>
-                                                        <td>{count}</td>
-                                                        <td>{dateOfManufacture}</td>
+                                                    filterId.map(item => item.idTechniqueDetail).includes(id) === false
+                                                        ?
+                                                        <tr key={indexSerialNumber}>
+                                                            <td>{indexSerialNumber + 1}</td>
+                                                            <td>{serialNumber}</td>
+                                                            <td>{price}</td>
+                                                            <td>{category}</td>
+                                                            <td>{count}</td>
+                                                            <td>{dateOfManufacture}</td>
 
-                                                        <td>
-                                                            <MyButtonChoice
-                                                                onClick={() => addInList(indexTechnique, indexSerialNumber)}>Вибрати
-                                                            </MyButtonChoice>
-                                                        </td>
-                                                    </tr>
+                                                            <td>
+                                                                <MyButtonChoice
+                                                                    onClick={() => addInList(id)}>Вибрати
+                                                                </MyButtonChoice>
+                                                            </td>
+                                                        </tr>
+                                                        : <></>
                                                 )}
                                                 </tbody>
                                             </table>

@@ -34,6 +34,8 @@ import TableLookTechniqueForModernization
 
 const DeregistrationRepair = observer(() => {
     const [listMove, setListMove] = useState([])
+    const [filterId, setFilterId] = useState([])
+
     const {technique} = useContext(Context)
     const {documents} = useContext(Context)
 
@@ -157,9 +159,9 @@ const DeregistrationRepair = observer(() => {
                             <MyButtonAdd onClick={() => setModalModernization(true)}>Додати техніку для
                                 модернізації</MyButtonAdd>
                             <MyModal visible={modalModernization} setVisible={setModalModernization}>
-                                <TableLookTechniqueForModernization/>
+                                <TableLookTechniqueForModernization filterId={filterId} setFilterId={setFilterId}/>
                             </MyModal>
-                            <TableTechniqueForModernization/>
+                            <TableTechniqueForModernization filterId={filterId} setFilterId={setFilterId}/>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             <MyButtonAdd onClick={() => setModalWithdrawal(true)}>Вилучена техніка</MyButtonAdd>

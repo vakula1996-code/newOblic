@@ -5,7 +5,7 @@ import classes from "../table.module.css";
 import MyButtonRemove from "../../button/MyButtonRemove";
 import MyInput from "../../input/MyInput";
 
-const TableTechniqueForModernization = observer(() => {
+const TableTechniqueForModernization = observer(({filterId, setFilterId}) => {
     const [listMove, setListMove] = useState([])
     const [listMoveId, setListMoveId] = useState([])
     const {technique} = useContext(Context)
@@ -14,12 +14,15 @@ const TableTechniqueForModernization = observer(() => {
         setListMove(technique.listModernizationTechnique)
     }, [technique.listModernizationTechnique])
     const handleRemove = (index) => {
-        const list = [...technique.listModernizationTechnique]
-        const listId = [...technique.listModernizationTechniqueId]
+        const list = [...listMove]
+        const listId = [...listMoveId]
         list.splice(index, 1)
         listId.splice(index, 1)
         technique.setListModernizationTechnique(list)
         technique.setListModernizationTechniqueId(listId)
+        const filterList = [...filterId]
+        filterList.splice(index, 1)
+        setFilterId(filterList)
     }
     const handleCountChange = (e, index) => {
         if (e.target.value.length === 0) {
