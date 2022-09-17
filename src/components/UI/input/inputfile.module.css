@@ -1,0 +1,26 @@
+/*.fileInput {*/
+/*    display: none;*/
+/*}*/
+
+.fileInput + label {
+    background-color: #4d8cf2;
+    padding: 8px;
+    color: #fff;
+    border: 2px solid #9ec3ff;
+    border-radius: 9px;
+
+}
+
+.fileInput + label:hover {
+    background-color: #3b73ce;
+    border-color: #629fe7;
+    cursor: pointer;
+}
+
+.inputButton {
+    background-color: #4d8cf2;
+    padding: 8px;
+    color: #fff;
+    border: 2px solid #9ec3ff;
+    border-radius: 9px;
+}
