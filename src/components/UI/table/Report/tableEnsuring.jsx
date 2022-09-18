@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
 import {nameSubdivisions} from "../../../../http/Type";
 import {techniqueEnsuring} from "../../../../http/Technique";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import classes from "../table.module.css";
 import {observer} from "mobx-react-lite";
 

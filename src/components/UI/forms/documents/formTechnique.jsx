@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import classes from "./form.module.css";
 import Box from "@mui/material/Box";
 import InputMui from "../../input/inputMui";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import InputDate from "../../input/inputDate";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";

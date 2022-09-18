@@ -17,7 +17,7 @@ const TableHistoryDocument = ({params}) => {
                 <th>З якого підрозділу</th>
                 <th>В який</th>
                 <th>Дата</th>
-                <th></th>
+                <th>Детальна інформація</th>
                 </thead>
                 <tbody>
                 {history.map(({

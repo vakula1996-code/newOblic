@@ -5,7 +5,7 @@ import MyButtonRemove from "../../button/MyButtonRemove";
 import {observer} from "mobx-react-lite";
 import MyInput from "../../input/MyInput";
 
-const TableTechniqueExcluded = observer(() => {
+const TableTechniqueExcluded = observer(({filterIdExcluded, setFilterIdExcluded}) => {
     const [listMove, setListMove] = useState([])
     const [moveId, setMoveId] = useState([])
     const {technique} = useContext(Context)
@@ -20,6 +20,9 @@ const TableTechniqueExcluded = observer(() => {
         listId.splice(index, 1)
         technique.setListTechniqueForExcluded(list)
         technique.setListTechniqueForExcludeId(listId)
+        const filterList = [...filterIdExcluded]
+        filterList.splice(index, 1)
+        setFilterIdExcluded(filterList)
     }
     const handleCountChange = (e, index) => {
         if (e.target.value.length === 0) {

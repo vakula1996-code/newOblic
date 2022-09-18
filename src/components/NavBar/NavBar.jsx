@@ -23,7 +23,7 @@ import {
     COMING_PURCHASE,
     DEREGISTRATION_MOVE,
     DEREGISTRATION_REPAIR,
-    ENSURING,
+    ENSURING, LOOK_DOCUMENTS,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_REGISTRATION,
     MOVE_TO_FORM,
@@ -223,7 +223,15 @@ export default function NavBar() {
                                 <ListItemText primary="Рух техніки"/>
                             </ListItemButton>
                         </NavLink>
+                        <NavLink to={LOOK_DOCUMENTS} className={classes.link}>
 
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Перегляд документів"/>
+                            </ListItemButton>
+                        </NavLink>
                     </List>
                 </Collapse>
                 <ListItemButton onClick={handleClick5}>

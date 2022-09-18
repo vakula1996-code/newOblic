@@ -25,15 +25,15 @@ const TableDeregastrationNewTechnique = ({error}) => {
     }
     const handleSerialNumberRemove = (indexSerialNumber, indexTechnique) => {
         const list = [...technique.listNewTechniqueFromModernization]
-        list[indexTechnique]['details'].splice(indexSerialNumber, 1)
+        list[indexTechnique]['detail'].splice(indexSerialNumber, 1)
         technique.setListNewTechniqueFromModernization(list)
 
         const listForTable = [...technique.listNewTechniqueFromModernizationForTable]
-        listForTable[indexTechnique]['details'].splice(indexSerialNumber, 1)
+        listForTable[indexTechnique]['detail'].splice(indexSerialNumber, 1)
         technique.setListNewTechniqueFromModernizationForTable(listForTable)
 
         const l = [...listTechnique]
-        l[indexTechnique]['details'].splice(indexSerialNumber, 1)
+        l[indexTechnique]['detail'].splice(indexSerialNumber, 1)
         setListTechnique(l)
     }
     useEffect(() => {
@@ -44,7 +44,7 @@ const TableDeregastrationNewTechnique = ({error}) => {
     const [listTechnique, setListTechnique] = useState([])
     useEffect(() => {
         setListTechnique(technique.listNewTechniqueFromModernizationForTable)
-    }, [])
+    }, [listTechnique])
     return (
         <Box className={classes.containerTable}>
             {technique.listNewTechniqueFromModernizationForTable.length > 0
@@ -70,7 +70,7 @@ const TableDeregastrationNewTechnique = ({error}) => {
                                                 techniqueTypeId,
                                                 techniqueName,
                                                 measurementId,
-                                                details,
+                                                detail,
                                                 ensuringTypeId
                                             }, indexTechnique) =>
                             <tr key={indexTechnique}>
@@ -101,7 +101,7 @@ const TableDeregastrationNewTechnique = ({error}) => {
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {details.map(({
+                                                {detail.map(({
                                                                   serialNumber,
                                                                   price,
                                                                   categoryId,

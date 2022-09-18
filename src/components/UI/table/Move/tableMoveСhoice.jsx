@@ -104,7 +104,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                         <th>
                             Одиниця виміру
                         </th>
-                        <th style={{zIndex: 999}}>
+                        <th style={{zIndex: 9}}>
                             Детальна інформація
                         </th>
                     </tr>
@@ -177,7 +177,6 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                                                         <td>{category}</td>
                                                         <td>{count}</td>
                                                         <td>{dateOfManufacture}</td>
-
                                                         <td>
                                                             <MyButtonChoice
                                                                 onClick={() => addInList(id)}>Вибрати

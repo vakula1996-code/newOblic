@@ -133,7 +133,7 @@
 
 .tableScroll {
     overflow-x: scroll;
-    width: calc(45vw);
+    /*width: calc(45vw);*/
     height: 500px;
 }
 

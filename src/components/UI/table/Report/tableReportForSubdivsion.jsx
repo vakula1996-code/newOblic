@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Select from "../../input/select";
+import Select from "../../select/select";
 import {Link} from "react-router-dom";
 import {Context} from "../../../../index";
 import {nameSubdivisions} from "../../../../http/Type";

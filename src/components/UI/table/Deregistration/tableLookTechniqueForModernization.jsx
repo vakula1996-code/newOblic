@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
 import {nameSubdivisions} from "../../../../http/Type";
 import {subdivisionsTechniques} from "../../../../http/Technique";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import classes from "../table.module.css";
 import MyButtonLookFilter from "../../button/MyButtonLookFilter";
 import FilterWindow from "../../filter/filterWindow";
@@ -11,30 +11,14 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MyButtonChoice from "../../button/MyButtonChoice";
 import {observer} from "mobx-react-lite";
 
-const TableLookTechniqueForModernization = observer(({filterId, setFilterId}) => {
+const TableLookTechniqueForModernization = observer(({dataList,filterId, setFilterId}) => {
     const {technique} = useContext(Context)
-    const {document} = useContext(Context)
-    const [dataList, setDataList] = useState([])
-    const [idSubdivision, setIdSubivision] = useState([])
-    useEffect(() => {
-        nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
-    }, [])
-
-
-    useEffect(() => {
-        if (idSubdivision) {
-            subdivisionsTechniques(idSubdivision).then(data => {
-                setDataList(data);
-            })
-        }
-    }, [idSubdivision])
-    const [listMove, setListMove] = useState([])
     const addInList = (id) => {
         dataList.filter(dataItem =>
             dataItem.techniqueDetails.filter(detailItem =>
                 detailItem.id === id
                     ?
-                    technique.setMoveTechnique([...technique.moveTechnique, {
+                    technique.setListModernizationTechnique([...technique.listModernizationTechnique, {
                         id: dataItem.id,
                         typeTechnique: dataItem.typeTechnique,
                         nameTechniques: dataItem.nameTechniques,
@@ -43,7 +27,7 @@ const TableLookTechniqueForModernization = observer(({filterId, setFilterId}) =>
                         techniqueDetails: detailItem
                     }])
                     ||
-                    technique.setMoveTechniqueId([...technique.moveTechniqueId, {
+                    technique.setListModernizationTechniqueId([...technique.listModernizationTechniqueId, {
                         techniqueDetailId: detailItem.id,
                         count: detailItem.count,
                         howCategoryId: detailItem.categoryId
@@ -69,9 +53,6 @@ const TableLookTechniqueForModernization = observer(({filterId, setFilterId}) =>
     }, [dataList])
     return (
         <div>
-            <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
-                    name='subdivisionName'
-                    getData={e => setIdSubivision(e.target.value)}/>
             <div className={classes.tableScroll}>
                 <table>
                     <thead>

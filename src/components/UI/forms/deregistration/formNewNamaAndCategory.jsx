@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import InputAutocomplit from "../../input/InputAutocomplit";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
 import {nameCategory} from "../../../../http/Type";

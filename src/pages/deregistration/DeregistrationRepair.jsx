@@ -30,12 +30,65 @@ import {toJS} from "mobx";
 import ErrorAddData from "../../components/UI/error/errorAddData";
 import TableLookTechniqueForModernization
     from "../../components/UI/table/Deregistration/tableLookTechniqueForModernization";
+import Select from "../../components/UI/select/select";
+import {subdivisionsTechniques} from "../../http/Technique";
+
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+function TabPanel(props) {
+    const {children, value, index, ...other} = props;
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{p: 3}}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    index: PropTypes.number,
+    children: PropTypes.node
+};
+
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+
 
 
 const DeregistrationRepair = observer(() => {
     const [listMove, setListMove] = useState([])
     const [filterId, setFilterId] = useState([])
+    const [filterIdExcluded, setFilterIdExcluded] = useState([])
+    const [idSubdivision, setIdSubdivision] = useState()
+    const [dataList, setDataList] = useState([])
 
+    useEffect(() => {
+        if (idSubdivision !== undefined) {
+            subdivisionsTechniques(idSubdivision).then(data => {
+                setDataList(data);
+            })
+        }
+    }, [idSubdivision])
     const {technique} = useContext(Context)
     const {documents} = useContext(Context)
 
@@ -58,68 +111,19 @@ const DeregistrationRepair = observer(() => {
         nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
     }, [])
 
-    function a11yProps(index) {
-        return {
-            id: `simple-tab-${index}`,
-            'aria-controls': `simple-tabpanel-${index}`,
-        };
-    }
 
-    function TabPanel(props) {
-        const {children, value, index, ...other} = props;
-        return (
-            <div
-                role="tabpanel"
-                hidden={value !== index}
-                id={`simple-tabpanel-${index}`}
-                aria-labelledby={`simple-tab-${index}`}
-                {...other}
-            >
-                {value === index && (
-                    <Box sx={{p: 3}}>
-                        <Typography>{children}</Typography>
-                    </Box>
-                )}
-            </div>
-        );
-    }
-
-    TabPanel.propTypes = {
-        index: PropTypes.number,
-        children: PropTypes.node
-    };
-
-
-    TabPanel.propTypes = {
-        children: PropTypes.node,
-        index: PropTypes.number.isRequired,
-        value: PropTypes.number.isRequired,
-    };
-
-    const [newDetail, setNewDetail] = useState([{
-        techniqueDetailId: '',
-        howCategoryId: '',
-        count: ''
-    }])
-
-
-    const [techniqueExcluded, setTechniqueExcluded] = useState([{
-        techniqueDetailId: '',
-        howCategoryId: '',
-        count: '',
-        subdivisionId: ''
-    }])
 
     const [error, setError] = useState('')
     const [errorMessages, setErrorMessages] = useState('')
     const modernizationTechnique = () => {
+        console.log(toJS(technique.listNewTechniqueFromModernization))
         const data = {
             techniqueDetailId: technique.listDeregistrationTechniqueId[0].techniqueDetailId,
             howCategoryId: technique.listDeregistrationTechniqueId[0].howCategoryId,
             newName: technique.listDeregistrationTechniqueId[0].newName,
             newCategoryId: technique.listDeregistrationTechniqueId[0].newCategoryId,
             input: technique.listModernizationTechniqueId,
-            output: toJS(technique.listNewTechniqueFromModernization),
+            output: technique.listNewTechniqueFromModernization,
             expendables: technique.listTechniqueForExcludedId
         }
         modernization(data).catch(data => {
@@ -136,6 +140,7 @@ const DeregistrationRepair = observer(() => {
     }
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
+
             <h2>Модернізація</h2>
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку для модернізації(ремонту)</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
@@ -145,6 +150,7 @@ const DeregistrationRepair = observer(() => {
                 ?
                 <div>
                     <TableLookTechniqueForDeregistration/>
+
                     <MyButton onClick={modernizationTechnique}>Здійснити модернізацію</MyButton>
                     <Box sx={{width: '100%'}}>
                         <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
@@ -155,11 +161,14 @@ const DeregistrationRepair = observer(() => {
                                 <Tab label="Змінити (назву, категорію)" {...a11yProps(3)} />
                             </Tabs>
                         </Box>
-                        <TabPanel value={value} index={0}>
+                        <TabPanel value={value} index={0} >
                             <MyButtonAdd onClick={() => setModalModernization(true)}>Додати техніку для
                                 модернізації</MyButtonAdd>
                             <MyModal visible={modalModernization} setVisible={setModalModernization}>
-                                <TableLookTechniqueForModernization filterId={filterId} setFilterId={setFilterId}/>
+                                <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
+                                        name='subdivisionName'
+                                        getData={e => setIdSubdivision(e.target.value)}/>
+                                <TableLookTechniqueForModernization filterId={filterId} setFilterId={setFilterId}  setFilterIdExcluded={setFilterIdExcluded} dataList={dataList}/>
                             </MyModal>
                             <TableTechniqueForModernization filterId={filterId} setFilterId={setFilterId}/>
                         </TabPanel>
@@ -170,13 +179,15 @@ const DeregistrationRepair = observer(() => {
                             </MyModal>
                             <TableDeregastrationNewTechnique/>
                         </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            <MyButtonAdd onClick={() => setModalExcluded(true)}>Витратні матеріали для
-                                списання</MyButtonAdd>
+                        <TabPanel value={value} index={2} >
+                            <MyButtonAdd onClick={() => setModalExcluded(true)}>Витратні матеріали для списання</MyButtonAdd>
                             <MyModal visible={modalExcluded} setVisible={setModalExcluded}>
-                                <TableLookTechniqueForExcluded/>
+                                <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
+                                        name='subdivisionName'
+                                        getData={e => setIdSubdivision(e.target.value)}/>
+                                <TableLookTechniqueForExcluded filterIdExcluded={filterIdExcluded} setFilterIdExcluded={setFilterIdExcluded} dataList={dataList} idSubdivision={idSubdivision}/>
                             </MyModal>
-                            <TableTechniqueExcluded/>
+                            <TableTechniqueExcluded filterIdExcluded={filterIdExcluded} setFilterIdExcluded={setFilterIdExcluded}/>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
                             <FormNewNamaAndCategory/>

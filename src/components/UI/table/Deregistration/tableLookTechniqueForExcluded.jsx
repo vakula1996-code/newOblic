@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
 import {nameSubdivisions} from "../../../../http/Type";
 import {subdivisionsTechniques} from "../../../../http/Technique";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import classes from "../table.module.css";
 import MyButtonLookFilter from "../../button/MyButtonLookFilter";
 import FilterWindow from "../../filter/filterWindow";
@@ -11,45 +11,38 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MyButtonChoice from "../../button/MyButtonChoice";
 import {observer} from "mobx-react-lite";
 
-const TableLookTechniqueForExcluded = observer(() => {
+
+const TableLookTechniqueForExcluded = observer(({dataList,filterIdExcluded, setFilterIdExcluded, idSubdivision}) => {
     const {technique} = useContext(Context)
-    const {document} = useContext(Context)
-    const [dataList, setDataList] = useState([])
-    const [idSubdivision, setIdSubivision] = useState([])
-    useEffect(() => {
-        nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
-    }, [])
-    useEffect(() => {
-        setIdSubivision(idSubdivision)
-    }, [idSubdivision])
-
-    useEffect(() => {
-        if (idSubdivision.length !== 0) {
-            subdivisionsTechniques(idSubdivision).then(data => {
-                setDataList(data);
-            })
-        }
-    }, [idSubdivision])
-    const [listMove, setListMove] = useState([])
-    const addInList = (indexTechnique, indexSerialNumber) => {
-        technique.setListTechniqueForExcluded([...technique.listTechniqueForExcluded, {
-            typeTechnique: dataList[indexTechnique].typeTechnique,
-            nameTechniques: dataList[indexTechnique].nameTechniques,
-            measurement: dataList[indexTechnique].measurement,
-            subdivision: dataList[indexTechnique].subdivision,
-            techniqueDetails: dataList[indexTechnique]["techniqueDetails"][indexSerialNumber]
-
-        }])
-        technique.setListTechniqueForExcludeId([...technique.listTechniqueForExcludedId, {
-            techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
-            count: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].count,
-            howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId,
-            subdivisionId: idSubdivision
-        }])
-        const list = [...dataList]
-        const listSerialNumber = list[indexTechnique]["techniqueDetails"].splice(indexSerialNumber, 1)
-        setListMove(listSerialNumber)
+    const addInList = (id) => {
+        dataList.filter(dataItem =>
+            dataItem.techniqueDetails.filter(detailItem =>
+                detailItem.id === id
+                    ?
+                    technique.setListTechniqueForExcluded([...technique.listTechniqueForExcluded, {
+                        id: dataItem.id,
+                        typeTechnique: dataItem.typeTechnique,
+                        nameTechniques: dataItem.nameTechniques,
+                        measurement: dataItem.measurement,
+                        subdivision: dataItem.subdivision,
+                        techniqueDetails: detailItem
+                    }])
+                    ||
+                    technique.setListTechniqueForExcludeId([...technique.listTechniqueForExcludedId, {
+                        techniqueDetailId: detailItem.id,
+                        count: detailItem.count,
+                        howCategoryId: detailItem.categoryId,
+                        subdivisionId: idSubdivision
+                    }])
+                    ||
+                    setFilterIdExcluded([...filterIdExcluded, {idTechnique: dataItem.id, idTechniqueDetail: detailItem.id}])
+                    :
+                    detailItem
+            )
+        )
     }
+    console.log(dataList)
+
     const [visible, setVisible] = useState(false)
     const hendleVisible = () => {
         if (visible === true) {
@@ -64,9 +57,7 @@ const TableLookTechniqueForExcluded = observer(() => {
     }, [dataList])
     return (
         <div>
-            <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
-                    name='subdivisionName'
-                    getData={e => setIdSubivision(e.target.value)}/>
+
             <div className={classes.tableScroll}>
                 <table>
                     <thead>
@@ -112,9 +103,8 @@ const TableLookTechniqueForExcluded = observer(() => {
                                          techniqueDetails,
 
                                      }, indexTechnique) =>
-                        techniqueDetails.length > 0
-                            ?
-                            <tr key={indexTechnique}>
+
+                            <tr key={id}>
                                 <td>{indexTechnique + 1}</td>
                                 <td>{typeTechnique}</td>
                                 <td>{nameTechniques}</td>
@@ -154,6 +144,8 @@ const TableLookTechniqueForExcluded = observer(() => {
                                                                            count,
                                                                            dateOfManufacture
                                                                        }, indexSerialNumber) =>
+                                                    filterIdExcluded.map(item => item.idTechniqueDetail).includes(id) === false
+                                                        ?
                                                     <tr key={indexSerialNumber}>
                                                         <td>{indexSerialNumber + 1}</td>
                                                         <td>{serialNumber}</td>
@@ -164,10 +156,12 @@ const TableLookTechniqueForExcluded = observer(() => {
 
                                                         <td>
                                                             <MyButtonChoice
-                                                                onClick={() => addInList(indexTechnique, indexSerialNumber)}>Вибрати
+                                                                onClick={(e) => addInList(id)}>Вибрати
                                                             </MyButtonChoice>
                                                         </td>
                                                     </tr>
+                                                        : <></>
+
                                                 )}
                                                 </tbody>
                                             </table>
@@ -175,7 +169,6 @@ const TableLookTechniqueForExcluded = observer(() => {
                                     </Accordion>
                                 </td>
                             </tr>
-                            : <></>
                     )}
                     </tbody>
                 </table>

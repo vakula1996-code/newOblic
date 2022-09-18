@@ -7,7 +7,7 @@ import {
     DEREGISTRATION_MOVE,
     DEREGISTRATION_REPAIR,
     DETAIL_LOOK_TECHNIQUE,
-    ENSURING,
+    ENSURING, LOOK_DOCUMENTS,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_REGISTRATION,
     MOVE_TO_FORM,
@@ -25,6 +25,7 @@ import ReportEnsuring from "./pages/report/reportEnsuring";
 import AdminPanelAddData from "./pages/adminPanel/adminPanelAddData";
 import DeregistrationRepair from "./pages/deregistration/DeregistrationRepair";
 import DeregistrationMove from "./pages/deregistration/DeregistrationMove";
+import LookDocuments from "./pages/report/lookDocuments";
 
 
 export const authRouter = [
@@ -76,4 +77,8 @@ export const authRouter = [
         path: ADMIN_PANEL,
         Component: <AdminPanelAddData/>
     },
+    {
+        path: LOOK_DOCUMENTS,
+        Component: <LookDocuments/>
+    }
 ]

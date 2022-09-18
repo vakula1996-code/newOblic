@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import classes from "../../../../pages/coming/coming.module.css";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import InputDate from "../../input/inputDate";
 import InputMui from "../../input/inputMui";
 import {observer} from "mobx-react-lite";

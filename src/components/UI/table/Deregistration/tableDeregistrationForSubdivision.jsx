@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import classes from "../table.module.css";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";

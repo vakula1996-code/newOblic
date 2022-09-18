@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import classes from "../../../../pages/coming/coming.module.css";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import InputDate from "../../input/inputDate";
 import Box from "@mui/material/Box";
 import DateNow from "../../calendar/dateNow";

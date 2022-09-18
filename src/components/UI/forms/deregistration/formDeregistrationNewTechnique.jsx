@@ -5,7 +5,7 @@ import DateNow from "../../calendar/dateNow";
 import Box from "@mui/material/Box";
 import classes from "../documents/form.module.css";
 import InputAutocomplit from "../../input/InputAutocomplit";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import InputMui from "../../input/inputMui";
 import InputDate from "../../input/inputDate";
 import {nameCategory} from "../../../../http/Type";
@@ -18,7 +18,7 @@ const FormDeregistrationNewTechnique = observer(({setVisible}) => {
         ensuringTypeId: '',
         techniqueName: '',
         measurementId: '',
-        details: [
+        detail: [
             {
                 serialNumber: 'Б/Н',
                 price: '',
@@ -35,7 +35,7 @@ const FormDeregistrationNewTechnique = observer(({setVisible}) => {
         techniqueName: '',
         measurementId: '',
         subdivisionId: '',
-        details:
+        detail:
             [{
                 serialNumber: 'Б/Н',
                 price: '',
@@ -92,7 +92,7 @@ const FormDeregistrationNewTechnique = observer(({setVisible}) => {
     }
     const handleSerialNumberAdd = () => {
         setListTechnique({
-            ...listTechnique, details: [...listTechnique.details, {
+            ...listTechnique, detail: [...listTechnique.detail, {
                 serialNumber: 'Б/Н',
                 price: '',
                 categoryId: '',
@@ -101,7 +101,7 @@ const FormDeregistrationNewTechnique = observer(({setVisible}) => {
             }]
         })
         setListTechniqueForTable({
-            ...listTechniqueForTable, details: [...listTechniqueForTable.details, {
+            ...listTechniqueForTable, detail: [...listTechniqueForTable.detail, {
                 serialNumber: 'Б/Н',
                 price: '',
                 categoryId: '',
@@ -121,34 +121,34 @@ const FormDeregistrationNewTechnique = observer(({setVisible}) => {
         const list = {...listTechnique};
         if (name === 'count' || name === 'price') {
             if (value.length === 0) {
-                list['details'][index][name] = 0;
+                list['detail'][index][name] = 0;
             } else {
-                list['details'][index][name] = parseInt(value);
+                list['detail'][index][name] = parseInt(value);
             }
         } else {
-            list['details'][index][name] = value;
+            list['detail'][index][name] = value;
         }
         setListTechnique(list);
         if (data) {
             const listForTable = {...listTechniqueForTable}
-            listForTable['details'][index][name] = data.props.children
+            listForTable['detail'][index][name] = data.props.children
             setListTechniqueForTable(listForTable)
         } else {
             const {value} = e.target;
             const listForTable = {...listTechniqueForTable}
-            listForTable['details'][index][name] = value
+            listForTable['detail'][index][name] = value
             setListTechniqueForTable(listForTable)
         }
 
 
     };
-
+    console.log(listTechnique)
     const handleSerialNumberRemove = (index) => {
         const list = {...listTechnique};
-        list['details'].splice(index, 1);
+        list['detail'].splice(index, 1);
         setListTechnique(list);
         const listForTable = {...listTechniqueForTable}
-        listForTable['details'].splice(index, 1);
+        listForTable['detail'].splice(index, 1);
         setListTechniqueForTable(listForTable);
         const listErrorSerialNumber = [...errorSerialNumber]
         listErrorSerialNumber.splice(index, 1)
@@ -171,7 +171,7 @@ const FormDeregistrationNewTechnique = observer(({setVisible}) => {
             listTechnique.techniqueName !== '' &&
             listTechnique.measurementId !== ''
         ) {
-            listTechnique.details.map(({count, serialNumber, price, categoryId, dateOfManufacture}) => {
+            listTechnique.detail.map(({count, serialNumber, price, categoryId, dateOfManufacture}) => {
                 if (
                     count !== '' &&
                     serialNumber !== '' &&
@@ -208,7 +208,7 @@ const FormDeregistrationNewTechnique = observer(({setVisible}) => {
                 setErrorMeasurementId(false)
             }
 
-            listTechnique.details.map(({count, serialNumber, price, categoryId, dateOfManufacture}, index) => {
+            listTechnique.detail.map(({count, serialNumber, price, categoryId, dateOfManufacture}, index) => {
                 if (serialNumber === '') {
                     const list = [...errorSerialNumber];
                     list[index]['state'] = true
@@ -276,6 +276,7 @@ const FormDeregistrationNewTechnique = observer(({setVisible}) => {
         }
 
     }
+    console.log(technique.listNewTechniqueFromModernization)
     const getCategory = () => {
         if (listTechnique.techniqueTypeId !== '') {
             nameCategory(listTechnique.techniqueTypeId).then(data => technique.setCategory(data))
@@ -342,32 +343,32 @@ const FormDeregistrationNewTechnique = observer(({setVisible}) => {
                             </tr>
                             </thead>
                             <tbody>
-                            {listTechnique.details.map(({
+                            {listTechnique.detail.map(({
                                                             serialNumber,
                                                             price,
                                                             categoryId,
                                                             dateOfManufacture
                                                         }, index) => (
                                 <tr key={index}>
-                                    <td><InputMui value={listTechnique.details[index].count}
+                                    <td><InputMui value={listTechnique.detail[index].count}
                                                   error={errorCount[index]['state']}
                                                   errorLabel='Кількість повина бути більше 0'
                                                   getData={(e) => handleSerialNumberChange(e, index, 'count')}/></td>
-                                    <td><InputMui value={listTechnique.details[index].serialNumber}
+                                    <td><InputMui value={listTechnique.detail[index].serialNumber}
                                                   error={errorSerialNumber[index]['state']}
                                                   getData={(e) => handleSerialNumberChange(e, index, 'serialNumber')}/>
                                     </td>
-                                    <td><InputMui value={listTechnique.details[index].price}
+                                    <td><InputMui value={listTechnique.detail[index].price}
                                                   error={errorPrice[index]['state']}
                                                   getData={(e) => handleSerialNumberChange(e, index, 'price')}/>
 
                                     </td>
-                                    <td><InputDate value={listTechnique.details[index].dateOfManufacture}
+                                    <td><InputDate value={listTechnique.detail[index].dateOfManufacture}
                                                    error={errorDateOfManufacture[index]['state']}
                                                    getData={(e) => handleSerialNumberChange(e, index, 'dateOfManufacture')}/>
 
                                     </td>
-                                    <td><Select nameSelect="category" value={listTechnique.details[index].categoryId}
+                                    <td><Select nameSelect="category" value={listTechnique.detail[index].categoryId}
                                                 name='categoryName'
                                                 error={errorCategoryId[index]['state']}
                                                 getData={(e, data) => handleSerialNumberChange(e, index, 'categoryId', data)}/>

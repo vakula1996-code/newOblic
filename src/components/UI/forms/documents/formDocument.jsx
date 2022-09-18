@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import classes from "../../../../pages/coming/coming.module.css";
 import InputDate from "../../input/inputDate";
 import InputMui from "../../input/inputMui";
-import Select from "../../input/select";
+import Select from "../../select/select";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
 import DateNow from "../../calendar/dateNow";

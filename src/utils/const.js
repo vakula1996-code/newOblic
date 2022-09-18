@@ -25,6 +25,8 @@ export const ENSURING = '/techniqueEnsuring'
 
 export const ADMIN_PANEL = '/admin'
 
+export const LOOK_DOCUMENTS = '/documents'
+
 
 //Типи
 export const TYPE_DOCUMENT_NAME = (id) => 'api/documentNames?type=' + id

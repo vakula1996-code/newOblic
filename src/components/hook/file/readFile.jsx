@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import {LOCAL_URLS, UPLOAD} from "../../../utils/const";
 import axios from "axios";
+import {LOCAL_URLS, UPLOAD} from "../../../utils/const";
 
 
 export const ReadFile = () => {
@@ -51,75 +51,65 @@ export const ReadFile = () => {
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
 
-    async function getFile() {
-        const link = document.createElement('a');
-        const response = await axios.get(LOCAL_URLS + UPLOAD, {responseType: 'blob'})
-        console.log(response)
-        // const blob = new Blob([response.data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-        const objectURL = URL.createObjectURL(response.data)
-        const a = document.createElement('a')
-        a.setAttribute('href', objectURL)
-        a.setAttribute('download', 'file.docx')
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(objectURL)
-    }
-
-    // const [idFile, setIfFile] = useState('')
-    //
-    // const OnSumbit = (event) => {
-    //     event.preventDefault();
-    //     const data = [
-    //         {id: '1'},
-    //         {id: '2'},
-    //         {id: '3'}
-    //     ]
-    //     const formData = new FormData(event.target.form);
-    //     const imagedata = document.querySelector('input[type="file"]').files[0];
-    //     formData.append('file', imagedata)
-    //     formData.append('data', JSON.stringify(data))
-    //     console.log(formData)
-    //
-    //     axios
-    //         .post(LOCAL_URLS + UPLOAD, formData, {
-    //             headers: {
-    //                 "Content-Type": "multipart/form-data"
-    //             },
-    //
-    //         })
-    //         .then((res) => {
-    //             setIfFile(res.data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // };
-
-    // const openFile = (id) => {
+    // const downLoadDocument = () => {
     //     const link = document.createElement('a');
-    //     link.href = LOCAL_URLS + 'api/upload/id/' + idFile
+    //     link.href = LOCAL_URLS + UPLOAD;
     //     document.body.appendChild(link);
+    //
     //     link.click();
+    //
     //     link.parentNode.removeChild(link)
+    //
+    //
     // }
 
+    const [idFile, setIfFile] = useState('')
+
+    const OnSumbit = (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target.form);
+        const imagedata = document.querySelector('input[type="file"]').files[0];
+        formData.append('file', imagedata)
+
+        axios
+            .post(LOCAL_URLS + UPLOAD, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                },
+
+            })
+            .then((res) => {
+                setIfFile(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const openFile = (id) => {
+        const link = document.createElement('a');
+        link.href = LOCAL_URLS + 'api/upload/id/' + idFile
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link)
+    }
+
     return (<div className='container'>
-        <button onClick={getFile}>Cкачать</button>
-        {/*<form onSubmit={OnSumbit}>*/}
-        {/*    <h1>Зона тестов</h1>*/}
-        {/*    <input*/}
-        {/*        id="contained-button-content"*/}
-        {/*        name="file"*/}
-        {/*        type="file"*/}
-        {/*    />*/}
-        {/*    <button>*/}
-        {/*        Сохранить и закрыть*/}
-        {/*    </button>*/}
-        {/*</form>*/}
-        {/*<button onClick={openFile}>*/}
-        {/*    Відкрити*/}
-        {/*</button>*/}
+        {/*<button onClick={downLoadDocument}>Cкачать</button>*/}
+        <form onSubmit={OnSumbit}>
+            <h1>Зона тестов</h1>
+            <input
+                id="contained-button-content"
+                name="file"
+                type="file"
+            />
+            <button>
+                Сохранить и закрыть
+            </button>
+        </form>
+        <button onClick={openFile}>
+            Відкрити
+        </button>
     </div>)
 }
 

@@ -18,7 +18,6 @@ const TableDetailInfo = ({params}) => {
                     <th>Тип техніки</th>
                     <th>Назва техніки</th>
                     <th>Серійний номер</th>
-                    <th>Дата ведення в експлутацію</th>
                     <th>Категорія</th>
                 </tr>
                 </thead>
@@ -29,7 +28,6 @@ const TableDetailInfo = ({params}) => {
                                   typeTechnique,
                                   nameTechnique,
                                   serialNumber,
-                                  commissioningDate,
                                   category
                               }, index) =>
                         <tr key={index}>
@@ -37,10 +35,6 @@ const TableDetailInfo = ({params}) => {
                             <td>{typeTechnique}</td>
                             <td>{nameTechnique}</td>
                             <td>{serialNumber}</td>
-                            <td>{commissioningDate === null
-                                ? 'відсутня іформація'
-                                : commissioningDate
-                            }</td>
                             <td>{category}</td>
                         </tr>
                     )}
