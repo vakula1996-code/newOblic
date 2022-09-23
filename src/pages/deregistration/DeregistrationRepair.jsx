@@ -26,7 +26,6 @@ import TableTechniqueExcluded from "../../components/UI/table/Deregistration/tab
 import MyButton from "../../components/UI/button/MyButton";
 import TableDeregastrationNewTechnique from "../../components/UI/table/Deregistration/tableDeregastrationNewTechnique";
 import FormNewNamaAndCategory from "../../components/UI/forms/deregistration/formNewNamaAndCategory";
-import {toJS} from "mobx";
 import ErrorAddData from "../../components/UI/error/errorAddData";
 import TableLookTechniqueForModernization
     from "../../components/UI/table/Deregistration/tableLookTechniqueForModernization";
@@ -73,8 +72,6 @@ TabPanel.propTypes = {
 };
 
 
-
-
 const DeregistrationRepair = observer(() => {
     const [listMove, setListMove] = useState([])
     const [filterId, setFilterId] = useState([])
@@ -112,11 +109,9 @@ const DeregistrationRepair = observer(() => {
     }, [])
 
 
-
     const [error, setError] = useState('')
     const [errorMessages, setErrorMessages] = useState('')
     const modernizationTechnique = () => {
-        console.log(toJS(technique.listNewTechniqueFromModernization))
         const data = {
             techniqueDetailId: technique.listDeregistrationTechniqueId[0].techniqueDetailId,
             howCategoryId: technique.listDeregistrationTechniqueId[0].howCategoryId,
@@ -133,6 +128,7 @@ const DeregistrationRepair = observer(() => {
             }
         }).then(data => {
             if (data !== undefined) {
+                window.location.reload()
                 setError(data)
                 setErrorMessages(data)
             }
@@ -142,7 +138,7 @@ const DeregistrationRepair = observer(() => {
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
 
             <h2>Модернізація</h2>
-            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку для модернізації(ремонту)</MyButtonAdd>
+            <MyButtonAdd onClick={() => setModalTechnique(true)}>Обрати майно для модернізації (ремонту)</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <TableDeregistrationForSubdivision setVisibleWindow={setModalTechnique}/>
             </MyModal>
@@ -158,17 +154,19 @@ const DeregistrationRepair = observer(() => {
                                 <Tab label="Модернізувати" {...a11yProps(0)} />
                                 <Tab label="Вилучити" {...a11yProps(1)} />
                                 <Tab label="Списати витратні матеріали" {...a11yProps(2)} />
-                                <Tab label="Змінити (назву, категорію)" {...a11yProps(3)} />
+                                <Tab label="Редагування даних" {...a11yProps(3)} />
                             </Tabs>
                         </Box>
-                        <TabPanel value={value} index={0} >
+                        <TabPanel value={value} index={0}>
                             <MyButtonAdd onClick={() => setModalModernization(true)}>Додати техніку для
                                 модернізації</MyButtonAdd>
                             <MyModal visible={modalModernization} setVisible={setModalModernization}>
                                 <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
                                         name='subdivisionName'
                                         getData={e => setIdSubdivision(e.target.value)}/>
-                                <TableLookTechniqueForModernization filterId={filterId} setFilterId={setFilterId}  setFilterIdExcluded={setFilterIdExcluded} dataList={dataList}/>
+                                <TableLookTechniqueForModernization filterId={filterId} setFilterId={setFilterId}
+                                                                    setFilterIdExcluded={setFilterIdExcluded}
+                                                                    dataList={dataList}/>
                             </MyModal>
                             <TableTechniqueForModernization filterId={filterId} setFilterId={setFilterId}/>
                         </TabPanel>
@@ -179,15 +177,19 @@ const DeregistrationRepair = observer(() => {
                             </MyModal>
                             <TableDeregastrationNewTechnique/>
                         </TabPanel>
-                        <TabPanel value={value} index={2} >
-                            <MyButtonAdd onClick={() => setModalExcluded(true)}>Витратні матеріали для списання</MyButtonAdd>
+                        <TabPanel value={value} index={2}>
+                            <MyButtonAdd onClick={() => setModalExcluded(true)}>Витратні матеріали для
+                                списання</MyButtonAdd>
                             <MyModal visible={modalExcluded} setVisible={setModalExcluded}>
                                 <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
                                         name='subdivisionName'
                                         getData={e => setIdSubdivision(e.target.value)}/>
-                                <TableLookTechniqueForExcluded filterIdExcluded={filterIdExcluded} setFilterIdExcluded={setFilterIdExcluded} dataList={dataList} idSubdivision={idSubdivision}/>
+                                <TableLookTechniqueForExcluded filterIdExcluded={filterIdExcluded}
+                                                               setFilterIdExcluded={setFilterIdExcluded}
+                                                               dataList={dataList} idSubdivision={idSubdivision}/>
                             </MyModal>
-                            <TableTechniqueExcluded filterIdExcluded={filterIdExcluded} setFilterIdExcluded={setFilterIdExcluded}/>
+                            <TableTechniqueExcluded filterIdExcluded={filterIdExcluded}
+                                                    setFilterIdExcluded={setFilterIdExcluded}/>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
                             <FormNewNamaAndCategory/>

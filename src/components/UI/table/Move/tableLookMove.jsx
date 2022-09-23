@@ -31,7 +31,6 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
         }
 
     }
-    console.log(moveId)
 
     const handleRemove = (index, id) => {
         const list = [...listMove]

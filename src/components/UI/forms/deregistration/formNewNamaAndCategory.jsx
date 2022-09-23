@@ -11,9 +11,12 @@ const FormNewNamaAndCategory = observer(() => {
     const [name, setName] = useState('')
     const [category, setCategory] = useState('')
     const [categoryForTable, setCategoryForTable] = useState('')
+    console.log(technique)
     const getCategory = () => {
-        if (technique.listDeregistrationTechnique[0].typeTechniqueId) {
-            nameCategory(technique.listDeregistrationTechnique[0].typeTechniqueId).then(data => technique.setCategory(data))
+        if (technique.listDeregistrationTechnique.length > 0) {
+            if (technique.listDeregistrationTechnique[0].typeTechniqueId !== undefined) {
+                nameCategory(technique.listDeregistrationTechnique[0].typeTechniqueId).then(data => technique.setCategory(data))
+            }
         }
     }
     useEffect(() => {

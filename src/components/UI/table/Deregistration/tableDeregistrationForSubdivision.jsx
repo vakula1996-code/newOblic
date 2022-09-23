@@ -66,15 +66,27 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
 
     return (
         <div>
+            <div style={{display: "flex"}}>
+                <MyButtonLookFilter onClick={hendleVisible}>Пошук</MyButtonLookFilter>
+            </div>
+            <FilterWindow
+                visible={visible}
+                setVisible={setVisible}
+                dataList={dataList}
+                dataFilter={dataFilter}
+                setDataFilter={setDataFilter}
+            />
             <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
                     name='subdivisionName'
                     getData={e => setIdSubivision(e.target.value)}/>
+
             <div className={classes.tableScroll}>
+
+
                 <table>
                     <thead>
                     <tr>
                         <th>
-                            <MyButtonLookFilter onClick={hendleVisible}/>
                             №
                         </th>
                         <th>
@@ -94,15 +106,7 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
                             Детальна інформація
                         </th>
                     </tr>
-                    <tr>
-                        <FilterWindow
-                            visible={visible}
-                            setVisible={setVisible}
-                            dataList={dataList}
-                            dataFilter={dataFilter}
-                            setDataFilter={setDataFilter}
-                        />
-                    </tr>
+
                     </thead>
                     <tbody>
                     {dataFilter.map(({

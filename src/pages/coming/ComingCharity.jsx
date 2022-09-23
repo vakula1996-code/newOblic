@@ -46,8 +46,10 @@ const ComingCharity = observer(() => {
             if (data !== undefined) {
                 setError(data)
                 setErrorMessages(data)
+                window.location.reload()
             }
         })
+
     }
 
 

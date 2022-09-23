@@ -1,16 +1,23 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import classes from "./table.module.css";
 import Box from "@mui/material/Box";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
-import MyButtonRemove from "../button/MyButtonRemove";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import StorageIcon from "@mui/icons-material/Storage";
+import MyModal from "../modal/MyModal";
+import FormTechniqueChange from "../forms/documents/formTechniqueChange";
 
 
 const Table = observer(({error}) => {
     const {document} = useContext(Context)
     const {technique} = useContext(Context)
+    const [idTechnique, setIdTechnique] = useState('')
+    const [modalTechniqueChange, setModalTechniqueChange] = useState(false)
+
     const handleTechniqueRemove = (index) => {
         const list = [...technique.listTechnique]
         list.splice(index, 1)
@@ -30,6 +37,12 @@ const Table = observer(({error}) => {
         listForTable[indexTechnique]['details'].splice(indexSerialNumber, 1)
         technique.setListTechniqueForTable(listForTable)
     }
+
+    const handleChange = (id) => {
+        setIdTechnique(id)
+        setModalTechniqueChange(true)
+    }
+
     useEffect(() => {
         if (error === 'Hello world') {
             technique.setListTechniqueForTable([])
@@ -102,8 +115,11 @@ const Table = observer(({error}) => {
                                                         <td>{price}</td>
                                                         <td>{dateOfManufacture}</td>
                                                         <td>{categoryId}</td>
-                                                        <td><MyButtonRemove
-                                                            onClick={() => handleSerialNumberRemove(indexSerialNumber, indexTechnique)}>Видалити</MyButtonRemove>
+                                                        <td>
+                                                            <IconButton size='small'
+                                                                        onClick={() => handleSerialNumberRemove(indexSerialNumber, indexTechnique)}><DeleteIcon>
+                                                            </DeleteIcon>
+                                                            </IconButton>
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -113,8 +129,11 @@ const Table = observer(({error}) => {
                                         </AccordionDetails>
                                     </Accordion>
                                 </td>
-                                <td><MyButtonRemove
-                                    onClick={() => handleTechniqueRemove(indexTechnique)}>Видалити</MyButtonRemove>
+                                <td><IconButton size='small'
+                                                onClick={() => handleChange(indexTechnique)}><StorageIcon></StorageIcon></IconButton>
+
+                                    <IconButton size='small'
+                                                onClick={() => handleTechniqueRemove(indexTechnique)}><DeleteIcon></DeleteIcon></IconButton>
                                 </td>
 
                             </tr>
@@ -125,6 +144,14 @@ const Table = observer(({error}) => {
 
                 : <h2>Добавте майно до списку</h2>
 
+            }
+            {idTechnique !== ''
+                ?
+                < MyModal visible={modalTechniqueChange} setVisible={setModalTechniqueChange}>
+                    <FormTechniqueChange setVisible={setModalTechniqueChange}
+                                         idTechnique={idTechnique}/>
+                </MyModal>
+                : <></>
             }
         </Box>
     );

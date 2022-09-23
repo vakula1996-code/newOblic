@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './inputfile.module.css'
 
-const InputFile = ({onChange, name, value = null}) => {
+const InputFile = ({onChange, name, value = null, accept}) => {
     return (
         <div style={{display: 'flex', whiteSpace: "nowrap", verticalAlign: 'middle'}}>
             <input
@@ -9,7 +9,7 @@ const InputFile = ({onChange, name, value = null}) => {
                 type='file'
                 name={name}
                 onChange={onChange}
-                accept='.pdf,.docx,.doc'
+                accept={accept}
                 className={classes.fileInput}
                 style={{display: "none"}}
             />

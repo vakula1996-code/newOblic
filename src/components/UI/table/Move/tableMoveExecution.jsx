@@ -37,6 +37,7 @@ const TableMoveExecution = observer(() => {
                 }
             }).then(data => {
             if (data !== undefined) {
+                window.location.reload()
                 setError(data)
                 setErrorMessages(data)
             }

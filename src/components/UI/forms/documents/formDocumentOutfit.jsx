@@ -7,16 +7,17 @@ import InputMui from "../../input/inputMui";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
 import DateNow from "../../calendar/dateNow";
-import MyButton from "../../button/MyButton";
-import MyButtonRemove from "../../button/MyButtonRemove";
 import InputFile from "../../input/inputFile";
 import {v4 as uuidv4} from "uuid";
+import IconButton from "@mui/material/IconButton";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 
 const getEmptyData = (fileName) => ({
-    documentNameId: '',
-    toSubdivisionId: '',
-    fromSubdivisionId: '',
+    documentNameId: null,
+    toSubdivisionId: null,
+    fromSubdivisionId: null,
     documentNumber: '',
     documentDate: DateNow(),
     documentScanName: fileName,
@@ -75,8 +76,10 @@ const FormDocumentOutfit = observer(({error}) => {
                     <th>Відправник</th>
                     <th>Одержувач</th>
                     <th>Прикрепити документ</th>
-                    <th><MyButton onClick={addDocument}>+</MyButton></th>
-
+                    <th><IconButton
+                        onClick={addDocument}>
+                        <AddBoxIcon style={{margin: 'auto'}}></AddBoxIcon></IconButton>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -141,10 +144,8 @@ const FormDocumentOutfit = observer(({error}) => {
                         {doc.length > 1
                             ?
                             <td>
-
-                                <MyButtonRemove onClick={onDelete(rowId)}>
-                                    Видалити
-                                </MyButtonRemove>
+                                <IconButton size='small'
+                                            onClick={onDelete(rowId)}><DeleteIcon></DeleteIcon></IconButton>
                             </td>
 
                             : <td></td>

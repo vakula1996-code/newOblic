@@ -23,7 +23,8 @@ import {
     COMING_PURCHASE,
     DEREGISTRATION_MOVE,
     DEREGISTRATION_REPAIR,
-    ENSURING, LOOK_DOCUMENTS,
+    ENSURING,
+    LOOK_DOCUMENTS,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_REGISTRATION,
     MOVE_TO_FORM,
@@ -90,7 +91,7 @@ export default function NavBar() {
 
     return (<div>
             <List
-                sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
+                sx={{width: '100%', maxWidth: 360, bgcolor: 'rgba(243,230,221,0.95)'}}
                 component="nav"
                 aria-labelledby="nested-list-subheader"
             >
@@ -182,7 +183,7 @@ export default function NavBar() {
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
                                 </ListItemIcon>
-                                <ListItemText primary="Передача"/>
+                                <ListItemText primary="Списання"/>
                             </ListItemButton>
                         </NavLink>
                         <NavLink to={DEREGISTRATION_REPAIR} className={classes.link}>

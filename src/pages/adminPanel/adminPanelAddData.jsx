@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import TableNameDocument from "../../components/UI/table/adminPanel/tableNameDocument";
 import {nameDocument} from "../../http/Type";
-import Select from "../../components/UI/select/select";
 import Box from "@mui/material/Box";
 import {Tab, Tabs} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
 import MyButton from "../../components/UI/button/MyButton";
 
 const AdminPanelAddData = () => {
@@ -67,13 +65,13 @@ const AdminPanelAddData = () => {
                 aria-label="Vertical tabs example"
                 sx={{borderRight: 1, borderColor: 'divider'}}
             >
-                <Tab label="Item One" {...a11yProps(0)} />
-                <Tab label="Item Two" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
-                <Tab label="Item Four" {...a11yProps(3)} />
-                <Tab label="Item Five" {...a11yProps(4)} />
-                <Tab label="Item Six" {...a11yProps(5)} />
-                <Tab label="Item Seven" {...a11yProps(6)} />
+                <Tab label="Підрозділи" {...a11yProps(0)} />
+                <Tab label="Типи" {...a11yProps(1)} />
+                <Tab label="Типи забезпечення" {...a11yProps(2)} />
+                <Tab label="Одиниці Виміру" {...a11yProps(3)} />
+                <Tab label="Документи" {...a11yProps(4)} />
+                <Tab label="Змінити запис" {...a11yProps(4)} />
+                <Tab label="Редагувати" {...a11yProps(5)} />
             </Tabs>
             <TabPanel value={value} index={0}>
                 {/*<Select label='Назва документа' nameSelect="typeDocumentCharity" value={idDoc} name='documentName'*/}
@@ -96,9 +94,7 @@ const AdminPanelAddData = () => {
             <TabPanel value={value} index={5}>
                 Item Six
             </TabPanel>
-            <TabPanel value={value} index={6}>
-                Item Seven
-            </TabPanel>
+
         </Box>
     );
 };

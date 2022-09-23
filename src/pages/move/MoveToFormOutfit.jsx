@@ -39,6 +39,8 @@ const MoveToFormOutfit = observer(() => {
                 document: doc,
                 techniques: listMoveTechnique
             }, {responseType: 'blob'})
+            technique.setMoveTechnique([])
+            technique.setMoveTechniqueId([])
             const objectURL = URL.createObjectURL(response.data)
             const a = document.createElement('a')
             a.setAttribute('href', objectURL)
@@ -47,8 +49,9 @@ const MoveToFormOutfit = observer(() => {
             a.click()
             document.body.removeChild(a)
             URL.revokeObjectURL(objectURL)
-            setError('200')
+            window.location.reload()
         } catch (error) {
+            console.log(error)
             if (
                 error.request.responseType === 'blob' &&
                 error.response.data instanceof Blob &&
@@ -83,34 +86,32 @@ const MoveToFormOutfit = observer(() => {
 
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
-            <div>
-                <h1>Формування наряду</h1>
+            <h1>Формування наряду</h1>
 
-                <FormDocumentMove
-                    id={setIdSubdivision}
-                    f={setDoc}
-                    error={error}
-                />
-                <MyButton onClick={move}>Сформувати наряд</MyButton>
-                {data.length > 0
-                    ? <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
-                    : <MyButtonNotActivated onClick={() => setModalTechnique(true)}>Додати майно</MyButtonNotActivated>
-                }
-                <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                    <div className={classes.blockTable}>
-                        <TableMoveChoice idSubdivision={idSubdivision} setData={setData} error={error}
-                                         filterId={filterId} setFilterId={setFilterId}
-                        />
-                    </div>
-                </MyModal>
-                {technique.moveTechnique.length > 0
-
-                    ? <TableLookMove list={setListMoveTechnique} error={error}
+            <FormDocumentMove
+                id={setIdSubdivision}
+                f={setDoc}
+                error={error}
+            />
+            <MyButton onClick={move}>Сформувати наряд</MyButton>
+            {data.length > 0
+                ? <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
+                : <MyButtonNotActivated onClick={() => setModalTechnique(true)}>Додати майно</MyButtonNotActivated>
+            }
+            <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
+                <div className={classes.blockTable}>
+                    <TableMoveChoice idSubdivision={idSubdivision} setData={setData} error={error}
                                      filterId={filterId} setFilterId={setFilterId}
                     />
-                    : <></>
-                }
-            </div>
+                </div>
+            </MyModal>
+            {technique.moveTechnique.length > 0
+
+                ? <TableLookMove list={setListMoveTechnique} error={error}
+                                 filterId={filterId} setFilterId={setFilterId}
+                />
+                : <></>
+            }
         </ErrorAddData>
     );
 });

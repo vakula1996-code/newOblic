@@ -4,6 +4,7 @@ export default class TechniqueStore {
     constructor() {
         this._listTechnique = []
         this._listTechniqueForTable = []
+        this._listTechniqueValid = []
         this._listTechniqueDeregistration = []
         this._listTechniqueForExcluded = []
         this._listTechniqueForExcludedId = []
@@ -32,6 +33,10 @@ export default class TechniqueStore {
 
     get listTechniqueForTable() {
         return toJS(this._listTechniqueForTable)
+    }
+
+    get listTechniqueValid() {
+        return toJS(this._listTechniqueValid)
     }
 
     get listTechniqueDeregistration() {
@@ -108,6 +113,10 @@ export default class TechniqueStore {
 
     setListTechniqueForTable(list) {
         this._listTechniqueForTable = list
+    }
+
+    setListTechniqueValid(list) {
+        this._listTechniqueValid = list
     }
 
     setListTechniqueDeregistration(list) {

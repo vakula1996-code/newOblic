@@ -33,6 +33,7 @@ const ComingPurchase = observer(() => {
     }, [])
 
     const [modalTechnique, setModalTechnique] = useState(false)
+    const [modalTechniqueChange, setModalTechniqueChange] = useState(false)
 
     const [error, setError] = useState('')
     const [errorMessages, setErrorMessages] = useState('')
@@ -48,8 +49,10 @@ const ComingPurchase = observer(() => {
             if (data !== undefined) {
                 setError(data)
                 setErrorMessages(data)
+                window.location.reload()
             }
         })
+
     }
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
@@ -60,8 +63,9 @@ const ComingPurchase = observer(() => {
                 <FormTechnique setVisible={setModalTechnique}/>
             </MyModal>
 
+
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
-            <Table error={error}/>
+            <Table error={error} setVisible={setModalTechniqueChange}/>
             <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
         </ErrorAddData>
     );

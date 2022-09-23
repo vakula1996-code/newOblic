@@ -9,7 +9,8 @@ export default function Sort(date, sort, nameFilter) {
         return date.filter((f) => {
             let d = String(f[nameFilter])
             let s = String(sort)
-            return d.toLowerCase().includes(s);
+            console.log(s.toLowerCase())
+            return d.toLowerCase().includes(s.toLowerCase());
         });
     }, [sort, date])
 

@@ -9,64 +9,23 @@ import {Context} from "../../../../index";
 import {nameCategory} from "../../../../http/Type";
 import DateNow from "../../calendar/dateNow";
 import InputAutocomplit from "../../input/InputAutocomplit";
-import IconButton from "@mui/material/IconButton";
-import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+import IconButton from "@mui/material/IconButton";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import SaveIcon from '@mui/icons-material/Save';
 
 
-const FormTechnique = observer(({setVisible}) => {
+const FormTechnique = observer(({setVisible, idTechnique}) => {
         const {technique} = useContext(Context)
-        const data = {
-            techniqueTypeId: '',
-            ensuringTypeId: '',
-            techniqueName: '',
-            measurementId: '',
-            details: [
-                {
-                    serialNumber: 'Б/Н',
-                    price: '',
-                    categoryId: '',
-                    count: 1,
-                    dateOfManufacture: DateNow()
-                }
-            ]
-        }
-        const dataForTable = {
-            techniqueTypeId: '',
-            ensuringTypeId: '',
-            techniqueName: '',
-            measurementId: '',
-            details: [
-                {
-                    serialNumber: 'Б/Н',
-                    price: '',
-                    categoryId: '',
-                    count: 1,
-                    dateOfManufacture: DateNow()
-                }
-            ]
-        }
-
-        const dataValid = {
-            techniqueTypeId: false,
-            ensuringTypeId: false,
-            techniqueName: false,
-            measurementId: false,
-            details: [
-                {
-                    serialNumber: false,
-                    price: false,
-                    categoryId: false,
-                    count: false,
-                    dateOfManufacture: false
-                }
-            ]
-        }
-        const [listTechnique, setListTechnique] = useState(data)
-        const [listTechniqueForTable, setListTechniqueForTable] = useState(dataForTable)
-        const [listDataValid, setListDataValid] = useState(dataValid)
-
+        const [listTechnique, setListTechnique] = useState(technique.listTechnique[idTechnique])
+        const [listTechniqueForTable, setListTechniqueForTable] = useState(technique.listTechniqueForTable[idTechnique])
+        const [listDataValid, setListDataValid] = useState(technique.listTechniqueValid[idTechnique])
+        console.log(listDataValid)
+        useEffect(() => {
+            setListTechnique(technique.listTechnique[idTechnique])
+            setListTechniqueForTable(technique.listTechniqueForTable[idTechnique])
+            setListDataValid(technique.listTechniqueValid[idTechnique])
+        }, [idTechnique])
         const handleTechniqueChange = (e, name, data) => {
             if (e.target.innerHTML) {
                 const list = {...listTechnique};
@@ -193,12 +152,35 @@ const FormTechnique = observer(({setVisible}) => {
                         return false
                     }
                 }).includes(false) === false) {
-                    technique.setListTechnique([...technique.listTechnique, listTechnique])
-                    setListTechnique(data)
-                    technique.setListTechniqueForTable([...technique.listTechniqueForTable, listTechniqueForTable])
-                    setListTechniqueForTable(dataForTable)
-                    technique.setListTechniqueValid([...technique.listTechniqueValid, listDataValid])
+                    technique.setListTechnique(
+                        technique.listTechnique.map((item, index) => {
+                            if (index === idTechnique) {
+                                return listTechnique
+                            } else {
+                                return item
+                            }
+                        })
+                    )
+                    technique.setListTechniqueForTable(
+                        technique.listTechniqueForTable.map((item, index) => {
+                            if (index === idTechnique) {
+                                return listTechnique
+                            } else {
+                                return item
+                            }
+                        })
+                    )
+                    technique.setListTechniqueValid(
+                        technique.listTechniqueValid.map((item, index) => {
+                            if (index === idTechnique) {
+                                return listTechnique
+                            } else {
+                                return item
+                            }
+                        })
+                    )
                     setVisible(false)
+
                 }
             } else {
                 setListDataValid({

@@ -46,8 +46,10 @@ const ComingOutfit = observer(() => {
             if (data !== undefined) {
                 setError(data)
                 setErrorMessages(data)
+                window.location.reload()
             }
         })
+
     }
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>

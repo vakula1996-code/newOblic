@@ -194,7 +194,7 @@
     cursor: not-allowed;
 }
 
-.buttonCloseWindow{
+.buttonCloseWindow {
     background: #FF4742;
     border: 1px solid #FF4742;
     border-radius: 6px;
@@ -204,7 +204,7 @@
     cursor: pointer;
     display: flex;
     margin-left: auto;
-    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
     font-size: 16px;
     font-weight: 800;
     line-height: 16px;
@@ -220,6 +220,7 @@
     vertical-align: middle;
     margin-bottom: 2px;
 }
+
 .buttonCloseWindow:hover,
 .buttonCloseWindow:active {
     background-color: initial;
@@ -231,10 +232,13 @@
     opacity: .5;
 }
 
-.buttonLookFilters{
-    border-style: none;
+.buttonLookFilters {
+    border-radius: 12px;
+    background-color: #008CBA;
+    width: 70px;
+    height: 30px;
 }
-.buttonLookFilters:hover{
-    color: darkgrey;
 
+.buttonLookFilters:hover {
+    color: darkgrey;
 }

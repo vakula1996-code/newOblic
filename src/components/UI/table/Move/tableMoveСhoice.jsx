@@ -22,21 +22,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
             })
         }
     }, [idSubdivision])
-    const [listMove, setListMove] = useState([])
     const addInList = (id) => {
-        // technique.setMoveTechnique([...technique.moveTechnique, {
-        //     typeTechnique: dataList[indexTechnique].typeTechnique,
-        //     nameTechniques: dataList[indexTechnique].nameTechniques,
-        //     measurement: dataList[indexTechnique].measurement,
-        //     subdivision: dataList[indexTechnique].subdivision,
-        //     techniqueDetails: dataList[indexTechnique]["techniqueDetails"][indexSerialNumber]
-        //
-        // }])
-        // technique.setMoveTechniqueId([...technique.moveTechniqueId, {
-        //     techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
-        //     count: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].count,
-        //     howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId
-        // }])
         dataList.filter(dataItem =>
             dataItem.techniqueDetails.filter(detailItem =>
                 detailItem.id === id
@@ -63,7 +49,6 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
         )
     }
 
-
     const [visible, setVisible] = useState(false)
     const hendleVisible = () => {
         if (visible === true) {
@@ -73,7 +58,6 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
         }
     }
     const [dataFilter, setDataFilter] = useState([])
-
 
     useEffect(() => {
         setDataFilter(dataList)
@@ -86,13 +70,22 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
     }, [error])
     return (
         <div>
+            <div style={{display: "flex"}}>
+                <MyButtonLookFilter onClick={hendleVisible}>Пошук</MyButtonLookFilter>
+            </div>
+            <FilterWindow
+                visible={visible}
+                setVisible={setVisible}
+                dataList={dataList}
+                dataFilter={dataFilter}
+                setDataFilter={setDataFilter}
+            />
             <h3>Список майна</h3>
             <div className={classes.tableScroll}>
                 <table>
                     <thead>
                     <tr>
                         <th>
-                            <MyButtonLookFilter onClick={hendleVisible}/>
                             №
                         </th>
                         <th>
@@ -109,13 +102,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                         </th>
                     </tr>
                     <tr>
-                        <FilterWindow
-                            visible={visible}
-                            setVisible={setVisible}
-                            dataList={dataList}
-                            dataFilter={dataFilter}
-                            setDataFilter={setDataFilter}
-                        />
+
                     </tr>
                     </thead>
                     <tbody>
@@ -128,69 +115,71 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                                          techniqueDetails,
 
                                      }, indexTechnique) =>
-
-                        <tr key={id}>
-                            <td>{indexTechnique + 1}</td>
-                            <td>{typeTechnique}</td>
-                            <td>{nameTechniques}</td>
-                            <td>{measurement}</td>
-                            <td>
-                                <Accordion>
-                                    <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon/>}
-                                        aria-controls="panel1a-content"
-                                        id="panel1a-header">
-                                        <h4>Додаткові дані</h4>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <table className={classes.table}>
-                                            <thead>
-                                            <tr>
-                                                <th>№</th>
-                                                <th>Серійний номер</th>
-                                                <th>Ціна за одиницю</th>
-                                                <th>Категорія</th>
-                                                <th>Кількість</th>
-                                                <th>Дата створення</th>
-                                                <th>Дія</th>
-                                                {techniqueDetails['serialNumber'] === 'Б/Н'
-                                                    ? <th>Кількість яку передати</th>
-                                                    : <></>
-                                                }
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {techniqueDetails.map(({
-                                                                       id,
-                                                                       serialNumber,
-                                                                       price,
-                                                                       category,
-                                                                       count,
-                                                                       dateOfManufacture
-                                                                   }, indexSerialNumber) =>
-                                                filterId.map(item => item.idTechniqueDetail).includes(id) === false
-                                                    ?
-                                                    <tr key={indexSerialNumber}>
-                                                        <td>{indexSerialNumber + 1}</td>
-                                                        <td>{serialNumber}</td>
-                                                        <td>{price}</td>
-                                                        <td>{category}</td>
-                                                        <td>{count}</td>
-                                                        <td>{dateOfManufacture}</td>
-                                                        <td>
-                                                            <MyButtonChoice
-                                                                onClick={() => addInList(id)}>Вибрати
-                                                            </MyButtonChoice>
-                                                        </td>
-                                                    </tr>
-                                                    : <></>
-                                            )}
-                                            </tbody>
-                                        </table>
-                                    </AccordionDetails>
-                                </Accordion>
-                            </td>
-                        </tr>
+                        techniqueDetails.some(itemDetail => (filterId.map(item => item.idTechniqueDetail).includes(itemDetail.id) === false))
+                            ?
+                            <tr key={id}>
+                                <td>{indexTechnique + 1}</td>
+                                <td>{typeTechnique}</td>
+                                <td>{nameTechniques}</td>
+                                <td>{measurement}</td>
+                                <td>
+                                    <Accordion>
+                                        <AccordionSummary
+                                            expandIcon={<ExpandMoreIcon/>}
+                                            aria-controls="panel1a-content"
+                                            id="panel1a-header">
+                                            <h4>Додаткові дані</h4>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <table className={classes.table}>
+                                                <thead>
+                                                <tr>
+                                                    <th>№</th>
+                                                    <th>Серійний номер</th>
+                                                    <th>Ціна за одиницю</th>
+                                                    <th>Категорія</th>
+                                                    <th>Кількість</th>
+                                                    <th>Дата створення</th>
+                                                    <th>Дія</th>
+                                                    {techniqueDetails['serialNumber'] === 'Б/Н'
+                                                        ? <th>Кількість яку передати</th>
+                                                        : <></>
+                                                    }
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {techniqueDetails.map(({
+                                                                           id,
+                                                                           serialNumber,
+                                                                           price,
+                                                                           category,
+                                                                           count,
+                                                                           dateOfManufacture
+                                                                       }, indexSerialNumber) =>
+                                                    filterId.map(item => item.idTechniqueDetail).includes(id) === false
+                                                        ?
+                                                        <tr key={indexSerialNumber}>
+                                                            <td>{indexSerialNumber + 1}</td>
+                                                            <td>{serialNumber}</td>
+                                                            <td>{price}</td>
+                                                            <td>{category}</td>
+                                                            <td>{count}</td>
+                                                            <td>{dateOfManufacture}</td>
+                                                            <td>
+                                                                <MyButtonChoice
+                                                                    onClick={() => addInList(id)}>Вибрати
+                                                                </MyButtonChoice>
+                                                            </td>
+                                                        </tr>
+                                                        : <></>
+                                                )}
+                                                </tbody>
+                                            </table>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                </td>
+                            </tr>
+                            : <></>
                     )}
                     </tbody>
                 </table>

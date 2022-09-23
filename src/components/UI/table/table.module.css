@@ -53,8 +53,13 @@
 
 }
 
-.table tbody tr:nth-child(even) {
+.table tbody tr:nth-child(odd) {
     background: #F8F8F8;
+}
+
+.table tbody tr:nth-child(even) {
+    background: #e1e1e1;
+
 }
 
 .table tbody tr:last-child td {

@@ -20,7 +20,7 @@ const TableLookTechniqueForDeregistration = observer(() => {
         technique.setListDeregistrationTechnique(list)
         technique.setListDeregistrationTechniqueId(listId)
     }
-   
+
     return (
         <div>
             <table className={classes.table}>
@@ -56,7 +56,6 @@ const TableLookTechniqueForDeregistration = observer(() => {
                                    measurement,
                                    subdivision,
                                    techniqueDetails,
-                                   count
                                }, indexTechnique) =>
                     <tr key={indexTechnique}>
                         <td>{indexTechnique + 1}</td>
@@ -64,7 +63,7 @@ const TableLookTechniqueForDeregistration = observer(() => {
                         <td>{nameTechniques}</td>
                         <td>{subdivision}</td>
                         <td>{measurement}</td>
-                        <td>{techniqueDetails.count}</td>
+                        <td>{1}</td>
                         <td>{techniqueDetails.serialNumber}</td>
                         <td>{techniqueDetails.price}</td>
                         <td>{techniqueDetails.category}</td>

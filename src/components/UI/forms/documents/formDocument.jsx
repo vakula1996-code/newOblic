@@ -9,8 +9,9 @@ import {Context} from "../../../../index";
 import DateNow from "../../calendar/dateNow";
 import {v4 as uuidv4} from "uuid";
 import InputFile from "../../input/inputFile";
-import MyButtonRemove from "../../button/MyButtonRemove";
-import MyButton from "../../button/MyButton";
+import IconButton from "@mui/material/IconButton";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 
 const getEmptyData = (fileName) => ({
@@ -28,10 +29,9 @@ const FormDocument = observer(({error}) => {
     const {documents} = useContext(Context)
 
     const [doc, setDoc] = useState([getEmptyData('file1')])
-    console.log(doc)
 
     const addDocument = () => {
-        setDoc([...doc, getEmptyData('file' + (doc.length))])
+        setDoc([...doc, getEmptyData(`file${doc.length + 1}`)])
     }
     const onAddFile = (id) => (e) => {
         const file = e.target.files[0];
@@ -73,8 +73,11 @@ const FormDocument = observer(({error}) => {
                     <th>Реєстраційний номер</th>
                     <th>Одержувач</th>
                     <th>Прикрепити документ</th>
-                    <th><MyButton onClick={addDocument}>+</MyButton></th>
-
+                    <th>
+                        <IconButton
+                            onClick={addDocument}>
+                            <AddBoxIcon style={{margin: 'auto'}}></AddBoxIcon></IconButton>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -124,15 +127,14 @@ const FormDocument = observer(({error}) => {
                                 name={documentScanName}
                                 onChange={onAddFile(rowId)}
                                 value={file}
+                                accept='application/pdf'
                             />
                         </td>
                         {doc.length > 1
                             ?
                             <td>
-
-                                <MyButtonRemove onClick={onDelete(rowId)}>
-                                    Видалити
-                                </MyButtonRemove>
+                                <IconButton size='small'
+                                            onClick={onDelete(rowId)}><DeleteIcon></DeleteIcon></IconButton>
                             </td>
 
                             : <td></td>
@@ -142,7 +144,8 @@ const FormDocument = observer(({error}) => {
                 </tbody>
             </table>
         </Box>
-    );
+    )
+        ;
 });
 
 export default FormDocument;

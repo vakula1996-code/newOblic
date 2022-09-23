@@ -16,33 +16,33 @@
 
 .wrapper {
     display: grid;
-    grid-gap: 10px;
     grid-template-areas:
     "header header header"
     "sidebar content ......."
     "footer  footer  footer";
     grid-template-columns: min-content 1fr 250px;
-
+    background: linear-gradient(190deg, rgba(26, 77, 189, 0.29) 30%, rgba(255, 255, 0, 0.52) 90%);
 }
 
-.sidebar{
+.sidebar {
     height: 100%;
     width: max-content;
     min-width: max-content;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.5s, opacity 0.5s;
+    background: rgba(243, 230, 221, 0.95);
 }
 
 .sidebar_hide {
-    visibility:  visible;
+    visibility: visible;
     opacity: 1;
     display: flex;
     transition: visibility 0.5s, opacity 0.5s;
 
 }
 
-.content{
+.content {
     height: 100%;
     width: min-content;
     position: center;
@@ -53,8 +53,8 @@
     margin: auto;
 }
 
-.footer{
+.footer {
     background-color: #a9a9a95c;
-    padding: 1rem;
+    padding: 2rem;
     text-align: center;
 }

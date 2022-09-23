@@ -8,9 +8,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import {useState} from "react";
 
-export default function MenuAppBar({visibleNavbar, setVisibleNavbar,className}) {
+export default function MenuAppBar({visibleNavbar, setVisibleNavbar, className}) {
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -32,7 +31,7 @@ export default function MenuAppBar({visibleNavbar, setVisibleNavbar,className}) 
     }
 
     return (
-        <Box sx={{ flexGrow: 1, marginBottom: 1}}>
+        <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -40,12 +39,12 @@ export default function MenuAppBar({visibleNavbar, setVisibleNavbar,className}) 
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
+                        sx={{mr: 2}}
                         onClick={visibleNav}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         Головна
                     </Typography>
                     {auth && (
@@ -58,7 +57,7 @@ export default function MenuAppBar({visibleNavbar, setVisibleNavbar,className}) 
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircle />
+                                <AccountCircle/>
                             </IconButton>
                             <Menu
                                 id="menu-appbar"

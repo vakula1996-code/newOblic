@@ -18,7 +18,7 @@
     background: #EDEDED;
     font-size: 14px;
     border-top: 1px solid #ddd;
-    
+
 }
 
 .table tr th:first-child, .table tr td:first-child {
@@ -46,7 +46,11 @@
 }
 
 .table tbody tr:nth-child(even) {
-    background: #F8F8F8;
+    background: #e1e1e1;
+}
+
+.table tbody tr:nth-child(odd) {
+    background: #fcfcfc;
 }
 
 .table tbody tr:last-child td {
