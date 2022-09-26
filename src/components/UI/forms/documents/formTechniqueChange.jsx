@@ -164,7 +164,7 @@ const FormTechnique = observer(({setVisible, idTechnique}) => {
                     technique.setListTechniqueForTable(
                         technique.listTechniqueForTable.map((item, index) => {
                             if (index === idTechnique) {
-                                return listTechnique
+                                return listTechniqueForTable
                             } else {
                                 return item
                             }

@@ -10,6 +10,7 @@ import MyButtonLookFilter from "../../button/MyButtonLookFilter";
 import FilterWindow from "../../filter/filterWindow";
 import MyButtonChoice from "../../button/MyButtonChoice";
 import {nameSubdivisions} from "../../../../http/Type";
+import MyButtonNotActivated from "../../button/MyButtonNotActivated";
 
 const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
     const {technique} = useContext(Context)
@@ -158,6 +159,7 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
                                                                            price,
                                                                            category,
                                                                            count,
+                                                                           available,
                                                                            dateOfManufacture
                                                                        }, indexSerialNumber) =>
                                                     <tr key={indexSerialNumber}>
@@ -167,11 +169,16 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
                                                         <td>{category}</td>
                                                         <td>{count}</td>
                                                         <td>{dateOfManufacture}</td>
-
                                                         <td>
-                                                            <MyButtonChoice
-                                                                onClick={() => addInList(indexTechnique, indexSerialNumber)}>Вибрати
-                                                            </MyButtonChoice>
+                                                            {available > 0
+                                                                ? <MyButtonChoice
+                                                                    onClick={() => addInList(indexTechnique, indexSerialNumber)}>Вибрати
+                                                                </MyButtonChoice>
+                                                                : <MyButtonNotActivated
+                                                                    style={{padding: '8px 16px'}}
+                                                                    onClick={() => addInList(indexTechnique, indexSerialNumber)}>Вибрати
+                                                                </MyButtonNotActivated>
+                                                            }
                                                         </td>
                                                     </tr>
                                                 )}

@@ -27,7 +27,7 @@ const TableTechniqueForModernization = observer(({filterId, setFilterId}) => {
     const handleCountChange = (e, index) => {
         if (e.target.value.length === 0) {
             const list = [...listMoveId]
-            list[index]['count'] = 1
+            list[index]['count'] = null
             setListMoveId(list)
         } else if (listMove[index].techniqueDetails.count < e.target.value) {
             const {value} = e.target

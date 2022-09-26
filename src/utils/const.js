@@ -1,7 +1,7 @@
 //Головні
 // export const LOCAL_URLS = "http://127.0.0.1:8000/"
-export const GLOBAL_URLS = "http://192.168.0.11:8000/"
-export const LOCAL_URLS = 'http://192.168.0.93:8080/'
+export const LOCAL_URLS = "http://192.168.0.11:8000/"
+export const GLOBAL_URLS = 'http://192.168.0.93:8080/'
 //Аунтентифікація
 export const LOGIN = 'api/login'
 export const CHECK_TOKEN = 'api/checkToken'

@@ -8,6 +8,7 @@ import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MyButtonLookFilter from "../../button/MyButtonLookFilter";
 import FilterWindow from "../../filter/filterWindow";
+import MyButtonNotActivated from "../../button/MyButtonNotActivated";
 
 
 const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setFilterId}) => {
@@ -139,6 +140,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                                                     <th>Ціна за одиницю</th>
                                                     <th>Категорія</th>
                                                     <th>Кількість</th>
+                                                    <th>Доступно</th>
                                                     <th>Дата створення</th>
                                                     <th>Дія</th>
                                                     {techniqueDetails['serialNumber'] === 'Б/Н'
@@ -154,6 +156,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                                                                            price,
                                                                            category,
                                                                            count,
+                                                                           available,
                                                                            dateOfManufacture
                                                                        }, indexSerialNumber) =>
                                                     filterId.map(item => item.idTechniqueDetail).includes(id) === false
@@ -164,11 +167,18 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                                                             <td>{price}</td>
                                                             <td>{category}</td>
                                                             <td>{count}</td>
+                                                            <td>{available}</td>
                                                             <td>{dateOfManufacture}</td>
                                                             <td>
-                                                                <MyButtonChoice
-                                                                    onClick={() => addInList(id)}>Вибрати
-                                                                </MyButtonChoice>
+                                                                {available > 0
+                                                                    ? <MyButtonChoice
+                                                                        onClick={() => addInList(id)}>Вибрати
+                                                                    </MyButtonChoice>
+                                                                    : <MyButtonNotActivated
+                                                                        style={{padding: '8px 16px'}}
+                                                                        onClick={() => addInList(id)}>Вибрати
+                                                                    </MyButtonNotActivated>
+                                                                }
                                                             </td>
                                                         </tr>
                                                         : <></>

@@ -9,7 +9,9 @@ const InputMui = ({name, label, getData, value, error, errorLabel = '*Обов`�
             <TextField id="component-error" label={label} variant="standard" value={value}
                        name={name}
                        onChange={(event) => getData(event)}
-                       size='small' style={{minWidth: '100px'}}/>
+                       size='small' style={{minWidth: '100px'}}
+                       inputProps={{inputMode: 'numeric', pattern: '[0-9]'}}
+            />
             {error === true
                 ? <FormHelperText id="component-error-text">{errorLabel}</FormHelperText>
                 : <></>
