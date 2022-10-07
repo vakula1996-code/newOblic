@@ -4,7 +4,6 @@ import TableReportForSubdivsion from "../../components/UI/table/Report/tableRepo
 
 
 const ReportForSubdivision = observer(() => {
-
     return (
         <div>
             <TableReportForSubdivsion/>

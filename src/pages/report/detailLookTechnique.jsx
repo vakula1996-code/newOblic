@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {useParams} from "react-router-dom";
 
 import TableDetailInfo from "../../components/UI/table/Report/tableDetailInfo";
@@ -28,7 +28,7 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box sx={{p: 3}}>
+                <Box>
                     <Typography>{children}</Typography>
                 </Box>
             )}
@@ -56,8 +56,8 @@ const DetailLookTechnique = () => {
     };
     return (
         <Box>
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" >
+            <Box sx={{borderBottom: 1, borderColor: 'divider'}} style={{width: 'max-content'}}>
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="Детальна інформація" {...a11yProps(0)} />
                     <Tab label="Історія руху" {...a11yProps(1)} />
                     <Tab label="Історія документів" {...a11yProps(2)} />

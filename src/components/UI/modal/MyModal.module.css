@@ -17,6 +17,9 @@
     padding: 25px;
     background: white;
     border-radius: 16px;
+    height: fit-content;
+    min-height: 200px;
+    max-height: 90%;
     /*min-width: 1450px;*/
     /*margin-top: auto;*/
     /*margin-bottom: auto;*/
@@ -26,7 +29,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .myModalForFile {

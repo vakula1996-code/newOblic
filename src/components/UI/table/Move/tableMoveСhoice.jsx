@@ -29,7 +29,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                 detailItem.id === id
                     ?
                     technique.setMoveTechnique([...technique.moveTechnique, {
-                        id: dataItem.id,
+                        id: id,
                         typeTechnique: dataItem.typeTechnique,
                         nameTechniques: dataItem.nameTechniques,
                         measurement: dataItem.measurement,
@@ -108,17 +108,15 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                     </thead>
                     <tbody>
                     {dataFilter.map(({
-                                         id,
                                          typeTechnique,
                                          nameTechniques,
                                          measurement,
                                          subdivision,
                                          techniqueDetails,
-
                                      }, indexTechnique) =>
                         techniqueDetails.some(itemDetail => (filterId.map(item => item.idTechniqueDetail).includes(itemDetail.id) === false))
                             ?
-                            <tr key={id}>
+                            <tr key={indexTechnique}>
                                 <td>{indexTechnique + 1}</td>
                                 <td>{typeTechnique}</td>
                                 <td>{nameTechniques}</td>

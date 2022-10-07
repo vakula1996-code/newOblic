@@ -17,7 +17,8 @@ import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
 import {addNewTechniqueHttp} from "../../http/Technique";
 import ErrorAddData from "../../components/UI/error/errorAddData";
 import MyButton from "../../components/UI/button/MyButton";
-import classes from "../../components/UI/table/table.module.css";
+import classesTable from "../../components/UI/table/table.module.css";
+import classesComing from "./coming.module.css";
 
 const ComingPurchase = observer(() => {
     const {documents} = useContext(Context)
@@ -56,17 +57,20 @@ const ComingPurchase = observer(() => {
     }
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
+            <div className={classesComing.buttonSave}>
+                <MyButton className={classesTable.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
+            </div>
             <h1>Закупка </h1>
-            <FormDocument error={error}/>
-
+            <div className={classesComing.tableDocument}>
+                <FormDocument error={error}/>
+            </div>
+            <div className={classesComing.tableTechnique}>
+                <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
+                <Table error={error} setVisible={setModalTechniqueChange}/>
+            </div>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <FormTechnique setVisible={setModalTechnique}/>
             </MyModal>
-
-
-            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
-            <Table error={error} setVisible={setModalTechniqueChange}/>
-            <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
         </ErrorAddData>
     );
 });

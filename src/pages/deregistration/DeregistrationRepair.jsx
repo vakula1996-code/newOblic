@@ -12,7 +12,6 @@ import * as PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import {Context} from "../../index";
 import TableTechniqueForModernization from "../../components/UI/table/Deregistration/tableTechniqueForModernization";
-import FormDeregistrationNewTechnique from "../../components/UI/forms/deregistration/formDeregistrationNewTechnique";
 import {
     modernization,
     nameEnsuring,
@@ -21,16 +20,15 @@ import {
     nameTechnique,
     nameTechniqueType
 } from "../../http/Type";
-import TableLookTechniqueForExcluded from "../../components/UI/table/Deregistration/tableLookTechniqueForExcluded";
-import TableTechniqueExcluded from "../../components/UI/table/Deregistration/tableTechniqueExcluded";
 import MyButton from "../../components/UI/button/MyButton";
-import TableDeregastrationNewTechnique from "../../components/UI/table/Deregistration/tableDeregastrationNewTechnique";
 import FormNewNamaAndCategory from "../../components/UI/forms/deregistration/formNewNamaAndCategory";
 import ErrorAddData from "../../components/UI/error/errorAddData";
 import TableLookTechniqueForModernization
     from "../../components/UI/table/Deregistration/tableLookTechniqueForModernization";
 import Select from "../../components/UI/select/select";
 import {subdivisionsTechniques} from "../../http/Technique";
+import FormDeregistrationNewTechnique from "../../components/UI/forms/deregistration/formDeregistrationNewTechnique";
+import TableDeregastrationNewTechnique from "../../components/UI/table/Deregistration/tableDeregastrationNewTechnique";
 
 
 function a11yProps(index) {
@@ -52,7 +50,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box sx={{p: 3}}>
-                    <Typography>{children}</Typography>
+                    <Typography component={'span'}>{children}</Typography>
                 </Box>
             )}
         </div>
@@ -136,29 +134,29 @@ const DeregistrationRepair = observer(() => {
     }
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
-
             <h2>Модернізація</h2>
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Обрати майно для модернізації (ремонту)</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <TableDeregistrationForSubdivision setVisibleWindow={setModalTechnique}/>
+                <TableDeregistrationForSubdivision setVisibleWindow={setModalTechnique}
+                                                   filterId={filterId} setFilterId={setFilterId} dataList={dataList}/>
             </MyModal>
             {listMove.length > 0
                 ?
                 <div>
-                    <TableLookTechniqueForDeregistration/>
+                    <TableLookTechniqueForDeregistration setFilterId={setFilterId}/>
 
                     <MyButton onClick={modernizationTechnique}>Здійснити модернізацію</MyButton>
-                    <Box sx={{width: '100%'}}>
-                        <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                    <Box sx={{width: '100%'}} style={{width: 'max-content'}}>
+                        <Box sx={{borderBottom: 1, borderColor: 'divider'}} style={{width: 'max-content'}}>
                             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
                                 <Tab label="Модернізувати" {...a11yProps(0)} />
                                 <Tab label="Вилучити" {...a11yProps(1)} />
-                                <Tab label="Списати витратні матеріали" {...a11yProps(2)} />
-                                <Tab label="Редагування даних" {...a11yProps(3)} />
+                                {/*<Tab label="Списати витратні матеріали" {...a11yProps(2)} />*/}
+                                <Tab label="Редагування даних" {...a11yProps(2)} />
                             </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>
-                            <MyButtonAdd onClick={() => setModalModernization(true)}>Додати техніку для
+                            <MyButtonAdd onClick={() => setModalModernization(true)}>Додати майно для
                                 модернізації</MyButtonAdd>
                             <MyModal visible={modalModernization} setVisible={setModalModernization}>
                                 <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
@@ -171,27 +169,27 @@ const DeregistrationRepair = observer(() => {
                             <TableTechniqueForModernization filterId={filterId} setFilterId={setFilterId}/>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            <MyButtonAdd onClick={() => setModalWithdrawal(true)}>Вилучена техніка</MyButtonAdd>
+                            <MyButtonAdd onClick={() => setModalWithdrawal(true)}>Вилучене майно</MyButtonAdd>
                             <MyModal visible={modalWithdrawal} setVisible={setModalWithdrawal}>
                                 <FormDeregistrationNewTechnique setVisible={setModalWithdrawal}/>
                             </MyModal>
                             <TableDeregastrationNewTechnique/>
                         </TabPanel>
+                        {/*<TabPanel value={value} index={2}>*/}
+                        {/*    <MyButtonAdd onClick={() => setModalExcluded(true)}>Витратні матеріали для*/}
+                        {/*        списання</MyButtonAdd>*/}
+                        {/*    <MyModal visible={modalExcluded} setVisible={setModalExcluded}>*/}
+                        {/*        <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}*/}
+                        {/*                name='subdivisionName'*/}
+                        {/*                getData={e => setIdSubdivision(e.target.value)}/>*/}
+                        {/*        <TableLookTechniqueForExcluded filterIdExcluded={filterIdExcluded}*/}
+                        {/*                                       setFilterIdExcluded={setFilterIdExcluded}*/}
+                        {/*                                       dataList={dataList} idSubdivision={idSubdivision}/>*/}
+                        {/*    </MyModal>*/}
+                        {/*    <TableTechniqueExcluded filterIdExcluded={filterIdExcluded}*/}
+                        {/*                            setFilterIdExcluded={setFilterIdExcluded}/>*/}
+                        {/*</TabPanel>*/}
                         <TabPanel value={value} index={2}>
-                            <MyButtonAdd onClick={() => setModalExcluded(true)}>Витратні матеріали для
-                                списання</MyButtonAdd>
-                            <MyModal visible={modalExcluded} setVisible={setModalExcluded}>
-                                <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
-                                        name='subdivisionName'
-                                        getData={e => setIdSubdivision(e.target.value)}/>
-                                <TableLookTechniqueForExcluded filterIdExcluded={filterIdExcluded}
-                                                               setFilterIdExcluded={setFilterIdExcluded}
-                                                               dataList={dataList} idSubdivision={idSubdivision}/>
-                            </MyModal>
-                            <TableTechniqueExcluded filterIdExcluded={filterIdExcluded}
-                                                    setFilterIdExcluded={setFilterIdExcluded}/>
-                        </TabPanel>
-                        <TabPanel value={value} index={3}>
                             <FormNewNamaAndCategory/>
                         </TabPanel>
                     </Box>

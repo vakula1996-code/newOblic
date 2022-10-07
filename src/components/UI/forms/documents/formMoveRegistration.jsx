@@ -13,6 +13,7 @@ const FormMoveRegistration = observer(({setDoc, setId, doc, id}) => {
 
     return (
         <div>
+            <h2>Документ</h2>
             <table className={classes.table}>
                 <thead>
                 <tr>

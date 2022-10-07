@@ -1,16 +1,33 @@
 import React, {useEffect, useState} from 'react';
-import {documentHisory} from "../../../../http/Documents";
+import {documentHisory, downloadDOC, downloadPDF} from "../../../../http/Documents";
 import classes from '../table.module.css'
+import ErrorAddData from "../../error/errorAddData";
 
 const TableHistory = ({params}) => {
     const [historyDocument, setHistoryDocument] = useState([])
+    const [error, setError] = useState('')
+    const [errorMessages, setErrorMessages] = useState('')
+    const onClickDownloadPDF = (documentId) => {
+        const response = downloadPDF(params.subdivisionId, documentId)
+    }
+
+    const onClickDownloadDOC = (documentId) => {
+        downloadDOC(params.subdivisionId, documentId).then((error) => {
+            if (error.response.status === 500) {
+                setError(error.message)
+                setErrorMessages(error.message)
+            }
+        })
+
+    }
+
+
     useEffect(() => {
         documentHisory(params.subdivisionId, params.id, params.categoryId).then(data => setHistoryDocument(data))
     }, [])
     return (
-        <div>
+        <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <h2>Історія документів</h2>
-
             <table className={classes.table}>
                 <thead>
                 <th>З якого підрозділу</th>
@@ -21,6 +38,7 @@ const TableHistory = ({params}) => {
                 </thead>
                 <tbody>
                 {historyDocument.map(({
+
                                           toSubdivision,
                                           fromSubdivision,
                                           date,
@@ -38,14 +56,27 @@ const TableHistory = ({params}) => {
                                 <tr>
                                     <th>Номер документа</th>
                                     <th>Назва документа</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {documents ?
-                                    documents.map(({numberDocument, nameDocument}, index) =>
+                                    documents.map(({documentId, numberDocument, nameDocument}, index) =>
                                         <tr key={index}>
                                             <td>{numberDocument}</td>
                                             <td>{nameDocument}</td>
+                                            <td>
+                                                <a
+                                                    onClick={() => onClickDownloadPDF(documentId)}
+                                                    download
+                                                    className={classes.file}><span>Скачати</span><span>PDF</span></a>
+                                                <a
+                                                    onClick={() => onClickDownloadDOC(documentId)}
+                                                    download
+                                                    className={classes.file}><span
+                                                    style={{background: "blue"}}>Скачати</span><span
+                                                    style={{background: "blue"}}>WORD</span></a>
+                                            </td>
                                         </tr>
                                     )
                                     : <></>
@@ -58,7 +89,7 @@ const TableHistory = ({params}) => {
                 )}
                 </tbody>
             </table>
-        </div>
+        </ErrorAddData>
     );
 };
 

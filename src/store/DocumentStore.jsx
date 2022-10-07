@@ -9,6 +9,7 @@ export default class DocumentStore {
         this._listOrderNotRegister = []
         this._listOrderNotExecution = []
         this._documentConfirm = []
+        this._documentConfirmChangedTechniques = []
         makeAutoObservable(this)
     }
 
@@ -40,6 +41,10 @@ export default class DocumentStore {
         return this._documentConfirm
     }
 
+    get documentConfirmChangedTechniques() {
+        return this._documentConfirmChangedTechniques
+    }
+
     setFiles(files) {
         this._files = files
     }
@@ -66,6 +71,10 @@ export default class DocumentStore {
 
     setDocumentConfirm(doc) {
         this._documentConfirm = doc
+    }
+
+    setDocumentConfirmChangedTechniques(doc) {
+        this._documentConfirmChangedTechniques = doc
     }
 
 }

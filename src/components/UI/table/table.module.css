@@ -139,7 +139,9 @@
 .tableScroll {
     overflow-x: scroll;
     /*width: calc(45vw);*/
-    height: 500px;
+    padding-bottom: 0;
+    height: calc(80vh - 10px);
+    max-width: calc(100vh);
 }
 
 .tableScroll table {
@@ -173,7 +175,11 @@
 }
 
 .tableScroll tbody tr:nth-child(even) {
-    background: #f3f3f3;
+    background: #e1e1e1;
+}
+
+.tableScroll tbody tr:nth-child(odd) {
+    background: #e1e1e1;
 }
 
 
@@ -223,4 +229,145 @@
 
 ::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.file {
+    background: #ffffff;
+    border: solid 1px #e6e6e6;
+    border-radius: 2px;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    margin: 5px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 100px;
+}
+
+.file span {
+    background: #f2594b;
+    border-radius: 4px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: normal;
+    padding: 5px 10px;
+    position: relative;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+.file span:last-child {
+    margin-left: -20px;
+}
+
+.file:before,
+.file:after {
+    background: #ffffff;
+    border: solid 3px #9fb4cc;
+    border-radius: 4px;
+    content: '';
+    display: block;
+    height: 35px;
+    left: 50%;
+    margin: -17px 0 0 -12px;
+    position: absolute;
+    top: 50%;
+    /*transform:translate(-50%,-50%);*/
+
+    width: 25px;
+}
+
+.file:hover:before,
+.file:hover:after {
+    background: #e2e8f0;
+}
+
+/*a:before{transform:translate(-30%,-60%);}*/
+
+.file:before {
+    margin: -23px 0 0 -5px;
+}
+
+.file:hover {
+    background: #e2e8f0;
+    border-color: #9fb4cc;
+}
+
+.file:active {
+    background: #dae0e8;
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .25);
+}
+
+.file span:first-child {
+    display: none;
+}
+
+.file:hover span:first-child {
+    display: inline-block;
+}
+
+.file:hover span:last-child {
+    display: none;
+}
+
+/* Таблиця перегляду вибраного майна*/
+.tableShow {
+    width: max-content;
+    border: none;
+    margin-bottom: 20px;
+    border-collapse: separate;
+}
+
+.tableShow thead th {
+    font-weight: bold;
+    border: none;
+    padding: 5px 8px;
+    background: #EDEDED;
+    font-size: 12px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+
+}
+
+.tableShow tr th:first-child, .tableShow tr td:first-child {
+    border-left: 1px solid #ddd;
+    height: 48px;
+}
+
+.tableShow tr th:last-child, .tableShow tr td:last-child {
+    border-right: 1px solid #ddd;
+}
+
+.tableShow thead tr th:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+.tableShow thead tr th:last-child {
+    border-radius: 0 20px 0 0;
+}
+
+.tableShow tbody td {
+    text-align: center;
+    vertical-align: center;
+    border: none;
+    /*padding: 10px 15px;*/
+    font-size: 12px;
+    border-right: 1px solid #ddd;
+
+}
+
+.tableShow tbody tr:nth-child(odd) {
+    background: #F8F8F8;
+}
+
+.tableShow tbody tr:nth-child(even) {
+    background: #e1e1e1;
+
+}
+
+.tableShow tbody tr:last-child td {
+    border-bottom: 1px solid #ddd;
 }

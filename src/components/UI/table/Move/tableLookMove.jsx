@@ -17,7 +17,7 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
     const handleCountChange = (e, index) => {
         if (e.target.value.length === 0) {
             const list = [...moveId]
-            list[index]['count'] = null
+            list[index]['count'] = 0
             setMoveId(list)
         } else if (listMove[index].techniqueDetails.count < e.target.value) {
             const list = [...moveId]
@@ -31,17 +31,10 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
         }
 
     }
-
-    const handleRemove = (index, id) => {
-        const list = [...listMove]
-        const listId = [...moveId]
-        list.splice(index, 1)
-        listId.splice(index, 1)
-        technique.setMoveTechnique(list)
-        technique.setMoveTechniqueId(listId)
-        const filterList = [...filterId]
-        filterList.splice(index, 1)
-        setFilterId(filterList)
+    const handleRemove = (id) => {
+        technique.setMoveTechnique(technique.moveTechnique.filter(item => item.id !== id))
+        technique.setMoveTechniqueId(technique.moveTechniqueId.filter(item => item.id !== id))
+        setFilterId((filterLocal) => filterLocal.filter(item => item.idTechniqueDetail !== id))
     }
     useEffect(() => {
         list(moveId)
@@ -55,7 +48,7 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
     return (
         <div>
             <h3>Список обраного майна для передачі</h3>
-            <div className={classes.tableScroll}>
+            <div className={classes.tableShow}>
                 <table>
                     <thead>
                     <tr>
@@ -73,7 +66,7 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
                             Кількість
                         </th>
                         <th>
-                            Кількість яку передати
+                            Кількість, яку передати
                         </th>
 
                         <th>Серійний номер</th>
@@ -103,7 +96,7 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
                                 {techniqueDetails.count > 1
                                     ?
                                     <MyInput value={moveId[indexTechnique].count}
-                                             style={{textAlign: 'center', width: '100%'}}
+                                             style={{textAlign: 'center', width: '50%'}}
                                              onChange={(e) => handleCountChange(e, indexTechnique)}/>
                                     : techniqueDetails.count
                                 }
@@ -113,7 +106,7 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
                             <td>{techniqueDetails.category}</td>
                             <td>{techniqueDetails.dateOfManufacture}</td>
                             <td><MyButtonRemove
-                                onClick={() => handleRemove(indexTechnique, id)}>Видалити</MyButtonRemove></td>
+                                onClick={() => handleRemove(id)}>Видалити</MyButtonRemove></td>
                         </tr>
                     )}
                     </tbody>

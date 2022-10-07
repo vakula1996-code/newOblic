@@ -1,6 +1,10 @@
 import {$authHost} from "./index";
 import {
+    DOCUMENT_ALL,
+    DOCUMENT_DOWNLOAD_DOC,
+    DOCUMENT_DOWNLOAD_SCAN,
     DOCUMENT_HISTORY,
+    DOCUMENT_NOT_EXECUTION_OR_NOT_REGISTER,
     EXECUTION_ORDER,
     ORDER_NOT_EXECUTION,
     ORDER_NOT_REGISTER,
@@ -29,17 +33,16 @@ export const registerOrder = async (document) => {
     // }
 }
 
-export const executionOrder = async (document, file, files) => {
+export const executionOrder = async (document, file, documents) => {
     // if (localStorage.getItem('token')) {
     // console.log(Object.keys(files[0]))
     const formData = new FormData()
-    if (file !== null && files !== null) {
+    if (file !== null && documents !== null) {
         formData.append('file', file)
         formData.append('data', JSON.stringify(document))
-        files.map((file, index) => {
-            const key = Object.keys(file)
-            const data = Object.values(file)
-            formData.append(`${key[0]}`, data[0])
+        documents.map(({file, documentScanName}) => {
+            console.log(documentScanName, file)
+            formData.append(documentScanName, file)
         })
     }
     const {data} = await $authHost.post(
@@ -63,6 +66,62 @@ export const documentHisory = async (id, idTechnique, idCategory) => {
     return data
     // }
 }
+
+export const documentAll = async (id) => {
+    // if (localStorage.getItem('token')) {
+    console.log(id)
+    const {data} = await $authHost.get(DOCUMENT_ALL(id))
+    return data
+
+    // }
+}
+
+
+export const downloadDOC = async (idSubdivision, idDocument) => {
+    // if (localStorage.getItem('token')){
+    try {
+        const response = await $authHost.get(DOCUMENT_DOWNLOAD_DOC(idSubdivision, idDocument), {responseType: 'blob'})
+        const objectURL = URL.createObjectURL(response.data)
+        const a = document.createElement('a')
+        a.setAttribute('href', objectURL)
+        a.setAttribute('download', 'file.pdf')
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(objectURL)
+    } catch (error) {
+        return error
+    }
+
+
+    // }
+}
+export const downloadPDF = async (idSubdivision, idDocument) => {
+    // if (localStorage.getItem('token')){
+    try {
+        const response = await $authHost.get(DOCUMENT_DOWNLOAD_SCAN(idSubdivision, idDocument), {responseType: 'blob'})
+        const objectURL = URL.createObjectURL(response.data)
+        const a = document.createElement('a')
+        a.setAttribute('href', objectURL)
+        a.setAttribute('download', 'file.pdf')
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(objectURL)
+    } catch (error) {
+        return error
+    }
+    // }
+}
+
+
+export const documentExecution = async (subdivisionId) => {
+    // if (localStorage.getItem('token')) {
+    const {data} = await $authHost.get(DOCUMENT_NOT_EXECUTION_OR_NOT_REGISTER(subdivisionId))
+    return data
+    // }
+}
+
 
 export const upload = async () => {
     const {data} = await $authHost.get(UPLOAD)

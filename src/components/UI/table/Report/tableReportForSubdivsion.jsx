@@ -10,11 +10,11 @@ import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const TableReportForSubdivsion = observer(() => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     useEffect(() => {
-        nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
+        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
     }, [])
-    const [subdivisionId, setSubdivisionid] = useState()
+    const [subdivisionId, setSubdivisionId] = useState()
     const [listTechnique, setListTechnique] = useState([])
     useEffect(() => {
         if (subdivisionId) {
@@ -25,17 +25,17 @@ const TableReportForSubdivsion = observer(() => {
         <div>
             <Select label="Підрозділ" nameSelect="numberSubdivisions" value={subdivisionId}
                     name='subdivisionName'
-                    getData={e => setSubdivisionid(e.target.value)}/>
+                    getData={e => setSubdivisionId(e.target.value)}/>
             <table className={classes.table}>
 
                 <thead>
                 <tr>
                     <th>№</th>
-                    <th>Тип техніки</th>
-                    <th>Назва техніки</th>
+                    <th>Тип</th>
+                    <th>Найменування</th>
                     <th>Підрозділ</th>
-                    <th>Одиниці виміру</th>
-                    <th>Деталі</th>
+                    <th>Одиниця виміру</th>
+                    <th>Додаткові дані</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,7 +49,7 @@ const TableReportForSubdivsion = observer(() => {
                                         techniqueDetails
                                     }, index) =>
                     <tr key={index}>
-                        <td>{index+1}</td>
+                        <td>{index + 1}</td>
                         <td>{typeTechnique}</td>
                         <td>{nameTechniques}</td>
                         <td>{subdivision}</td>
@@ -60,33 +60,41 @@ const TableReportForSubdivsion = observer(() => {
                                     expandIcon={<ExpandMoreIcon/>}
                                     aria-controls="panel1a-content"
                                     id="panel1a-header">
-                                    <h4>Детальні данні</h4>
+                                    <h4>Додаткові дані</h4>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                            <table className={classes.table}>
-                                <thead>
-                                <tr>
-                                    <th>№</th>
-                                    <th>Серійний номер</th>
-                                    <th>Кількість</th>
-                                    <th>Ціна</th>
-                                    <th>Дата створення</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {techniqueDetails.map(({id, serialNumber, price, dateOfManufacture,category,categoryId,count}, index) =>
-                                    <tr key={index}>
-                                        <td>{index+1}</td>
-                                        <td><Link
-                                            to={`/detailLookTechnique/${subdivisionId}/${id}/${categoryId}`}>{serialNumber}</Link>
-                                        </td>
-                                        <td>{count}</td>
-                                        <td>{price}</td>
-                                        <td>{dateOfManufacture}</td>
-                                    </tr>
-                                )}
-                                </tbody>
-                            </table>
+                                    <table className={classes.table}>
+                                        <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Серійний номер</th>
+                                            <th>Кількість</th>
+                                            <th>Ціна за одиницю</th>
+                                            <th>Дата створення</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {techniqueDetails.map(({
+                                                                   id,
+                                                                   serialNumber,
+                                                                   price,
+                                                                   dateOfManufacture,
+                                                                   category,
+                                                                   categoryId,
+                                                                   count
+                                                               }, index) =>
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td><Link
+                                                    to={`/detailLookTechnique/${subdivisionId}/${id}/${categoryId}`}>{serialNumber}</Link>
+                                                </td>
+                                                <td>{count}</td>
+                                                <td>{price}</td>
+                                                <td>{dateOfManufacture}</td>
+                                            </tr>
+                                        )}
+                                        </tbody>
+                                    </table>
                                 </AccordionDetails>
                             </Accordion>
                         </td>

@@ -4,47 +4,57 @@ import Box from "@mui/material/Box";
 import classes from "../table.module.css";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MyButtonRemove from "../../button/MyButtonRemove";
+import IconButton from "@mui/material/IconButton";
+import StorageIcon from "@mui/icons-material/Storage";
+import DeleteIcon from "@mui/icons-material/Delete";
+import MyModal from "../../modal/MyModal";
+import FormTechniqueChangeDeregistration from "../../forms/deregistration/formTechniqueChangeDeregistration";
+import {observer} from "mobx-react-lite";
 
-const TableDeregastrationNewTechnique = ({error}) => {
+const TableDeregastrationNewTechnique = observer(({error}) => {
     const {document} = useContext(Context)
     const {technique} = useContext(Context)
-    const handleTechniqueRemove = (index) => {
-        const list = [...technique.listNewTechniqueFromModernization]
-        list.splice(index, 1)
-        technique.setListNewTechniqueFromModernization(list)
-
-
-        const listForTable = [...technique.listNewTechniqueFromModernizationForTable]
-        listForTable.splice(index, 1)
-        technique.setListNewTechniqueFromModernizationForTable(listForTable)
-
-        const l = [...listTechnique]
-        l.splice(index, 1)
-        setListTechnique(l)
+    const [idTechnique, setIdTechnique] = useState('')
+    const [modalTechniqueChange, setModalTechniqueChange] = useState(false)
+    const handleTechniqueRemove = (id) => {
+        technique.setListNewTechniqueFromModernization(technique.listNewTechniqueFromModernization.filter(listItem => listItem.id !== id))
+        technique.setListNewTechniqueFromModernizationForTable(technique.listNewTechniqueFromModernizationForTable.filter(listItem => listItem.id !== id))
+        technique.setListTechniqueValid(technique.listTechniqueValid.filter(listItem => listItem.id !== id))
     }
-    const handleSerialNumberRemove = (indexSerialNumber, indexTechnique) => {
-        const list = [...technique.listNewTechniqueFromModernization]
-        list[indexTechnique]['detail'].splice(indexSerialNumber, 1)
-        technique.setListNewTechniqueFromModernization(list)
-
-        const listForTable = [...technique.listNewTechniqueFromModernizationForTable]
-        listForTable[indexTechnique]['detail'].splice(indexSerialNumber, 1)
-        technique.setListNewTechniqueFromModernizationForTable(listForTable)
-
-        const l = [...listTechnique]
-        l[indexTechnique]['detail'].splice(indexSerialNumber, 1)
-        setListTechnique(l)
+    const handleSerialNumberRemove = (id, idDetail) => {
+        technique.setListNewTechniqueFromModernization(technique.listNewTechniqueFromModernization.map(listItem =>
+            listItem.id === id
+                ?
+                {...listItem, detail: listItem.detail.filter(detailItem => detailItem.idDetail !== idDetail)}
+                :
+                listItem
+        ))
+        technique.setListNewTechniqueFromModernizationForTable(technique.listNewTechniqueFromModernizationForTable.map(listItem =>
+            listItem.id === id
+                ?
+                {...listItem, detail: listItem.detail.filter(detailItem => detailItem.idDetail !== idDetail)}
+                :
+                listItem
+        ))
+        technique.setListTechniqueValid(technique.listTechniqueValid.map(listItem =>
+            listItem.id === id
+                ?
+                {...listItem, detail: listItem.detail.filter(detailItem => detailItem.idDetail !== idDetail)}
+                :
+                listItem
+        ))
     }
+
+
     useEffect(() => {
         if (error === 'Hello world') {
             technique.setListNewTechniqueFromModernizationForTable([])
         }
     }, [error])
-    const [listTechnique, setListTechnique] = useState([])
-    useEffect(() => {
-        setListTechnique(technique.listNewTechniqueFromModernizationForTable)
-    }, [listTechnique])
+    const handleChange = (id) => {
+        setIdTechnique(id)
+        setModalTechniqueChange(true)
+    }
     return (
         <Box className={classes.containerTable}>
             {technique.listNewTechniqueFromModernizationForTable.length > 0
@@ -56,24 +66,25 @@ const TableDeregastrationNewTechnique = ({error}) => {
                         <tr>
                             <th>№</th>
                             <th>Підрозділ</th>
-                            <th>Назва</th>
+                            <th>Найменування</th>
                             <th>Тип</th>
                             <th>Тип забезпечення</th>
-                            <th>Одиниці виміру</th>
-                            <th>Детальні данні</th>
+                            <th>Одиниця виміру</th>
+                            <th>Додаткові дані</th>
                             <th>Дія</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {listTechnique.map(({
-                                                subdivisionId,
-                                                techniqueTypeId,
-                                                techniqueName,
-                                                measurementId,
-                                                detail,
-                                                ensuringTypeId
-                                            }, indexTechnique) =>
-                            <tr key={indexTechnique}>
+                        {technique.listNewTechniqueFromModernizationForTable.map(({
+                                                                                      id,
+                                                                                      subdivisionId,
+                                                                                      techniqueTypeId,
+                                                                                      techniqueName,
+                                                                                      measurementId,
+                                                                                      detail,
+                                                                                      ensuringTypeId
+                                                                                  }, indexTechnique) =>
+                            <tr key={id}>
                                 <td>{indexTechnique + 1}</td>
                                 <td>{subdivisionId}</td>
                                 <td>{techniqueName}</td>
@@ -86,7 +97,7 @@ const TableDeregastrationNewTechnique = ({error}) => {
                                             expandIcon={<ExpandMoreIcon/>}
                                             aria-controls="panel1a-content"
                                             id="panel1a-header">
-                                            <h4>Детальні данні</h4>
+                                            <h4>Додаткові дані</h4>
                                         </AccordionSummary>
                                         <AccordionDetails>
                                             <table>
@@ -94,7 +105,7 @@ const TableDeregastrationNewTechnique = ({error}) => {
                                                 <tr>
                                                     <th>Кількість</th>
                                                     <th>Серійний номер</th>
-                                                    <th>Ціна</th>
+                                                    <th>Ціна за одниницю</th>
                                                     <th>Дата створення</th>
                                                     <th>Категорія</th>
                                                     <th>Дія</th>
@@ -102,21 +113,23 @@ const TableDeregastrationNewTechnique = ({error}) => {
                                                 </thead>
                                                 <tbody>
                                                 {detail.map(({
-                                                                  serialNumber,
-                                                                  price,
-                                                                  categoryId,
-                                                                  dateOfManufacture,
-                                                                  count
-                                                              }, indexSerialNumber) => (
-                                                    <tr key={indexSerialNumber}>
+                                                                 idDetail,
+                                                                 serialNumber,
+                                                                 price,
+                                                                 categoryId,
+                                                                 dateOfManufacture,
+                                                                 count
+                                                             }) => (
+                                                    <tr key={idDetail}>
                                                         <td>{count}</td>
 
                                                         <td>{serialNumber}</td>
                                                         <td>{price}</td>
                                                         <td>{dateOfManufacture}</td>
                                                         <td>{categoryId}</td>
-                                                        <td><MyButtonRemove
-                                                            onClick={() => handleSerialNumberRemove(indexSerialNumber, indexTechnique)}>Видалити</MyButtonRemove>
+                                                        <td>
+                                                            <IconButton size='small'
+                                                                        onClick={() => handleSerialNumberRemove(id, idDetail)}><DeleteIcon></DeleteIcon></IconButton>
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -126,8 +139,11 @@ const TableDeregastrationNewTechnique = ({error}) => {
                                         </AccordionDetails>
                                     </Accordion>
                                 </td>
-                                <td><MyButtonRemove
-                                    onClick={() => handleTechniqueRemove(indexTechnique)}>Видалити</MyButtonRemove>
+                                <td><IconButton size='small'
+                                                onClick={() => handleChange(id)}><StorageIcon></StorageIcon></IconButton>
+
+                                    <IconButton size='small'
+                                                onClick={() => handleTechniqueRemove(id)}><DeleteIcon></DeleteIcon></IconButton>
                                 </td>
 
                             </tr>
@@ -136,11 +152,19 @@ const TableDeregastrationNewTechnique = ({error}) => {
                     </table>
                 </div>
 
-                : <h2>Добавте техніку в сиписок</h2>
+                : <h2>Добавте майно в список</h2>
 
+            }
+            {idTechnique !== ''
+                ?
+                < MyModal visible={modalTechniqueChange} setVisible={setModalTechniqueChange}>
+                    <FormTechniqueChangeDeregistration setVisible={setModalTechniqueChange}
+                                                       idTechnique={idTechnique}/>
+                </MyModal>
+                : <></>
             }
         </Box>
     );
-};
+});
 
 export default TableDeregastrationNewTechnique;

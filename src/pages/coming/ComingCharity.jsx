@@ -16,7 +16,7 @@ import FormTechnique from "../../components/UI/forms/documents/formTechnique";
 import FormDocument from "../../components/UI/forms/documents/formDocument";
 import MyButton from "../../components/UI/button/MyButton";
 import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
-import classes from './coming.module.css'
+import classesComing from './coming.module.css'
 import Table from "../../components/UI/table/table";
 
 const ComingCharity = observer(() => {
@@ -52,21 +52,22 @@ const ComingCharity = observer(() => {
 
     }
 
-
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
-            {/*<ReadFile/>*/}
-            <h1>Шефська допомога
-            </h1>
-
+            <div className={classesComing.buttonSave}>
+                <MyButton onClick={addNewTeqchnique}>Зберегти</MyButton>
+            </div>
+            <h1>Шефська допомога</h1>
+            <div className={classesComing.tableDocument}>
+                <FormDocument error={error}/>
+            </div>
+            <div className={classesComing.tableTechnique}>
+                <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
+                <Table error={error}/>
+            </div>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <FormTechnique setVisible={setModalTechnique}/>
             </MyModal>
-            <FormDocument error={error}/>
-            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати техніку</MyButtonAdd>
-            <Table error={error}/>
-            <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
-
         </ErrorAddData>
 
     );

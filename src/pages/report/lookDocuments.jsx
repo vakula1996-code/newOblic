@@ -1,14 +1,21 @@
-import React,{useEffect,useState} from 'react';
-import {subdivisionsTechniques} from "../../http/Technique";
+import React, {useContext, useEffect, useState} from 'react';
 import Select from "../../components/UI/select/select";
+import TableDocumentsAll from "../../components/UI/table/Report/tableDocumentsAll";
+import {nameSubdivisions} from "../../http/Type";
+import {documentAll} from "../../http/Documents";
+import {observer} from "mobx-react-lite";
+import {Context} from "../../index";
 
-const LookDocuments = () => {
+const LookDocuments = observer(() => {
+    const {documents} = useContext(Context)
     const [idSubdivision, setIdSubdivision] = useState()
     const [dataList, setDataList] = useState([])
-
+    useEffect(() => {
+        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
+    }, [])
     useEffect(() => {
         if (idSubdivision !== undefined) {
-            subdivisionsTechniques(idSubdivision).then(data => {
+            documentAll(idSubdivision).then(data => {
                 setDataList(data);
             })
         }
@@ -18,9 +25,9 @@ const LookDocuments = () => {
             <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
                     name='subdivisionName'
                     getData={e => setIdSubdivision(e.target.value)}/>
-
+            <TableDocumentsAll/>
         </div>
     );
-};
+});
 
 export default LookDocuments;

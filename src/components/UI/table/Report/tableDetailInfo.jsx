@@ -1,12 +1,12 @@
-import React, {useEffect,useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {techniqueInformation} from "../../../../http/Technique";
 import classes from '../table.module.css'
 
 const TableDetailInfo = ({params}) => {
     const [info, setInfo] = useState([])
-    useEffect(()=>{
+    useEffect(() => {
         techniqueInformation(params.subdivisionId, params.id, params.categoryId).then(data => setInfo([data]))
-    },[])
+    }, [])
     return (
         <div>
             <h2>Детальна інформація</h2>
@@ -15,9 +15,13 @@ const TableDetailInfo = ({params}) => {
                 <thead>
                 <tr>
                     <th>Підрозділ</th>
-                    <th>Тип техніки</th>
-                    <th>Назва техніки</th>
+                    <th>Тип</th>
+                    <th>Тип забезпечення</th>
+                    <th>Найменування</th>
                     <th>Серійний номер</th>
+                    <th>Кількість</th>
+                    <th>Одиниця виміру</th>
+                    <th>Ціна за одиницю</th>
                     <th>Категорія</th>
                 </tr>
                 </thead>
@@ -33,8 +37,12 @@ const TableDetailInfo = ({params}) => {
                         <tr key={index}>
                             <td>{subdivision}</td>
                             <td>{typeTechnique}</td>
+                            <td></td>
                             <td>{nameTechnique}</td>
                             <td>{serialNumber}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td>{category}</td>
                         </tr>
                     )}

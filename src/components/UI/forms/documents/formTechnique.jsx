@@ -13,17 +13,22 @@ import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import {v4 as uuidv4} from "uuid";
 
 
 const FormTechnique = observer(({setVisible}) => {
         const {technique} = useContext(Context)
+        const id = uuidv4()
+        const idDetail = uuidv4()
         const data = {
+            id: id,
             techniqueTypeId: '',
             ensuringTypeId: '',
             techniqueName: '',
             measurementId: '',
             details: [
                 {
+                    idDetail: idDetail,
                     serialNumber: 'Б/Н',
                     price: '',
                     categoryId: '',
@@ -33,12 +38,14 @@ const FormTechnique = observer(({setVisible}) => {
             ]
         }
         const dataForTable = {
+            id: id,
             techniqueTypeId: '',
             ensuringTypeId: '',
             techniqueName: '',
             measurementId: '',
             details: [
                 {
+                    idDetail: idDetail,
                     serialNumber: 'Б/Н',
                     price: '',
                     categoryId: '',
@@ -49,12 +56,14 @@ const FormTechnique = observer(({setVisible}) => {
         }
 
         const dataValid = {
+            id: id,
             techniqueTypeId: false,
             ensuringTypeId: false,
             techniqueName: false,
             measurementId: false,
             details: [
                 {
+                    idDetail: idDetail,
                     serialNumber: false,
                     price: false,
                     categoryId: false,
@@ -66,7 +75,6 @@ const FormTechnique = observer(({setVisible}) => {
         const [listTechnique, setListTechnique] = useState(data)
         const [listTechniqueForTable, setListTechniqueForTable] = useState(dataForTable)
         const [listDataValid, setListDataValid] = useState(dataValid)
-
         const handleTechniqueChange = (e, name, data) => {
             if (e.target.innerHTML) {
                 const list = {...listTechnique};
@@ -105,8 +113,10 @@ const FormTechnique = observer(({setVisible}) => {
 
         }
         const handleSerialNumberAdd = () => {
+            const id = uuidv4()
             setListTechnique({
                 ...listTechnique, details: [...listTechnique.details, {
+                    idDetail: id,
                     serialNumber: 'Б/Н',
                     price: '',
                     categoryId: '',
@@ -116,6 +126,7 @@ const FormTechnique = observer(({setVisible}) => {
             })
             setListTechniqueForTable({
                 ...listTechniqueForTable, details: [...listTechniqueForTable.details, {
+                    idDetail: id,
                     serialNumber: 'Б/Н',
                     price: '',
                     categoryId: '',
@@ -125,6 +136,7 @@ const FormTechnique = observer(({setVisible}) => {
             })
             setListDataValid({
                 ...listDataValid, details: [...listDataValid.details, {
+                    idDetail: id,
                     serialNumber: false,
                     price: false,
                     categoryId: false,
@@ -133,7 +145,7 @@ const FormTechnique = observer(({setVisible}) => {
                 }]
             })
         }
-        const handleSerialNumberChange = (e, index, name, data) => {
+        const handleChange = (e, index, name, data) => {
 
             const {value} = e.target;
             const list = {...listTechnique};
@@ -161,23 +173,48 @@ const FormTechnique = observer(({setVisible}) => {
 
         };
 
-        const handleSerialNumberRemove = (index) => {
+        const handleChangeCount = (e, index, name) => {
+            const {value} = e.target;
             const list = {...listTechnique};
-            list['details'].splice(index, 1);
+            if (list['details'][index]['serialNumber'] !== 'Б/Н') {
+                list['details'][index][name] = 1
+            } else {
+                if (value.length === 0) {
+                    list['details'][index][name] = 0;
+                } else {
+                    list['details'][index][name] = parseInt(value);
+                }
+            }
             setListTechnique(list);
-            const listForTable = {...listTechniqueForTable}
-            listForTable['details'].splice(index, 1);
-            setListTechniqueForTable(listForTable);
-            const listDataValid = {...listDataValid}
-            listDataValid['details'].splice(index, 1)
-            setListDataValid(listDataValid)
+        }
+        const handleChangeSerialNumber = (e, index, name) => {
+            const {value} = e.target;
+            const list = {...listTechnique};
+            list['details'][index][name] = value;
+            list['details'][index]['count'] = 1;
+            setListTechnique(list);
+        }
+
+        const handleSerialNumberRemove = (id) => {
+            setListTechnique((listLocal) => ({
+                ...listLocal,
+                details: listLocal.details.filter(listItem => listItem.idDetail !== id)
+            }))
+            setListTechniqueForTable((listLocal) => ({
+                ...listLocal,
+                details: listLocal.details.filter(listItem => listItem.idDetail !== id)
+            }))
+            setListDataValid((listLocal) => ({
+                ...listLocal,
+                details: listLocal.details.filter(listItem => listItem.idDetail !== id)
+            }))
         };
+
         const addInListTeqchnique = () => {
             if (
                 listTechnique.techniqueTypeId !== '' &&
                 listTechnique.ensuringTypeId !== '' &&
                 listTechnique.techniqueName !== '' &&
-                listTechnique.techniqueName !== undefined &&
                 listTechnique.measurementId !== ''
             ) {
                 if (listTechnique.details.map(({count, serialNumber, price, categoryId, dateOfManufacture}, index) => {
@@ -190,6 +227,77 @@ const FormTechnique = observer(({setVisible}) => {
                     ) {
                         return true
                     } else {
+                        setListDataValid({
+                            ...listDataValid,
+                            techniqueName: (
+                                listTechnique.techniqueName === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            techniqueTypeId: (
+                                listTechnique.techniqueTypeId === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            ensuringTypeId: (
+                                listTechnique.ensuringTypeId === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            measurementId: (
+                                listTechnique.measurementId === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            details: listDataValid.details.map((item, index) => {
+                                return {
+                                    ...item,
+                                    count: (
+                                        listTechnique.details[index].count === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    serialNumber: (
+                                        listTechnique.details[index].serialNumber === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    price: (
+                                        listTechnique.details[index].price === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    categoryId: (
+                                        listTechnique.details[index].categoryId === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    dateOfManufacture: (
+                                        listTechnique.details[index].dateOfManufacture === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    )
+                                }
+                            })
+                        })
                         return false
                     }
                 }).includes(false) === false) {
@@ -199,6 +307,7 @@ const FormTechnique = observer(({setVisible}) => {
                     setListTechniqueForTable(dataForTable)
                     technique.setListTechniqueValid([...technique.listTechniqueValid, listDataValid])
                     setVisible(false)
+                    setListDataValid(dataValid)
                 }
             } else {
                 setListDataValid({
@@ -284,7 +393,8 @@ const FormTechnique = observer(({setVisible}) => {
             getCategory()
         }, [listTechnique.techniqueTypeId])
         return (
-            <Box className={classes.containerForm}><h2>Майно</h2>
+            <Box className={classes.containerForm}>
+                <h2>Майно</h2>
                 <table className={classes.table}>
                     <thead>
                     <tr>
@@ -292,7 +402,7 @@ const FormTechnique = observer(({setVisible}) => {
                         <th>Тип</th>
                         <th>Тип забезпечення</th>
                         <th>Одиниця виміру</th>
-                        <th>
+                        <th style={{zIndex: 9}}>
                             Додаткові дані
                             <IconButton size='small'
                                         onClick={handleSerialNumberAdd}>
@@ -323,7 +433,7 @@ const FormTechnique = observer(({setVisible}) => {
                                     getData={(e, data) => handleTechniqueChange(e, 'measurementId', data)}/></td>
                         <td>
 
-                            <table>
+                            <table className={classes.doubleTable}>
                                 <thead>
                                 <tr>
                                     <th>Кількість</th>
@@ -336,38 +446,41 @@ const FormTechnique = observer(({setVisible}) => {
                                 </thead>
                                 <tbody>
                                 {listTechnique.details.map(({
+                                                                idDetail,
                                                                 serialNumber,
                                                                 price,
                                                                 categoryId,
                                                                 dateOfManufacture
                                                             }, index) => (
-                                    <tr key={index}>
+                                    <tr key={idDetail}>
                                         <td><InputMui value={listTechnique.details[index].count}
                                                       error={listDataValid.details[index].count}
                                                       errorLabel='Кількість повина бути більше 0'
-                                                      getData={(e) => handleSerialNumberChange(e, index, 'count')}/></td>
+                                                      getData={(e) => handleChangeCount(e, index, 'count')}
+                                        /></td>
                                         <td><InputMui value={listTechnique.details[index].serialNumber}
                                                       error={listDataValid.details[index].serialNumber}
-                                                      getData={(e) => handleSerialNumberChange(e, index, 'serialNumber')}/>
+                                                      getData={(e) => handleChangeSerialNumber(e, index, 'serialNumber')}/>
                                         </td>
                                         <td><InputMui value={listTechnique.details[index].price}
                                                       error={listDataValid.details[index].price}
-                                                      getData={(e) => handleSerialNumberChange(e, index, 'price')}/>
+                                                      type='number'
+                                                      getData={(e) => handleChange(e, index, 'price')}/>
 
                                         </td>
                                         <td><InputDate value={listTechnique.details[index].dateOfManufacture}
                                                        error={listDataValid.details[index].dateOfManufacture}
-                                                       getData={(e) => handleSerialNumberChange(e, index, 'dateOfManufacture')}/>
+                                                       getData={(e) => handleChange(e, index, 'dateOfManufacture')}/>
 
                                         </td>
                                         <td><Select nameSelect="category" value={listTechnique.details[index].categoryId}
                                                     name='categoryName'
                                                     error={listDataValid.details[index].categoryId}
-                                                    getData={(e, data) => handleSerialNumberChange(e, index, 'categoryId', data)}/>
+                                                    getData={(e, data) => handleChange(e, index, 'categoryId', data)}/>
 
                                         </td>
                                         <td><IconButton size='small'
-                                                        onClick={() => handleSerialNumberRemove(index)}><DeleteIcon></DeleteIcon></IconButton>
+                                                        onClick={() => handleSerialNumberRemove(idDetail)}><DeleteIcon></DeleteIcon></IconButton>
                                         </td>
                                     </tr>
                                 ))}
@@ -379,9 +492,9 @@ const FormTechnique = observer(({setVisible}) => {
                     </tbody>
                 </table>
                 <IconButton size='small'
-                            onClick={addInListTeqchnique}>
+                            onClick={addInListTeqchnique}
+                >
                     <SaveIcon></SaveIcon></IconButton>
-
             </Box>
         );
 

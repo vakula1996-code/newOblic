@@ -1,35 +1,42 @@
-import React, {useEffect,useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {techniqueHistory} from "../../../../http/Technique";
 import classes from '../table.module.css'
 
 const TableHistoryDocument = ({params}) => {
     const [history, setHistory] = useState([])
-    useEffect(()=>{
+    useEffect(() => {
         techniqueHistory(params.subdivisionId, params.id, params.categoryId).then(data => setHistory(data))
 
-    },[])
+    }, [])
     return (
         <div>
             <h2>Історія руху</h2>
 
             <table className={classes.table}>
                 <thead>
-                <th>З якого підрозділу</th>
-                <th>В який</th>
-                <th>Дата</th>
-                <th>Детальна інформація</th>
+                <th>Дата документа</th>
+                <th>Від кого отримано</th>
+                <th>Куди убило (прибуло)</th>
+                <th>Надходження</th>
+                <th>Видаток</th>
+                <th>Залишок</th>
+                <th>Файл</th>
                 </thead>
                 <tbody>
                 {history.map(({
+
                                   toSubdivision,
                                   fromSubdivision,
                                   date,
                                   documents
                               }, index) =>
                     <tr key={index}>
+                        <td>{date}</td>
                         <td>{fromSubdivision}</td>
                         <td>{toSubdivision}</td>
-                        <td>{date}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>
                             <table>
                                 <thead>

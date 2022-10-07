@@ -12,7 +12,6 @@ import {
 
 export const addNewTechniqueHttp = async (document, technique, type, files) => {
     // if (localStorage.getItem('token')) {
-    console.log(document)
 
     const formData = new FormData()
     if (files !== null) {

@@ -12,13 +12,13 @@ import MyButtonChoice from "../../button/MyButtonChoice";
 import {nameSubdivisions} from "../../../../http/Type";
 import MyButtonNotActivated from "../../button/MyButtonNotActivated";
 
-const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
+const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId, setFilterId}) => {
     const {technique} = useContext(Context)
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     const [dataList, setDataList] = useState([])
     const [idSubdivision, setIdSubivision] = useState([])
     useEffect(() => {
-        nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
+        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
     }, [])
     useEffect(() => {
         setIdSubivision(idSubdivision)
@@ -32,22 +32,35 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
         }
     }, [idSubdivision])
     const [listMove, setListMove] = useState([])
-    const addInList = (indexTechnique, indexSerialNumber) => {
-        technique.setListDeregistrationTechnique([{
-            typeTechnique: dataList[indexTechnique].typeTechnique,
-            nameTechniques: dataList[indexTechnique].nameTechniques,
-            measurement: dataList[indexTechnique].measurement,
-            subdivision: dataList[indexTechnique].subdivision,
-            techniqueDetails: dataList[indexTechnique]["techniqueDetails"][indexSerialNumber],
-            typeTechniqueId: dataList[indexTechnique].typeTechniqueId,
+    const addInList = (id) => {
 
-        }])
-        technique.setListDeregistrationTechniqueId([...technique.listDeregistrationTechniqueId, {
-            techniqueDetailId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].id,
-            howCategoryId: dataList[indexTechnique]['techniqueDetails'][indexSerialNumber].categoryId,
-            newName: '',
-            newCategoryId: '',
-        }])
+        dataList.filter(dataItem =>
+            dataItem.techniqueDetails.filter(detailItem =>
+                detailItem.id === id
+                    ?
+                    technique.setListDeregistrationTechnique([{
+                        id: dataItem.id,
+                        typeTechnique: dataItem.typeTechnique,
+                        nameTechniques: dataItem.nameTechniques,
+                        measurement: dataItem.measurement,
+                        subdivision: dataItem.subdivision,
+                        techniqueDetails: detailItem,
+                        typeTechniqueId: dataItem.typeTechniqueId,
+                    }])
+                    ||
+                    technique.setListDeregistrationTechniqueId([...technique.listDeregistrationTechniqueId, {
+                        techniqueDetailId: detailItem.id,
+                        howCategoryId: detailItem.categoryId,
+                        newName: '',
+                        newCategoryId: '',
+                        newPrice: '',
+                    }])
+                    ||
+                    setFilterId([...filterId, {idTechnique: dataItem.id, idTechniqueDetail: detailItem.id}])
+                    :
+                    detailItem
+            )
+        )
         setVisibleWindow(false)
 
     }
@@ -91,20 +104,20 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
                             №
                         </th>
                         <th>
-                            Тип техніки
+                            Тип
                         </th>
                         <th>
-                            Назва техніки
+                            Найменування
                         </th>
 
                         <th>
                             Підрозділ де знаходиться
                         </th>
                         <th>
-                            Одиниці виміру
+                            Одиниця виміру
                         </th>
-                        <th>
-                            Детальна інформація
+                        <th style={{zIndex: 9}}>
+                            Додаткові дані
                         </th>
                     </tr>
 
@@ -133,7 +146,7 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
                                             expandIcon={<ExpandMoreIcon/>}
                                             aria-controls="panel1a-content"
                                             id="panel1a-header">
-                                            <h4>Детальні данні</h4>
+                                            <h4>Додаткові дані</h4>
                                         </AccordionSummary>
                                         <AccordionDetails>
                                             <table className={classes.table}>
@@ -141,9 +154,10 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
                                                 <tr>
                                                     <th>№</th>
                                                     <th>Серійний номер</th>
-                                                    <th>Ціна</th>
+                                                    <th>Ціна за одиницю</th>
                                                     <th>Категорія</th>
                                                     <th>Кількість</th>
+                                                    <th>Доступно</th>
                                                     <th>Дата створення</th>
                                                     <th>Дія</th>
                                                     {techniqueDetails['serialNumber'] === 'Б/Н'
@@ -168,15 +182,16 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow}) => {
                                                         <td>{price}</td>
                                                         <td>{category}</td>
                                                         <td>{count}</td>
+                                                        <td>{available}</td>
                                                         <td>{dateOfManufacture}</td>
                                                         <td>
                                                             {available > 0
                                                                 ? <MyButtonChoice
-                                                                    onClick={() => addInList(indexTechnique, indexSerialNumber)}>Вибрати
+                                                                    onClick={() => addInList(id)}>Вибрати
                                                                 </MyButtonChoice>
                                                                 : <MyButtonNotActivated
                                                                     style={{padding: '8px 16px'}}
-                                                                    onClick={() => addInList(indexTechnique, indexSerialNumber)}>Вибрати
+                                                                    onClick={() => addInList(id)}>Вибрати
                                                                 </MyButtonNotActivated>
                                                             }
                                                         </td>

@@ -17,7 +17,13 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import {NavLink} from "react-router-dom";
 import classes from "./NavBar.module.css";
 import {
-    ADMIN_PANEL,
+    ADMIN_PANEL_DOCUMENTS_NAME,
+    ADMIN_PANEL_MEASUREMENT,
+    ADMIN_PANEL_RECORD,
+    ADMIN_PANEL_SUBDIVISION,
+    ADMIN_PANEL_TYPE,
+    ADMIN_PANEL_TYPE_ENSURING,
+    ADMIN_PANEL_USERS,
     COMING_CHARITY,
     COMING_OUTFIT,
     COMING_PURCHASE,
@@ -26,6 +32,7 @@ import {
     ENSURING,
     LOOK_DOCUMENTS,
     MOVE_CONFIRM_TRANSMISSION,
+    MOVE_DOCUMENT_EXECUTION,
     MOVE_REGISTRATION,
     MOVE_TO_FORM,
     REPORT_FOR_SUBDIVISION
@@ -166,6 +173,14 @@ export default function NavBar() {
                                 <ListItemText primary="Підтвердження передачі"/>
                             </ListItemButton>
                         </NavLink>
+                        <NavLink to={MOVE_DOCUMENT_EXECUTION} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Відміна наряду"/>
+                            </ListItemButton>
+                        </NavLink>
                     </List>
                 </Collapse>
 
@@ -211,7 +226,7 @@ export default function NavBar() {
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
                                 </ListItemIcon>
-                                <ListItemText primary="За підрозділ"/>
+                                <ListItemText primary="Забезпеченість"/>
                             </ListItemButton>
                         </NavLink>
 
@@ -221,7 +236,7 @@ export default function NavBar() {
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
                                 </ListItemIcon>
-                                <ListItemText primary="Рух техніки"/>
+                                <ListItemText primary="Перегляд майна"/>
                             </ListItemButton>
                         </NavLink>
                         <NavLink to={LOOK_DOCUMENTS} className={classes.link}>
@@ -261,13 +276,60 @@ export default function NavBar() {
                 </ListItemButton>
                 <Collapse in={open6} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <NavLink to={ADMIN_PANEL} className={classes.link}>
-
+                        <NavLink to={ADMIN_PANEL_SUBDIVISION} className={classes.link}>
                             <ListItemButton sx={{pl: 4}}>
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
                                 </ListItemIcon>
-                                <ListItemText primary="Редагування даних"/>
+                                <ListItemText primary="Підрозділи"/>
+                            </ListItemButton>
+                        </NavLink>
+                        <NavLink to={ADMIN_PANEL_TYPE} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Типи"/>
+                            </ListItemButton>
+                        </NavLink>
+                        <NavLink to={ADMIN_PANEL_TYPE_ENSURING} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Типи забезпечення"/>
+                            </ListItemButton>
+                        </NavLink>
+                        <NavLink to={ADMIN_PANEL_MEASUREMENT} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Одиниці виміру"/>
+                            </ListItemButton>
+                        </NavLink>
+                        <NavLink to={ADMIN_PANEL_DOCUMENTS_NAME} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Назви документів"/>
+                            </ListItemButton>
+                        </NavLink>
+                        <NavLink to={ADMIN_PANEL_RECORD} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Записи"/>
+                            </ListItemButton>
+                        </NavLink>
+                        <NavLink to={ADMIN_PANEL_USERS} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="Користувачі"/>
                             </ListItemButton>
                         </NavLink>
                     </List>

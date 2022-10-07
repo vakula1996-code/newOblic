@@ -84,7 +84,7 @@ const TableForOrderNotRegister = observer(({orderNotRegisterId, doc, setOrderNot
             </table>
 
 
-            : <h2>Добавте не зареєстрований наряд</h2>
+            : <h2>Оберіть незареєстрований наряд</h2>
     );
 });
 

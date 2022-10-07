@@ -19,7 +19,7 @@ const TableOrderNotRegistration = observer(({setVisible, setOrderNotRegisterId})
     }
     return (
         <div>
-            <h2>Список не зареєстрованих нарядів</h2>
+            <h2>Список незареєстрованих нарядів</h2>
             <table className={classes.table}>
                 <thead>
                 <tr>

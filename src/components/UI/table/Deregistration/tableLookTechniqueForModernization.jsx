@@ -1,8 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
-import {nameSubdivisions} from "../../../../http/Type";
-import {subdivisionsTechniques} from "../../../../http/Technique";
-import Select from "../../select/select";
 import classes from "../table.module.css";
 import MyButtonLookFilter from "../../button/MyButtonLookFilter";
 import FilterWindow from "../../filter/filterWindow";
@@ -10,8 +7,9 @@ import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MyButtonChoice from "../../button/MyButtonChoice";
 import {observer} from "mobx-react-lite";
+import MyButtonNotActivated from "../../button/MyButtonNotActivated";
 
-const TableLookTechniqueForModernization = observer(({dataList,filterId, setFilterId}) => {
+const TableLookTechniqueForModernization = observer(({dataList, filterId, setFilterId}) => {
     const {technique} = useContext(Context)
     const addInList = (id) => {
         dataList.filter(dataItem =>
@@ -19,7 +17,7 @@ const TableLookTechniqueForModernization = observer(({dataList,filterId, setFilt
                 detailItem.id === id
                     ?
                     technique.setListModernizationTechnique([...technique.listModernizationTechnique, {
-                        id: dataItem.id,
+                        id: id,
                         typeTechnique: dataItem.typeTechnique,
                         nameTechniques: dataItem.nameTechniques,
                         measurement: dataItem.measurement,
@@ -53,40 +51,41 @@ const TableLookTechniqueForModernization = observer(({dataList,filterId, setFilt
     }, [dataList])
     return (
         <div>
+            <div style={{display: "flex"}}>
+                <MyButtonLookFilter onClick={hendleVisible}>Пошук</MyButtonLookFilter>
+            </div>
+            <FilterWindow
+                visible={visible}
+                setVisible={setVisible}
+                dataList={dataList}
+                dataFilter={dataFilter}
+                setDataFilter={setDataFilter}
+            />
             <div className={classes.tableScroll}>
                 <table>
                     <thead>
                     <tr>
                         <th>
-                            <MyButtonLookFilter onClick={hendleVisible}/>
                             №
                         </th>
                         <th>
-                            Тип техніки
+                            Тип
                         </th>
                         <th>
-                            Назва техніки
+                            Найменування
                         </th>
 
                         <th>
-                            Підрозділ де знаходиться
+                            Підрозділ, де знаходиться
                         </th>
                         <th>
-                            Одиниці виміру
+                            Одиниця виміру
                         </th>
-                        <th>
-                            Детальна інформація
+                        <th style={{zIndex: 9}}>
+                            Додаткові дані
                         </th>
                     </tr>
-                    <tr>
-                        <FilterWindow
-                            visible={visible}
-                            setVisible={setVisible}
-                            dataList={dataList}
-                            dataFilter={dataFilter}
-                            setDataFilter={setDataFilter}
-                        />
-                    </tr>
+
                     </thead>
                     <tbody>
                     {dataFilter.map(({
@@ -98,7 +97,7 @@ const TableLookTechniqueForModernization = observer(({dataList,filterId, setFilt
                                          techniqueDetails,
 
                                      }, indexTechnique) =>
-                        techniqueDetails.length > 0
+                        techniqueDetails.some(itemDetail => (filterId.map(item => item.idTechniqueDetail).includes(itemDetail.id) === false))
                             ?
                             <tr key={id}>
                                 <td>{indexTechnique + 1}</td>
@@ -112,7 +111,7 @@ const TableLookTechniqueForModernization = observer(({dataList,filterId, setFilt
                                             expandIcon={<ExpandMoreIcon/>}
                                             aria-controls="panel1a-content"
                                             id="panel1a-header">
-                                            <h4>Детальні данні</h4>
+                                            <h4>Додаткові дані</h4>
                                         </AccordionSummary>
                                         <AccordionDetails>
                                             <table className={classes.table}>
@@ -120,9 +119,10 @@ const TableLookTechniqueForModernization = observer(({dataList,filterId, setFilt
                                                 <tr>
                                                     <th>№</th>
                                                     <th>Серійний номер</th>
-                                                    <th>Ціна</th>
+                                                    <th>Ціна за одиницю</th>
                                                     <th>Категорія</th>
                                                     <th>Кількість</th>
+                                                    <th>Доступно</th>
                                                     <th>Дата створення</th>
                                                     <th>Дія</th>
                                                     {techniqueDetails['serialNumber'] === 'Б/Н'
@@ -138,6 +138,7 @@ const TableLookTechniqueForModernization = observer(({dataList,filterId, setFilt
                                                                            price,
                                                                            category,
                                                                            count,
+                                                                           available,
                                                                            dateOfManufacture
                                                                        }, indexSerialNumber) =>
                                                     filterId.map(item => item.idTechniqueDetail).includes(id) === false
@@ -148,12 +149,19 @@ const TableLookTechniqueForModernization = observer(({dataList,filterId, setFilt
                                                             <td>{price}</td>
                                                             <td>{category}</td>
                                                             <td>{count}</td>
+                                                            <td>{available}</td>
                                                             <td>{dateOfManufacture}</td>
 
                                                             <td>
-                                                                <MyButtonChoice
-                                                                    onClick={() => addInList(id)}>Вибрати
-                                                                </MyButtonChoice>
+                                                                {available > 0
+                                                                    ? <MyButtonChoice
+                                                                        onClick={() => addInList(id)}>Вибрати
+                                                                    </MyButtonChoice>
+                                                                    : <MyButtonNotActivated
+                                                                        style={{padding: '8px 16px'}}
+                                                                        onClick={() => addInList(id)}>Вибрати
+                                                                    </MyButtonNotActivated>
+                                                                }
                                                             </td>
                                                         </tr>
                                                         : <></>

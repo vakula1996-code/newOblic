@@ -18,25 +18,35 @@ const Table = observer(({error}) => {
     const [idTechnique, setIdTechnique] = useState('')
     const [modalTechniqueChange, setModalTechniqueChange] = useState(false)
 
-    const handleTechniqueRemove = (index) => {
-        const list = [...technique.listTechnique]
-        list.splice(index, 1)
-        technique.setListTechnique(list)
-
-        const listForTable = [...technique.listTechniqueForTable]
-        listForTable.splice(index, 1)
-        technique.setListTechniqueForTable(listForTable)
-
+    const handleTechniqueRemove = (id) => {
+        technique.setListTechnique(technique.listTechnique.filter(listItem => listItem.id !== id))
+        technique.setListTechniqueForTable(technique.listTechniqueForTable.filter(listItem => listItem.id !== id))
+        technique.setListTechniqueValid(technique.listTechniqueValid.filter(listItem => listItem.id !== id))
     }
-    const handleSerialNumberRemove = (indexSerialNumber, indexTechnique) => {
-        const list = [...technique.listTechnique]
-        list[indexTechnique]['details'].splice(indexSerialNumber, 1)
-        technique.setListTechnique(list)
-
-        const listForTable = [...technique.listTechniqueForTable]
-        listForTable[indexTechnique]['details'].splice(indexSerialNumber, 1)
-        technique.setListTechniqueForTable(listForTable)
+    const handleSerialNumberRemove = (id, idDetail) => {
+        technique.setListTechnique(technique.listTechnique.map(listItem =>
+            listItem.id === id
+                ?
+                {...listItem, details: listItem.details.filter(detailItem => detailItem.idDetail !== idDetail)}
+                :
+                listItem
+        ))
+        technique.setListTechniqueForTable(technique.listTechniqueForTable.map(listItem =>
+            listItem.id === id
+                ?
+                {...listItem, details: listItem.details.filter(detailItem => detailItem.idDetail !== idDetail)}
+                :
+                listItem
+        ))
+        technique.setListTechniqueValid(technique.listTechniqueValid.map(listItem =>
+            listItem.id === id
+                ?
+                {...listItem, details: listItem.details.filter(detailItem => detailItem.idDetail !== idDetail)}
+                :
+                listItem
+        ))
     }
+
 
     const handleChange = (id) => {
         setIdTechnique(id)
@@ -54,27 +64,28 @@ const Table = observer(({error}) => {
                 ?
                 <div>
                     <table className={classes.table}>
-                        <caption><h2>Список техніки</h2></caption>
+                        <caption><h2>Майно</h2></caption>
                         <thead>
                         <tr>
                             <th>№</th>
-                            <th>Назва</th>
+                            <th>Найменування</th>
                             <th>Тип</th>
                             <th>Тип забезпечення</th>
-                            <th>Одиниці виміру</th>
-                            <th>Детальні данні</th>
+                            <th>Одиниця виміру</th>
+                            <th>Додаткові дані</th>
                             <th>Дія</th>
                         </tr>
                         </thead>
                         <tbody>
                         {technique.listTechniqueForTable.map(({
+                                                                  id,
                                                                   techniqueTypeId,
                                                                   techniqueName,
                                                                   measurementId,
                                                                   details,
                                                                   ensuringTypeId
                                                               }, indexTechnique) =>
-                            <tr key={indexTechnique}>
+                            <tr key={id}>
                                 <td>{indexTechnique + 1}</td>
                                 <td>{techniqueName}</td>
                                 <td>{techniqueTypeId}</td>
@@ -86,7 +97,7 @@ const Table = observer(({error}) => {
                                             expandIcon={<ExpandMoreIcon/>}
                                             aria-controls="panel1a-content"
                                             id="panel1a-header">
-                                            <h4>Детальні данні</h4>
+                                            <h4>Додаткові дані</h4>
                                         </AccordionSummary>
                                         <AccordionDetails>
                                             <table>
@@ -94,7 +105,7 @@ const Table = observer(({error}) => {
                                                 <tr>
                                                     <th>Кількість</th>
                                                     <th>Серійний номер</th>
-                                                    <th>Ціна</th>
+                                                    <th>Ціна за одиницю</th>
                                                     <th>Дата створення</th>
                                                     <th>Категорія</th>
                                                     <th>Дія</th>
@@ -102,13 +113,14 @@ const Table = observer(({error}) => {
                                                 </thead>
                                                 <tbody>
                                                 {details.map(({
+                                                                  idDetail,
                                                                   serialNumber,
                                                                   price,
                                                                   categoryId,
                                                                   dateOfManufacture,
                                                                   count
                                                               }, indexSerialNumber) => (
-                                                    <tr key={indexSerialNumber}>
+                                                    <tr key={idDetail}>
                                                         <td>{count}</td>
 
                                                         <td>{serialNumber}</td>
@@ -117,7 +129,7 @@ const Table = observer(({error}) => {
                                                         <td>{categoryId}</td>
                                                         <td>
                                                             <IconButton size='small'
-                                                                        onClick={() => handleSerialNumberRemove(indexSerialNumber, indexTechnique)}><DeleteIcon>
+                                                                        onClick={() => handleSerialNumberRemove(id, idDetail)}><DeleteIcon>
                                                             </DeleteIcon>
                                                             </IconButton>
                                                         </td>
@@ -130,10 +142,10 @@ const Table = observer(({error}) => {
                                     </Accordion>
                                 </td>
                                 <td><IconButton size='small'
-                                                onClick={() => handleChange(indexTechnique)}><StorageIcon></StorageIcon></IconButton>
+                                                onClick={() => handleChange(id)}><StorageIcon></StorageIcon></IconButton>
 
                                     <IconButton size='small'
-                                                onClick={() => handleTechniqueRemove(indexTechnique)}><DeleteIcon></DeleteIcon></IconButton>
+                                                onClick={() => handleTechniqueRemove(id)}><DeleteIcon></DeleteIcon></IconButton>
                                 </td>
 
                             </tr>
@@ -142,7 +154,7 @@ const Table = observer(({error}) => {
                     </table>
                 </div>
 
-                : <h2>Добавте майно до списку</h2>
+                : <h2>Додайте майно до списку</h2>
 
             }
             {idTechnique !== ''

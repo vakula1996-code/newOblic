@@ -18,6 +18,7 @@ import {addNewTechniqueHttp} from "../../http/Technique";
 import ErrorAddData from "../../components/UI/error/errorAddData";
 import MyButton from "../../components/UI/button/MyButton";
 import classes from "../../components/UI/table/table.module.css";
+import classesComing from "./coming.module.css";
 
 const ComingOutfit = observer(() => {
     const {documents} = useContext(Context)
@@ -37,34 +38,57 @@ const ComingOutfit = observer(() => {
     const [error, setError] = useState('')
     const [errorMessages, setErrorMessages] = useState('')
     const addNewTeqchnique = () => {
-        addNewTechniqueHttp(documents.document, technique.listTechnique, 'order').catch(data => {
-            if (data.response.data.detail) {
-                setError(data.response.data.detail)
-                setErrorMessages(data.response.data.detail)
-            }
-        }).then(data => {
-            if (data !== undefined) {
-                setError(data)
-                setErrorMessages(data)
-                window.location.reload()
-            }
-        })
+        if (
+            documents.document[0].documentDate !== '' &&
+            documents.document[0].documentNameId !== null &&
+            documents.document[0].documentNumber !== '' &&
+            documents.document[0].documentScanName !== '' &&
+            documents.document[0].file !== null &&
+            documents.document[0].fromSubdivisionId !== null &&
+            documents.document[0].toSubdivisionId !== null &&
+            documents.document[0].fromSubdivisionId !== documents.document[0].toSubdivisionId
+        ) {
+            addNewTechniqueHttp(documents.document, technique.listTechnique, 'order').catch(data => {
+                if (data.response.data.detail) {
+                    setError(data.response.data.detail)
+                    setErrorMessages(data.response.data.detail)
+                }
+            }).then(data => {
+                if (data !== undefined) {
+                    setError(data)
+                    setErrorMessages(data)
+                    window.location.reload()
+                }
+            })
+        } else if (documents.document[0].fromSubdivisionId === documents.document[0].toSubdivisionId &&
+            documents.document[0].fromSubdivisionId !== null &&
+            documents.document[0].toSubdivisionId !== null) {
+            console.log(documents.document[0].toSubdivisionId)
+            setError('Відправник та Одержувач не мають співпадати')
+            setErrorMessages('Відправник та Одержувач не мають співпадати')
+        } else {
+            setError('Заповніть всі поля')
+            setErrorMessages('Заповніть всі поля')
+        }
+
 
     }
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
-
+            <div className={classesComing.buttonSave}>
+                <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
+            </div>
             <h1>По наряду </h1>
+            <div className={classesComing.tableDocument}>
+                <FormDocumentOutfit error={error}/>
+            </div>
+            <div className={classesComing.tableTechnique}>
+                <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
+                <Table error={error}/>
+            </div>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <FormTechnique setVisible={setModalTechnique}/>
             </MyModal>
-
-            <FormDocumentOutfit error={error}/>
-
-            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>
-
-            <Table error={error}/>
-            <MyButton className={classes.button} onClick={addNewTeqchnique}>Зберегти</MyButton>
         </ErrorAddData>
     );
 });

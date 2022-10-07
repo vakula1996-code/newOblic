@@ -15,9 +15,11 @@ const InputFile = ({onChange, name, value = null, accept}) => {
             />
             <label id='nameFile' htmlFor={name}>Файл</label>
             {value !== null
-                ? <label id='nameFile' style={{margin: 'auto'}}>{value.name}</label>
+                ? <label id='nameFile'
+                         style={{margin: 'auto', whiteSpace: 'break-spaces'}}>{value.name}</label>
 
-                : <label id='nameFile' style={{margin: 'auto'}}>Файл не вибраний</label>
+                : <label id='nameFile' style={{margin: 'auto'}}>Файл не
+                    вибраний</label>
 
             }
         </div>

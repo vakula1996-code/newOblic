@@ -1,13 +1,16 @@
 .containerForm {
     margin-top: 10px;
+
 }
 
 .table {
-    width: min-content;
-    border: none;
+    display: block;
+    overflow-y: scroll;
+    max-height: calc(70vh);
     margin-bottom: 20px;
-    border-collapse: separate;
+    table-layout: fixed;
 }
+
 
 .table thead th {
     font-weight: bold;
@@ -17,6 +20,10 @@
     background: #EDEDED;
     font-size: 14px;
     border-top: 1px solid #ddd;
+    position: -webkit-sticky;
+    position: sticky;
+    top: -3px;
+    z-index: 2;
 }
 
 .table tr th:first-child, .table tr td:first-child {
@@ -35,12 +42,14 @@
     border-radius: 0 20px 0 0;
 }
 
+
 .table tbody td {
+
     text-align: left;
     border: none;
     padding: 10px 15px;
     font-size: 14px;
-    vertical-align: middle;
+    vertical-align: baseline;
 }
 
 .table tbody tr:nth-child(even) {
@@ -55,12 +64,11 @@
     border-bottom: 1px solid #ddd;
 }
 
-.table tbody tr:last-child td:first-child {
-    border-radius: 0 0 0 20px;
+
+::-webkit-scrollbar {
+    background-color: white;
 }
 
-.table tbody tr:last-child td:last-child {
-    border-radius: 0 0 20px 0;
+.doubleTable tbody td {
+    vertical-align: bottom;
 }
-
-

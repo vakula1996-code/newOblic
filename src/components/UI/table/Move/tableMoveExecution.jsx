@@ -1,53 +1,25 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
-import {executionOrder} from "../../../../http/Documents";
 import {toJS} from "mobx";
 import InputDate from "../../input/inputDate";
-import MyButton from "../../button/MyButton";
 import classes from "../table.module.css"
-import DateNow from "../../calendar/dateNow";
-import ErrorAddData from "../../error/errorAddData";
 import InputFile from "../../input/inputFile";
+import IconButton from "@mui/material/IconButton";
+import StorageIcon from "@mui/icons-material/Storage";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const TableMoveExecution = observer(() => {
+const TableMoveExecution = observer(({dateConfirm, setDateConfirm, file, setFile, setChangeData}) => {
     const {documents} = useContext(Context)
-    const [dateConfirm, setDateConfirm] = useState(DateNow())
-    const [error, setError] = useState('')
-    const [errorMessages, setErrorMessages] = useState('')
-    const [file, setFile] = useState(null)
-    const documentConfim = () => {
-        executionOrder(
-            {
-                orderId: toJS(documents.listOrderNotExecution['id']),
-                date: dateConfirm,
-                orderScanName: "file",
-                documents: toJS(documents.documentConfirm)
-            },
-            file,
-            documents.Myfiles
-        )
-            .catch(data => {
-                if (data.response.data.detail) {
-                    setError(data.response.data.detail)
-                    setErrorMessages(data.response.data.detail)
-                } else if (data.response.status === 500) {
-                    setError('Не опрацьовий запит')
-                    setErrorMessages('Не опрацьовий запит! Перевірте правельність ведених значень.')
-                }
-            }).then(data => {
-            if (data !== undefined) {
-                window.location.reload()
-                setError(data)
-                setErrorMessages(data)
-            }
-        })
+    const handleRemove = () => {
+        documents.setListOrderNotExecution([])
     }
+
     return (
         toJS(documents.listOrderNotExecution).length !== 0
             ?
-            <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
-                <h2>Список не підтвердженої передачі</h2>
+            <div>
+                <h2>Непідтверджений наряд</h2>
                 <table className={classes.table}>
                     <thead>
                     <tr>
@@ -66,6 +38,7 @@ const TableMoveExecution = observer(() => {
                         <th>
                             Список майна
                         </th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -88,6 +61,7 @@ const TableMoveExecution = observer(() => {
                                         <th>Найменування</th>
                                         <th>Тип майна</th>
                                         <th>Серійний номер</th>
+                                        <th>Кількість</th>
                                         <th>Ціна за одиницю</th>
                                         <th>Дата створення</th>
                                     </tr>
@@ -98,12 +72,14 @@ const TableMoveExecution = observer(() => {
                                         techniques.map(({
                                                             techniqueName,
                                                             techniqueType,
-                                                            techniqueDetail
+                                                            techniqueDetail,
+                                                            count
                                                         }, indexTechnique) =>
                                             <tr key={indexTechnique}>
                                                 <td>{techniqueName}</td>
                                                 <td>{techniqueType}</td>
                                                 <td>{techniqueDetail.serialNumber}</td>
+                                                <td>{techniqueDetail.count}</td>
                                                 <td>{techniqueDetail.price}</td>
                                                 <td>{techniqueDetail.dateOfManufacture}</td>
                                             </tr>
@@ -115,6 +91,12 @@ const TableMoveExecution = observer(() => {
                                     </tbody>
                                 </table>
 
+                            </td>
+                            <td><IconButton size='small' onClick={() => setChangeData(true)}
+                            ><StorageIcon></StorageIcon></IconButton>
+
+                                <IconButton size='small'
+                                            onClick={handleRemove}><DeleteIcon></DeleteIcon></IconButton>
                             </td>
                         </tr>
                     )}
@@ -128,13 +110,12 @@ const TableMoveExecution = observer(() => {
                         style={{marginTop: '-25px'}}
                     />
                     <div style={{marginLeft: '80%', marginBottom: 10}}>
-                        <InputFile onChange={(e) => setFile(e.target.files[0])} value={file}/>
+                        <InputFile name='file' onChange={(e) => setFile(e.target.files[0])} value={file}/>
                     </div>
                 </div>
-                <MyButton onClick={documentConfim}>Підтвердити передачу</MyButton>
 
-            </ErrorAddData>
-            : <></>
+            </div>
+            : <h2>Оберіть непідтверджений наряд</h2>
     );
 });
 

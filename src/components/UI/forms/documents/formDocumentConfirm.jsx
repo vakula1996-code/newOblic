@@ -25,7 +25,6 @@ const FormDocumentConfirm = observer(() => {
     const {documents} = useContext(Context)
 
     const [doc, setDoc] = useState([getEmptyData('file1')])
-    console.log(doc)
     const addDocument = () => {
         setDoc([...doc, getEmptyData(`file${doc.length + 1}`)])
     }
@@ -34,7 +33,6 @@ const FormDocumentConfirm = observer(() => {
         const file = e.target.files[0];
         setDoc((docLocal) => docLocal.map(docItem => docItem.rowId === id ? ({...docItem, file}) : docItem))
     }
-
     const onChangeTextInput = (id, fieldName) => (e) => {
         setDoc((docLocalList) => {
             return docLocalList.map(docItem => {
@@ -49,7 +47,6 @@ const FormDocumentConfirm = observer(() => {
 
     useEffect(() => {
         documents.setDocumentConfirm(doc)
-        documents.setFiles(doc.map(docItem => docItem.file))
     }, [doc])
 
 
@@ -61,14 +58,14 @@ const FormDocumentConfirm = observer(() => {
 
     return (
         <div>
-            <h2>Документ</h2>
+            <h2>Супроводжуючі документи</h2>
             <table className={classes.table}>
                 <thead>
                 <tr>
                     <th>Назва документа</th>
                     <th>Дата документа</th>
                     <th>Номер документа</th>
-                    <th>Прикрепити документ</th>
+                    <th>Прикріпити документ</th>
                     <th><MyButton onClick={addDocument}>+</MyButton></th>
 
                 </tr>

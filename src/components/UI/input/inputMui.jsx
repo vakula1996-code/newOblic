@@ -2,7 +2,7 @@ import React from 'react';
 import {FormControl, FormHelperText, TextField} from "@mui/material";
 
 
-const InputMui = ({name, label, getData, value, error, errorLabel = '*Обов`язкове поле'}) => {
+const InputMui = ({name, label, getData, value, error, errorLabel = '*Обов`язкове поле', type = 'string'}) => {
     return (
 
         <FormControl error variant="standard">
@@ -10,7 +10,7 @@ const InputMui = ({name, label, getData, value, error, errorLabel = '*Обов`�
                        name={name}
                        onChange={(event) => getData(event)}
                        size='small' style={{minWidth: '100px'}}
-                       inputProps={{inputMode: 'numeric', pattern: '[0-9]'}}
+                       type={type}
             />
             {error === true
                 ? <FormHelperText id="component-error-text">{errorLabel}</FormHelperText>

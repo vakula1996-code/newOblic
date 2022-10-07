@@ -4,7 +4,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
 import classes from "../table.module.css";
 
-const TableLookTechniqueForDeregistration = observer(() => {
+const TableLookTechniqueForDeregistration = observer(({setFilterId}) => {
     const [listMove, setListMove] = useState([])
     const [moveId, setMoveId] = useState([])
     const {technique} = useContext(Context)
@@ -19,6 +19,7 @@ const TableLookTechniqueForDeregistration = observer(() => {
         listId.splice(index, 1)
         technique.setListDeregistrationTechnique(list)
         technique.setListDeregistrationTechniqueId(listId)
+        setFilterId([])
     }
 
     return (
@@ -28,22 +29,22 @@ const TableLookTechniqueForDeregistration = observer(() => {
                 <tr>
                     <th>№</th>
                     <th>
-                        Тип техніки
+                        Тип
                     </th>
                     <th>
-                        Назва техніки
+                        Найменування
                     </th>
                     <th>
-                        Підрозділ де знаходиться
+                        Підрозділ, де знаходиться
                     </th>
                     <th>
-                        Одиниці виміру
+                        Одиниця виміру
                     </th>
                     <th>
                         Кількість
                     </th>
                     <th>Серійний номер</th>
-                    <th>Ціна</th>
+                    <th>Ціна за одниницю</th>
                     <th>Категорія</th>
                     <th>Дата створення</th>
                     <th>Дія</th>

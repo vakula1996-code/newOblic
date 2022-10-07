@@ -8,28 +8,91 @@ import TableMoveExecution from "../../components/UI/table/Move/tableMoveExecutio
 import FormDocumentConfirm from "../../components/UI/forms/documents/formDocumentConfirm";
 
 import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
+import classes from "./move.module.css";
+import DateNow from "../../components/UI/calendar/dateNow";
+import {executionOrder} from "../../http/Documents";
+import {toJS} from "mobx";
+import MyButton from "../../components/UI/button/MyButton";
+import ErrorAddData from "../../components/UI/error/errorAddData";
+import FormChangeDocumentTransmission from "../../components/UI/forms/move/formChangeDocumentTransmission";
 
 const MoveConfirmTransmission = observer(() => {
     const {documents} = useContext(Context)
     const [modalTechnique, setModalTechnique] = useState(false)
-    const [modalDocument, setModalDocument] = useState(false)
+    const [modalChangeData, setChangeData] = useState(false)
+    const [dateConfirm, setDateConfirm] = useState(DateNow())
+    const [file, setFile] = useState(null)
+    const [error, setError] = useState('')
+    const [errorMessages, setErrorMessages] = useState('')
     useEffect(() => {
         nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
         nameDocument(4).then(data => documents.setTypeDocumentComing(data))
 
     }, [])
-
+    const documentConfim = () => {
+        executionOrder(
+            {
+                orderId: toJS(documents.listOrderNotExecution['id']),
+                date: dateConfirm,
+                orderScanName: "file",
+                documents: toJS(documents.documentConfirm),
+                changedTechniques: documents.documentConfirmChangedTechniques
+            },
+            file,
+            documents.documentConfirm
+        )
+            .catch(data => {
+                console.log(data)
+                if (data.response.data.detail) {
+                    setError(data.response.data.detail)
+                    setErrorMessages(data.response.data.detail)
+                } else if (data.response.status === 500) {
+                    setError('Не опрацьовий запит')
+                    setErrorMessages('Не опрацьовий запит! Перевірте правельність ведених значень.')
+                }
+            }).then(data => {
+            if (data !== undefined) {
+                window.location.reload()
+                setError(data)
+                setErrorMessages(data)
+            }
+        })
+    }
     return (
-        <div>
+        <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
+            <div className={classes.buttonSave}>
+                <MyButton onClick={documentConfim}>Підтвердити передачу</MyButton>
+            </div>
             <h1>Підтвердження передачі</h1>
-            <FormDocumentConfirm/>
+            <div className={classes.tableTechnique}>
+                <MyButtonAdd onClick={() => setModalTechnique(true)}>Обрати непідтверджений наряд</MyButtonAdd>
+                {/*<TableDocumentConfirm/>*/}
+                <TableMoveExecution
+                    dateConfirm={dateConfirm}
+                    setDateConfirm={setDateConfirm}
+                    file={file}
+                    setFile={setFile}
+                    setChangeData={setChangeData}
+                />
+            </div>
+            <div className={classes.tableDocument}>
+                <FormDocumentConfirm/>
+            </div>
+
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <FormDocumentRegistration setVisible={setModalTechnique}/>
+                <FormDocumentRegistration
+                    setVisible={setModalTechnique}
+                    dateConfirm={dateConfirm}
+                    setDateConfirm={setDateConfirm}
+                    file={file}
+                    setFile={setFile}
+
+                />
             </MyModal>
-            <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати зареєстрований наряд</MyButtonAdd>
-            {/*<TableDocumentConfirm/>*/}
-            <TableMoveExecution/>
-        </div>
+            <MyModal visible={modalChangeData} setVisible={setChangeData}>
+                <FormChangeDocumentTransmission visible={modalChangeData} setVisible={setChangeData}/>
+            </MyModal>
+        </ErrorAddData>
     );
 });
 

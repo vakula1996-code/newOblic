@@ -1,10 +1,12 @@
-.blockTable{
+.blockTable {
     display: flex;
 }
+
 .bigTable {
     overflow: auto;
     position: relative;
 }
+
 .bigTable table {
     display: inline-block;
     vertical-align: top;
@@ -12,4 +14,23 @@
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
+}
+
+.buttonSave {
+    margin-top: 20px;
+}
+
+.tableDocument {
+    border: 2px solid #a9a9a9;
+    border-radius: 50px;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    min-width: 830px;
+}
+
+.tableTechnique {
+    border: 2px solid #a9a9a9;
+    border-radius: 50px;
+    margin-bottom: 10px;
+    padding: 10px 10px 0 10px;
 }

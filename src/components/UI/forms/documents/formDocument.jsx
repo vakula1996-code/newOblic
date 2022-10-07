@@ -9,9 +9,6 @@ import {Context} from "../../../../index";
 import DateNow from "../../calendar/dateNow";
 import {v4 as uuidv4} from "uuid";
 import InputFile from "../../input/inputFile";
-import IconButton from "@mui/material/IconButton";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 
 const getEmptyData = (fileName) => ({
@@ -72,12 +69,12 @@ const FormDocument = observer(({error}) => {
                     <th>Дата</th>
                     <th>Реєстраційний номер</th>
                     <th>Одержувач</th>
-                    <th>Прикрепити документ</th>
-                    <th>
-                        <IconButton
-                            onClick={addDocument}>
-                            <AddBoxIcon style={{margin: 'auto'}}></AddBoxIcon></IconButton>
-                    </th>
+                    <th>Прикріпити документ</th>
+                    {/*<th>*/}
+                    {/*    <IconButton*/}
+                    {/*        onClick={addDocument}>*/}
+                    {/*        <AddBoxIcon style={{margin: 'auto'}}></AddBoxIcon></IconButton>*/}
+                    {/*</th>*/}
                 </tr>
                 </thead>
                 <tbody>
@@ -115,7 +112,7 @@ const FormDocument = observer(({error}) => {
                         </td>
                         <td>
                             <Select
-                                label="Частина в яку"
+                                label="Підрозділ"
                                 nameSelect="numberSubdivisions"
                                 value={toSubdivisionId}
                                 name='subdivisionName'
@@ -130,15 +127,15 @@ const FormDocument = observer(({error}) => {
                                 accept='application/pdf'
                             />
                         </td>
-                        {doc.length > 1
-                            ?
-                            <td>
-                                <IconButton size='small'
-                                            onClick={onDelete(rowId)}><DeleteIcon></DeleteIcon></IconButton>
-                            </td>
+                        {/*{doc.length > 1*/}
+                        {/*    ?*/}
+                        {/*    <td>*/}
+                        {/*        <IconButton size='small'*/}
+                        {/*                    onClick={onDelete(rowId)}><DeleteIcon></DeleteIcon></IconButton>*/}
+                        {/*    </td>*/}
 
-                            : <td></td>
-                        }
+                        {/*    : <td></td>*/}
+                        {/*}*/}
                     </tr>
                 ))}
                 </tbody>

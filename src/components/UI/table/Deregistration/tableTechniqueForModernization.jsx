@@ -13,36 +13,32 @@ const TableTechniqueForModernization = observer(({filterId, setFilterId}) => {
         setListMoveId(technique.listModernizationTechniqueId)
         setListMove(technique.listModernizationTechnique)
     }, [technique.listModernizationTechnique])
-    const handleRemove = (index) => {
-        const list = [...listMove]
-        const listId = [...listMoveId]
-        list.splice(index, 1)
-        listId.splice(index, 1)
-        technique.setListModernizationTechnique(list)
-        technique.setListModernizationTechniqueId(listId)
-        const filterList = [...filterId]
-        filterList.splice(index, 1)
-        setFilterId(filterList)
+    console.log(technique.listModernizationTechniqueId, listMoveId)
+    const handleRemove = (id) => {
+        technique.setListModernizationTechnique(technique.listModernizationTechnique.filter(item => item.id !== id))
+        technique.setListModernizationTechniqueId(technique.listModernizationTechniqueId.filter(item => item.id !== id))
+        setFilterId((filterLocal) => filterLocal.filter(item => item.idTechniqueDetail !== id))
     }
     const handleCountChange = (e, index) => {
         if (e.target.value.length === 0) {
-            const list = [...listMoveId]
-            list[index]['count'] = null
-            setListMoveId(list)
-        } else if (listMove[index].techniqueDetails.count < e.target.value) {
+            const list = [...technique.listModernizationTechniqueId]
+            list[index]['count'] = 0
+            technique.setListModernizationTechniqueId(list)
+        } else if (technique.listModernizationTechnique[index].techniqueDetails.count < e.target.value) {
             const {value} = e.target
-            const list = [...listMoveId]
-            list[index]['count'] = parseInt(listMove[index].techniqueDetails.count)
-            setListMoveId(list)
+            const list = [...technique.listModernizationTechniqueId]
+            list[index]['count'] = parseInt(technique.listModernizationTechnique[index].techniqueDetails.count)
+            technique.setListModernizationTechniqueId(list)
         } else {
             const {value} = e.target
-            const list = [...listMoveId]
+            const list = [...technique.listModernizationTechniqueId]
             list[index]['count'] = parseInt(value)
-            setListMoveId(list)
+            technique.setListModernizationTechniqueId(list)
         }
 
 
     }
+
     return (
         listMove.length > 0
             ?
@@ -53,25 +49,25 @@ const TableTechniqueForModernization = observer(({filterId, setFilterId}) => {
                     <tr>
                         <th>№</th>
                         <th>
-                            Тип техніки
+                            Тип
                         </th>
                         <th>
-                            Назва техніки
+                            Найменування
                         </th>
                         <th>
-                            Підрозділ де знаходиться
+                            Підрозділ, де знаходиться
                         </th>
                         <th>
-                            Одиниці виміру
+                            Одиниця виміру
                         </th>
                         <th>
                             Кількість
                         </th>
                         <th>
-                            Кількість яку передати
+                            Кількість, яку передати
                         </th>
                         <th>Серійний номер</th>
-                        <th>Ціна</th>
+                        <th>Ціна за одниницю</th>
                         <th>Категорія</th>
                         <th>Дата створення</th>
                         <th>Дія</th>
@@ -79,6 +75,7 @@ const TableTechniqueForModernization = observer(({filterId, setFilterId}) => {
                     </thead>
                     <tbody>
                     {listMove.map(({
+                                       id,
                                        typeTechnique,
                                        nameTechniques,
                                        measurement,
@@ -96,7 +93,7 @@ const TableTechniqueForModernization = observer(({filterId, setFilterId}) => {
                             <td>
                                 {techniqueDetails.count > 1
                                     ?
-                                    <MyInput value={listMoveId[indexTechnique].count}
+                                    <MyInput value={technique.listModernizationTechniqueId[indexTechnique].count}
                                              style={{textAlign: 'center', width: '80%'}}
                                              onChange={(e) => handleCountChange(e, indexTechnique)}
                                     />
@@ -108,7 +105,7 @@ const TableTechniqueForModernization = observer(({filterId, setFilterId}) => {
                             <td>{techniqueDetails.category}</td>
                             <td>{techniqueDetails.dateOfManufacture}</td>
                             <td><MyButtonRemove
-                                onClick={() => handleRemove(indexTechnique)}>Видалити</MyButtonRemove></td>
+                                onClick={() => handleRemove(id)}>Видалити</MyButtonRemove></td>
                         </tr>
                     )}
                     </tbody>

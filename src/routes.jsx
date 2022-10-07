@@ -1,14 +1,22 @@
 import React from "react";
 import {
-    ADMIN_PANEL,
+    ADMIN_PANEL_DOCUMENTS_NAME,
+    ADMIN_PANEL_MEASUREMENT,
+    ADMIN_PANEL_RECORD,
+    ADMIN_PANEL_SUBDIVISION,
+    ADMIN_PANEL_TYPE,
+    ADMIN_PANEL_TYPE_ENSURING,
+    ADMIN_PANEL_USERS,
     COMING_CHARITY,
     COMING_OUTFIT,
     COMING_PURCHASE,
     DEREGISTRATION_MOVE,
     DEREGISTRATION_REPAIR,
     DETAIL_LOOK_TECHNIQUE,
-    ENSURING, LOOK_DOCUMENTS,
+    ENSURING,
+    LOOK_DOCUMENTS,
     MOVE_CONFIRM_TRANSMISSION,
+    MOVE_DOCUMENT_EXECUTION,
     MOVE_REGISTRATION,
     MOVE_TO_FORM,
     REPORT_FOR_SUBDIVISION
@@ -22,10 +30,17 @@ import MoveConfirmTransmission from "./pages/move/MoveConfirmTransmission";
 import ReportForSubdivision from "./pages/report/reportForSubdivision";
 import DetailLookTechnique from "./pages/report/detailLookTechnique";
 import ReportEnsuring from "./pages/report/reportEnsuring";
-import AdminPanelAddData from "./pages/adminPanel/adminPanelAddData";
 import DeregistrationRepair from "./pages/deregistration/DeregistrationRepair";
 import DeregistrationMove from "./pages/deregistration/DeregistrationMove";
+import AdminPanelDocumentsName from "./pages/adminPanel/adminPanelDocumentsName";
+import AdminPanelSubdivision from "./pages/adminPanel/adminPanelSubdivision";
+import AdminPanelType from "./pages/adminPanel/adminPanelType";
+import AdminPanelTypeEnsuring from "./pages/adminPanel/adminPanelTypeEnsuring";
+import AdminPanelMeasurement from "./pages/adminPanel/adminPanelMeasurement";
+import AdminPanelRecord from "./pages/adminPanel/adminPanelRecord";
+import AdminPanelUsers from "./pages/adminPanel/adminPanelUsers";
 import LookDocuments from "./pages/report/lookDocuments";
+import MoveDocumentExecution from "./pages/move/MoveDocumentExecution";
 
 
 export const authRouter = [
@@ -54,6 +69,10 @@ export const authRouter = [
         Component: <MoveConfirmTransmission/>
     },
     {
+        path: MOVE_DOCUMENT_EXECUTION,
+        Component: <MoveDocumentExecution/>
+    },
+    {
         path: REPORT_FOR_SUBDIVISION,
         Component: <ReportForSubdivision/>
     },
@@ -74,11 +93,37 @@ export const authRouter = [
         Component: <DeregistrationMove/>
     },
     {
-        path: ADMIN_PANEL,
-        Component: <AdminPanelAddData/>
-    },
-    {
         path: LOOK_DOCUMENTS,
         Component: <LookDocuments/>
-    }
+    },
+    {
+        path: ADMIN_PANEL_SUBDIVISION,
+        Component: <AdminPanelSubdivision/>
+    },
+    {
+        path: ADMIN_PANEL_TYPE,
+        Component: <AdminPanelType/>
+    },
+    {
+        path: ADMIN_PANEL_TYPE_ENSURING,
+        Component: <AdminPanelTypeEnsuring/>
+    },
+    {
+        path: ADMIN_PANEL_MEASUREMENT,
+        Component: <AdminPanelMeasurement/>
+    },
+    {
+        path: ADMIN_PANEL_DOCUMENTS_NAME,
+        Component: <AdminPanelDocumentsName/>
+    },
+    {
+        path: ADMIN_PANEL_RECORD,
+        Component: <AdminPanelRecord/>
+    },
+    {
+        path: ADMIN_PANEL_USERS,
+        Component: <AdminPanelUsers/>
+    },
+
+
 ]

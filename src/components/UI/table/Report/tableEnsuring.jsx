@@ -7,9 +7,9 @@ import classes from "../table.module.css";
 import {observer} from "mobx-react-lite";
 
 const TableEnsuring = observer(() => {
-    const {document} = useContext(Context)
+    const {documents} = useContext(Context)
     useEffect(() => {
-        nameSubdivisions().then(data => document.setTypeNumberSubdivisions(data))
+        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
     }, [])
     const [subdivisionId, setSubdivisionid] = useState()
     const [listEnsuring, setListEnsuring] = useState()
@@ -18,7 +18,6 @@ const TableEnsuring = observer(() => {
             techniqueEnsuring(subdivisionId).then(data => setListEnsuring(data))
         }
     }, [subdivisionId])
-    console.log(listEnsuring)
     return (
         <div>
             <Select label="Підрозділ" nameSelect="numberSubdivisions" value={subdivisionId}
@@ -29,10 +28,10 @@ const TableEnsuring = observer(() => {
                     <thead>
                     <tr>
                         <th>№</th>
-                        <th>Тип абезпечення</th>
-                        <th>Потреба</th>
-                        <th>В наявності</th>
-                        <th>Забезпечення</th>
+                        <th>Тип забезпечення</th>
+                        <th>Необхідна кількість</th>
+                        <th>Наявна кількість</th>
+                        <th>Забезпечення, %</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -52,7 +51,7 @@ const TableEnsuring = observer(() => {
                     )}
 
                     <tr>
-                        <td colSpan='5'>Загальна забезпеченість: {listEnsuring.ensuring}</td>
+                        <td colSpan='5'>Загальна забезпеченість: {listEnsuring.ensuring}%</td>
                     </tr>
                     </tbody>
                 </table>

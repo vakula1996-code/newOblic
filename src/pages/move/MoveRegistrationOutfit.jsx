@@ -10,6 +10,7 @@ import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
 import TableForOrderNotRegister from "../../components/UI/table/Move/tableForOrderNotRegister";
 import MyButton from "../../components/UI/button/MyButton";
 import ErrorAddData from "../../components/UI/error/errorAddData";
+import classes from "./move.module.css";
 
 const MoveRegistrationOutfit = observer(() => {
     const {documents} = useContext(Context)
@@ -67,17 +68,22 @@ const MoveRegistrationOutfit = observer(() => {
 
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
+            <div className={classes.buttonSave}>
+                <MyButton onClick={register}>Зареєструвати наряд</MyButton>
+            </div>
             <h1>Реєстрація наряду</h1>
-            <FormMoveRegistration setDoc={setDoc} setId={setId} doc={doc} id={id}/>
-            <MyButton onClick={register}>Зареєструвати наряд</MyButton>
-            <MyButtonAdd onClick={addDocument}>Вибрати наряд</MyButtonAdd>
+            <div className={classes.tableDocument}>
+                <FormMoveRegistration setDoc={setDoc} setId={setId} doc={doc} id={id}/>
+            </div>
+            <div className={classes.tableTechnique}>
+                <MyButtonAdd onClick={addDocument}>Обрати наряд</MyButtonAdd>
+                <TableForOrderNotRegister orderNotRegisterId={orderNotRegisterId}
+                                          setOrderNotRegisterId={setOrderNotRegisterId} doc={doc}/>
+            </div>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <TableOrderNotRegistration setVisible={setModalTechnique}
                                            setOrderNotRegisterId={setOrderNotRegisterId}/>
             </MyModal>
-            <TableForOrderNotRegister orderNotRegisterId={orderNotRegisterId}
-                                      setOrderNotRegisterId={setOrderNotRegisterId} doc={doc}/>
-
         </ErrorAddData>
     );
 });

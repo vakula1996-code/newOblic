@@ -9,9 +9,6 @@ import {Context} from "../../../../index";
 import DateNow from "../../calendar/dateNow";
 import InputFile from "../../input/inputFile";
 import {v4 as uuidv4} from "uuid";
-import IconButton from "@mui/material/IconButton";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 
 const getEmptyData = (fileName) => ({
@@ -75,11 +72,11 @@ const FormDocumentOutfit = observer(({error}) => {
                     <th>Реєстраційний номер</th>
                     <th>Відправник</th>
                     <th>Одержувач</th>
-                    <th>Прикрепити документ</th>
-                    <th><IconButton
-                        onClick={addDocument}>
-                        <AddBoxIcon style={{margin: 'auto'}}></AddBoxIcon></IconButton>
-                    </th>
+                    <th>Прикріпити документ</th>
+                    {/*<th><IconButton*/}
+                    {/*    onClick={addDocument}>*/}
+                    {/*    <AddBoxIcon style={{margin: 'auto'}}></AddBoxIcon></IconButton>*/}
+                    {/*</th>*/}
                 </tr>
                 </thead>
                 <tbody>
@@ -118,7 +115,7 @@ const FormDocumentOutfit = observer(({error}) => {
                         </td>
                         <td>
                             <Select
-                                label="Частина з якої"
+                                label="Підрозділ"
                                 nameSelect="numberSubdivisions"
                                 value={fromSubdivisionId}
                                 name='subdivisionName'
@@ -127,7 +124,7 @@ const FormDocumentOutfit = observer(({error}) => {
                         </td>
                         <td>
                             <Select
-                                label="Частина в яку"
+                                label="Підрозділ"
                                 nameSelect="numberSubdivisions"
                                 value={toSubdivisionId}
                                 name='subdivisionName'
@@ -139,17 +136,18 @@ const FormDocumentOutfit = observer(({error}) => {
                                 name={documentScanName}
                                 onChange={onAddFile(rowId)}
                                 value={file}
+                                accept='application/pdf'
                             />
                         </td>
-                        {doc.length > 1
-                            ?
-                            <td>
-                                <IconButton size='small'
-                                            onClick={onDelete(rowId)}><DeleteIcon></DeleteIcon></IconButton>
-                            </td>
+                        {/*{doc.length > 1*/}
+                        {/*    ?*/}
+                        {/*    <td>*/}
+                        {/*        <IconButton size='small'*/}
+                        {/*                    onClick={onDelete(rowId)}><DeleteIcon></DeleteIcon></IconButton>*/}
+                        {/*    </td>*/}
 
-                            : <td></td>
-                        }
+                        {/*    : <td></td>*/}
+                        {/*}*/}
                     </tr>
                 ))}
                 </tbody>
