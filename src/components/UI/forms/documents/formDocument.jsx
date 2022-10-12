@@ -9,6 +9,7 @@ import {Context} from "../../../../index";
 import DateNow from "../../calendar/dateNow";
 import {v4 as uuidv4} from "uuid";
 import InputFile from "../../input/inputFile";
+import hookDataChangeSimple from "../../../hook/hookDataChange/hookDataChangeSimple";
 
 
 const getEmptyData = (fileName) => ({
@@ -34,16 +35,7 @@ const FormDocument = observer(({error}) => {
         const file = e.target.files[0];
         setDoc((docLocal) => docLocal.map(docItem => docItem.rowId === id ? ({...docItem, file}) : docItem))
     }
-    const onChangeTextInput = (id, fieldName) => (e) => {
-        setDoc((docLocalList) => {
-            return docLocalList.map(docItem => {
-                if (docItem.rowId === id) {
-                    return {...docItem, [fieldName]: e.target.value}
-                }
-                return docItem
-            })
-        })
-    }
+
 
     const onDelete = (id) => () => {
         setDoc((docLocal) => docLocal.filter(docItem => docItem.rowId !== id))
@@ -95,20 +87,44 @@ const FormDocument = observer(({error}) => {
                                 value={documentNameId}
                                 name='documentName'
                                 selectName='documentNameId'
-                                getData={onChangeTextInput(rowId, 'documentNameId')}/>
+                                getData={hookDataChangeSimple(
+                                    {
+                                        data: doc,
+                                        setData: setDoc,
+                                        nameData: 'documentNameId',
+                                        id: rowId,
+                                        idName: 'rowId'
+                                    })
+                                }/>
                         </td>
                         <td>
                             <InputDate
                                 value={documentDate}
                                 name='documentDate'
-                                getData={onChangeTextInput(rowId, 'documentDate')}/>
+                                getData={hookDataChangeSimple(
+                                    {
+                                        data: doc,
+                                        setData: setDoc,
+                                        nameData: 'documentDate',
+                                        id: rowId,
+                                        idName: 'rowId'
+                                    })
+                                }/>
                         </td>
                         <td>
                             <InputMui
                                 label="Номер документа"
                                 value={documentNumber}
                                 name='documentNumber'
-                                getData={onChangeTextInput(rowId, 'documentNumber')}/>
+                                getData={hookDataChangeSimple(
+                                    {
+                                        data: doc,
+                                        setData: setDoc,
+                                        nameData: 'documentNumber',
+                                        id: rowId,
+                                        idName: 'rowId'
+                                    })
+                                }/>
                         </td>
                         <td>
                             <Select
@@ -117,7 +133,15 @@ const FormDocument = observer(({error}) => {
                                 value={toSubdivisionId}
                                 name='subdivisionName'
                                 selectName='toSubdivisionId'
-                                getData={onChangeTextInput(rowId, 'toSubdivisionId')}/>
+                                getData={hookDataChangeSimple(
+                                    {
+                                        data: doc,
+                                        setData: setDoc,
+                                        nameData: 'toSubdivisionId',
+                                        id: rowId,
+                                        idName: 'rowId'
+                                    })
+                                }/>
                         </td>
                         <td>
                             <InputFile

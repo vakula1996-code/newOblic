@@ -9,6 +9,7 @@ import {Context} from "../../../../index";
 import DateNow from "../../calendar/dateNow";
 import InputFile from "../../input/inputFile";
 import {v4 as uuidv4} from "uuid";
+import hookDataChangeSimple from "../../../hook/hookDataChange/hookDataChangeSimple";
 
 
 const getEmptyData = (fileName) => ({
@@ -98,20 +99,44 @@ const FormDocumentOutfit = observer(({error}) => {
                                 value={documentNameId}
                                 name='documentName'
                                 selectName='documentNameId'
-                                getData={onChangeTextInput(rowId, 'documentNameId')}/>
+                                getData={hookDataChangeSimple(
+                                    {
+                                        data: doc,
+                                        setData: setDoc,
+                                        nameData: 'documentNameId',
+                                        id: rowId,
+                                        idName: 'rowId'
+                                    })
+                                }/>
                         </td>
                         <td>
                             <InputDate
                                 value={documentDate}
                                 name='documentDate'
-                                getData={onChangeTextInput(rowId, 'documentDate')}/>
+                                getData={hookDataChangeSimple(
+                                    {
+                                        data: doc,
+                                        setData: setDoc,
+                                        nameData: 'documentDate',
+                                        id: rowId,
+                                        idName: 'rowId'
+                                    })
+                                }/>
                         </td>
                         <td>
                             <InputMui
                                 label="Номер документа"
                                 value={documentNumber}
                                 name='documentNumber'
-                                getData={onChangeTextInput(rowId, 'documentNumber')}/>
+                                getData={hookDataChangeSimple(
+                                    {
+                                        data: doc,
+                                        setData: setDoc,
+                                        nameData: 'documentNumber',
+                                        id: rowId,
+                                        idName: 'rowId'
+                                    })
+                                }/>
                         </td>
                         <td>
                             <Select
@@ -120,7 +145,15 @@ const FormDocumentOutfit = observer(({error}) => {
                                 value={fromSubdivisionId}
                                 name='subdivisionName'
                                 selectName='fromSubdivisionId'
-                                getData={onChangeTextInput(rowId, 'fromSubdivisionId')}/>
+                                getData={hookDataChangeSimple(
+                                    {
+                                        data: doc,
+                                        setData: setDoc,
+                                        nameData: 'fromSubdivisionId',
+                                        id: rowId,
+                                        idName: 'rowId'
+                                    })
+                                }/>
                         </td>
                         <td>
                             <Select
@@ -129,7 +162,15 @@ const FormDocumentOutfit = observer(({error}) => {
                                 value={toSubdivisionId}
                                 name='subdivisionName'
                                 selectName='toSubdivisionId'
-                                getData={onChangeTextInput(rowId, 'toSubdivisionId')}/>
+                                getData={hookDataChangeSimple(
+                                    {
+                                        data: doc,
+                                        setData: setDoc,
+                                        nameData: 'toSubdivisionId',
+                                        id: rowId,
+                                        idName: 'rowId'
+                                    })
+                                }/>
                         </td>
                         <td>
                             <InputFile
