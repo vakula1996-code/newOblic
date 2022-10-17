@@ -13,19 +13,13 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
         setDocumentsList(documents.documentExecutionList.filter(item => item.id === id))
         setModalDocument(false)
     }
-    // const onClickDownloadPDF = (documentId) => {
-    //     const response = downloadPDF(params.subdivisionId, documentId)
-    // }
-    //
-    // const onClickDownloadDOC = (documentId) => {
-    //     downloadDOC(params.subdivisionId, documentId).then((error) => {
-    //         if (error.response.status === 500) {
-    //             setError(error.message)
-    //             setErrorMessages(error.message)
-    //         }
-    //     })
-    //
-    // }
+    const onClickDownloadPDF = (documentId,fromSubdivisionId) => {
+        downloadPDF(fromSubdivisionId, documentId)
+    }
+
+    const onClickDownloadDOC = (documentId,fromSubdivisionId) => {
+        downloadDOC(fromSubdivisionId, documentId)
+    }
     return (
         <div className={classes.tableScroll}>
             <table>
@@ -35,10 +29,11 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
                     <th>Дата документа</th>
                     <th>Майно</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {documents.documentExecutionList.map(({id, documentName, date, techniques}) =>
+                {documents.documentExecutionList.map(({id,fromSubdivisionId, documentName, date, techniques,doc,scan}) =>
                     <tr key={id}>
                         <td>{documentName}</td>
                         <td>{date}</td>
@@ -96,19 +91,29 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
                                 )}
                                 </tbody>
                             </table>
-                            {/*<td>*/}
-                            {/*    <a*/}
-                            {/*        onClick={() => onClickDownloadPDF(documentId)}*/}
-                            {/*        download*/}
-                            {/*        className={classes.file}><span>Скачати</span><span>PDF</span></a>*/}
-                            {/*    <a*/}
-                            {/*        onClick={() => onClickDownloadDOC(documentId)}*/}
-                            {/*        download*/}
-                            {/*        className={classes.file}><span*/}
-                            {/*        style={{background: "blue"}}>Скачати</span><span*/}
-                            {/*        style={{background: "blue"}}>WORD</span></a>*/}
-                            {/*</td>*/}
-                            <MyButtonChoice onClick={() => onChange(id)}>Вибрати</MyButtonChoice>
+                        </td>
+                        <td>
+                            {doc === true
+                                ?
+                                <a
+                                    onClick={() => onClickDownloadPDF(id)}
+                                    download
+                                    className={classes.file}><span>Скачати</span><span>PDF</span></a>
+                                :<></>
+                            }
+                            {scan === true
+                                ?
+                                <a
+                                    onClick={() => onClickDownloadDOC(id,fromSubdivisionId)}
+                                    download
+                                    className={classes.file}><span
+                                    style={{background: "blue"}}>Скачати</span><span
+                                    style={{background: "blue"}}>WORD</span></a>
+                                :<></>
+                            }
+                        </td>
+                        <td>
+                            <MyButtonChoice onClick={() => onChange(id,fromSubdivisionId)}>Вибрати</MyButtonChoice>
                         </td>
                     </tr>
                 )}
