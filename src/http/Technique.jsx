@@ -81,10 +81,8 @@ export const decommissionedTechnique = async(document,details,files)=>{
     // if (localStorage.getItem('token')) {
     const formData = new FormData()
     if (files !== null) {
-        formData.append('data', JSON.stringify({document:document,details:details}))
-        document.map(({file, documentScanName}) => {
-            formData.append(documentScanName, file)
-        })
+        formData.append('data', JSON.stringify({document:document[0],details:details}))
+        formData.append(document[0].documentScanName, document[0].file)
         const {data} = await $authHost.post(DECOMMISSIONED, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"

@@ -57,6 +57,7 @@ const DeregistrationMove = observer(() => {
             <div className={classesComing.buttonSave}>
                 <MyButton className={classesTable.button} onClick={decommissioned}>Зберегти</MyButton>
             </div>
+            <h1>Списання</h1>
             <div className={classes.tableDocument}>
                 <FormDocument error={error}/>
             </div>

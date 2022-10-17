@@ -24,8 +24,8 @@ const TableChooseSubdivisions = observer(({data, setData}) => {
         <table className={classes.tableShow}>
             <thead>
             <tr>
-                <th>Підрозділ з якого</th>
-                <th>Підрозділ в який</th>
+                <th>Відправник</th>
+                <th>Одержувач</th>
                 <th>Дата відміни наряду</th>
             </tr>
             </thead>

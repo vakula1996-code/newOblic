@@ -4,6 +4,8 @@ import MyInput from "../../input/MyInput";
 import MyButtonRemove from "../../button/MyButtonRemove";
 import {Context} from "../../../../index";
 import {observer} from "mobx-react-lite";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const TableDeregegistrationLook = observer(({list, error, filterId, setFilterId}) => {
     const [listMove, setListMove] = useState([])
@@ -47,7 +49,7 @@ const TableDeregegistrationLook = observer(({list, error, filterId, setFilterId}
     }, [error])
     return (
         <div>
-            <h3>Список обраного майна для передачі</h3>
+            <h3>Список обраного майна для списанн</h3>
             <div className={classes.tableShow}>
                 <table>
                     <thead>
@@ -105,8 +107,10 @@ const TableDeregegistrationLook = observer(({list, error, filterId, setFilterId}
                             <td>{techniqueDetails.price}</td>
                             <td>{techniqueDetails.category}</td>
                             <td>{techniqueDetails.dateOfManufacture}</td>
-                            <td><MyButtonRemove
-                                onClick={() => handleRemove(id)}>Видалити</MyButtonRemove></td>
+                            <td>
+                                <IconButton size='small'
+                                            onClick={() => handleRemove(id)}><DeleteIcon></DeleteIcon></IconButton>
+                            </td>
                         </tr>
                     )}
                     </tbody>

@@ -14,7 +14,7 @@ import hookDataChangeSimple from "../../../hook/hookDataChange/hookDataChangeSim
 
 const getEmptyData = (fileName) => ({
     documentNameId: null,
-    toSubdivisionId: null,
+    fromSubdivisionId: null,
     documentNumber: '',
     documentDate: DateNow(),
     documentScanName: fileName,
@@ -60,7 +60,7 @@ const FormDocument = observer(({error}) => {
                     <th>Назва</th>
                     <th>Дата</th>
                     <th>Реєстраційний номер</th>
-                    <th>Одержувач</th>
+                    <th>Підрозділ</th>
                     <th>Прикріпити документ</th>
                     {/*<th>*/}
                     {/*    <IconButton*/}
@@ -132,12 +132,12 @@ const FormDocument = observer(({error}) => {
                                 nameSelect="numberSubdivisions"
                                 value={toSubdivisionId}
                                 name='subdivisionName'
-                                selectName='toSubdivisionId'
+                                selectName='fromSubdivisionId'
                                 getData={hookDataChangeSimple(
                                     {
                                         data: doc,
                                         setData: setDoc,
-                                        nameData: 'toSubdivisionId',
+                                        nameData: 'fromSubdivisionId',
                                         id: rowId,
                                         idName: 'rowId'
                                     })

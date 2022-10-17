@@ -41,8 +41,8 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
                             <table className={classes.tableSecond}>
                                 <thead>
                                 <tr>
-                                    <th>Назва техніки</th>
-                                    <th>Тип техніки</th>
+                                    <th>Найменування</th>
+                                    <th>Тип</th>
                                     <th style={{zIndex: 9}}>
                                         Детальна інформація
                                     </th>
