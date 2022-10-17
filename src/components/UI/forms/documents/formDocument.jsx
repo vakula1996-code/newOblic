@@ -72,7 +72,7 @@ const FormDocument = observer(({error}) => {
                 <tbody>
                 {doc.map(({
                               documentNameId,
-                              toSubdivisionId,
+                              fromSubdivisionId,
                               documentNumber,
                               documentDate,
                               rowId,
@@ -130,7 +130,7 @@ const FormDocument = observer(({error}) => {
                             <Select
                                 label="Підрозділ"
                                 nameSelect="numberSubdivisions"
-                                value={toSubdivisionId}
+                                value={fromSubdivisionId}
                                 name='subdivisionName'
                                 selectName='fromSubdivisionId'
                                 getData={hookDataChangeSimple(

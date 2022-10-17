@@ -21,9 +21,10 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
         nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
     }, [])
     useEffect(() => {
-        setIdSubivision(idSubdivision)
-    }, [idSubdivision])
-
+        if(documents.document[0].fromSubdivisionId !== null){
+            setIdSubivision(documents.document[0].fromSubdivisionId)
+        }
+    }, [documents.document[0]])
     useEffect(() => {
         if (idSubdivision.length !== 0) {
             subdivisionsTechniques(idSubdivision).then(data => {
@@ -85,10 +86,6 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                 dataFilter={dataFilter}
                 setDataFilter={setDataFilter}
             />
-            <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
-                    name='subdivisionName'
-                    getData={e => setIdSubivision(e.target.value)}/>
-
             <div className={classes.tableScroll}>
 
 

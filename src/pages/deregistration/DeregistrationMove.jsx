@@ -51,7 +51,6 @@ const DeregistrationMove = observer(() => {
         })
 
     }
-
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <div className={classesComing.buttonSave}>
@@ -66,10 +65,14 @@ const DeregistrationMove = observer(() => {
                 <TableDeregistrationForSubdivision setVisibleWindow={setModalTechnique}
                                                    filterId={filterId} setFilterId={setFilterId} dataList={dataList}/>
             </MyModal>
-            <TableDeregegistrationLook
+
+                <TableDeregegistrationLook
                 list={setListMoveTechnique} error={error}
                 filterId={filterId} setFilterId={setFilterId}
-            />
+                />
+
+
+
         </ErrorAddData>
     );
 });

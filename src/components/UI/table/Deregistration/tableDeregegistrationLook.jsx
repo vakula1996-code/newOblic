@@ -49,8 +49,10 @@ const TableDeregegistrationLook = observer(({list, error, filterId, setFilterId}
     }, [error])
     return (
         <div>
-            <h3>Список обраного майна для списанн</h3>
+            {listMove.length
+                ?
             <div className={classes.tableShow}>
+                <h3>Список обраного майна для списання</h3>
                 <table>
                     <thead>
                     <tr>
@@ -116,12 +118,12 @@ const TableDeregegistrationLook = observer(({list, error, filterId, setFilterId}
                     </tbody>
                 </table>
 
-                {listMove.length
-                    ? <></>
-                    : <h2>Добавте майно для передачі</h2>
-                }
-            </div>
 
+
+
+            </div>
+                : <h2>Добавте майно для передачі</h2>
+            }
         </div>
 
     );
