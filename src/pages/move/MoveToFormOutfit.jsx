@@ -37,7 +37,6 @@ const MoveToFormOutfit = observer(() => {
         if (
             doc.toSubdivisionId !== null &&
             doc.fromSubdivisionId !== null &&
-            doc.documentDate !== '' &&
             doc.toSubdivisionId !== doc.fromSubdivisionId
         ) {
             try {

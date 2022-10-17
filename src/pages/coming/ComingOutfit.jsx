@@ -6,7 +6,7 @@ import {
     nameDocument,
     nameEnsuring,
     nameMeasurements,
-    nameSubdivisions,
+    nameSubdivisions, nameSubdivisionsAll,
     nameTechnique,
     nameTechniqueType
 } from "../../http/Type";
@@ -25,10 +25,10 @@ const ComingOutfit = observer(() => {
     const {technique} = useContext(Context)
     useEffect(() => {
         nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
+        nameSubdivisionsAll().then(data => documents.setTypeNumberSubdivisionsAll(data))
         nameDocument(3).then(data => documents.setTypeDocumentComing(data))
         nameTechniqueType().then(data => technique.setTypeTechnique(data))
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
-
         nameTechnique().then(data => technique.setNameTechnique(data))
         nameMeasurements().then(data => technique.setMeasurements(data))
     }, [])

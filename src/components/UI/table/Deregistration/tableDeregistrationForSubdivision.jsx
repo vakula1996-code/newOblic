@@ -31,14 +31,13 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
             })
         }
     }, [idSubdivision])
-    const [listMove, setListMove] = useState([])
     const addInList = (id) => {
 
         dataList.filter(dataItem =>
             dataItem.techniqueDetails.filter(detailItem =>
                 detailItem.id === id
                     ?
-                    technique.setListDeregistrationTechnique([{
+                    technique.setWritingOffTechnique([...technique.writingOffTechnique,{
                         id: dataItem.id,
                         typeTechnique: dataItem.typeTechnique,
                         nameTechniques: dataItem.nameTechniques,
@@ -48,12 +47,9 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                         typeTechniqueId: dataItem.typeTechniqueId,
                     }])
                     ||
-                    technique.setListDeregistrationTechniqueId([...technique.listDeregistrationTechniqueId, {
-                        techniqueDetailId: detailItem.id,
+                    technique.setWritingOffTechniqueId([...technique.writingOffTechniqueId, {
                         howCategoryId: detailItem.categoryId,
-                        newName: '',
-                        newCategoryId: '',
-                        newPrice: '',
+                        count: detailItem.count,
                     }])
                     ||
                     setFilterId([...filterId, {idTechnique: dataItem.id, idTechniqueDetail: detailItem.id}])
@@ -61,7 +57,6 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                     detailItem
             )
         )
-        setVisibleWindow(false)
 
     }
     const [visible, setVisible] = useState(false)
@@ -130,11 +125,10 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                                          measurement,
                                          subdivision,
                                          techniqueDetails,
-
                                      }, indexTechnique) =>
-                        techniqueDetails.length > 0
+                        techniqueDetails.some(itemDetail => (filterId.map(item => item.idTechniqueDetail).includes(itemDetail.id) === false))
                             ?
-                            <tr key={indexTechnique}>
+                            <tr key={id}>
                                 <td>{indexTechnique + 1}</td>
                                 <td>{typeTechnique}</td>
                                 <td>{nameTechniques}</td>
@@ -176,6 +170,8 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                                                                            available,
                                                                            dateOfManufacture
                                                                        }, indexSerialNumber) =>
+                                                    filterId.map(item => item.idTechniqueDetail).includes(id) === false
+                                                        ?
                                                     <tr key={indexSerialNumber}>
                                                         <td>{indexSerialNumber + 1}</td>
                                                         <td>{serialNumber}</td>
@@ -196,6 +192,8 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                                                             }
                                                         </td>
                                                     </tr>
+                                                        :
+                                                        <></>
                                                 )}
                                                 </tbody>
                                             </table>

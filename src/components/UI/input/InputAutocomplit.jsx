@@ -3,12 +3,12 @@ import {Autocomplete, FormControl, FormHelperText, TextField} from "@mui/materia
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
 
-const InputAutocomplit = observer(({label, getData, value = '', error, errorLabel = '*Обов`язкове поле'}) => {
+const InputAutocomplit = observer(({label, getData, value = '', error, errorLabel = '*Обов`язкове поле',nameState}) => {
     const [data, setData] = useState([])
     const {technique} = useContext(Context)
     useEffect(() => {
-        setData(technique.nameTechnique)
-    }, [technique.nameTechnique])
+        setData(technique[nameState])
+    }, [technique[nameState]])
     return (
         <FormControl error variant="standard">
             < Autocomplete

@@ -74,7 +74,9 @@ const FormNewNamaAndCategory = observer(() => {
                     <td>
                         <InputAutocomplit value={name}
                                           label='Найменування'
-                                          getData={(e) => handleChange(e)}/>
+                                          getData={(e) => handleChange(e)}
+                                          nameState='nameTechnique'
+                        />
                     </td>
                     <td>
                         <Select nameSelect="category" value={category}

@@ -436,7 +436,9 @@ const FormTechnique = observer(({setVisible, idTechnique}) => {
                         <td><InputAutocomplit value={listTechnique.techniqueName}
                                               error={listDataValid.techniqueName}
                                               label='Найменування'
-                                              getData={(e) => handleTechniqueChange(e, 'techniqueName')}/></td>
+                                              getData={(e) => handleTechniqueChange(e, 'techniqueName')}
+                                              nameState='nameTechnique'
+                        /></td>
                         <td><Select label='Тип' nameSelect="typeTechnique" value={listTechnique.techniqueTypeId}
                                     error={listDataValid.techniqueTypeId}
                                     name='techniqueType'

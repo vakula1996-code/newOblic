@@ -1,6 +1,7 @@
 //Головні
 // export const LOCAL_URLS = "http://127.0.0.1:8000/"
-export const LOCAL_URLS = "http://192.168.0.93:8080/"
+export const LOCAL_URLS = "http://127.0.0.1:8000/"
+// export const LOCAL_URLS = "http://192.168.0.93:8080/"
 // export const GLOBAL_URLS = 'http://192.168.0.11:8000/'
 // export const GLOBAL_URLS = "http://192.168.0.93:8080/"
 // export const LOCAL_URLS = 'http://192.168.0.11:8000/'
@@ -45,6 +46,7 @@ export const LOOK_DOCUMENTS = '/documents'
 //Типи
 export const TYPE_DOCUMENT_NAME = (id) => 'api/documentNames?type=' + id
 export const TYPE_SUBDIVISION_NAME = 'api/subdivisions'
+export const TYPE_SUBDIVISION_NAME_ALL = 'api/subdivisions?type=inner'
 export const TYPE_MEASUREMENTS_NAME = 'api/measurements'
 export const TYPE_CATEGORY_NAME = (id) => 'api/category?type=' + id
 export const TYPE_TECHNIQUE = 'api/techniqueType'
@@ -61,6 +63,7 @@ export const TECHNIQUE_INFORMATION = (id) => 'api/subdivisions/+' + id + '+/tech
 export const TECHNIQUE_HISTORY = (id) => 'api/subdivisions/' + id + '/techniques/history'
 export const TECHNIQUE_ENSURING = (id) => 'api/subdivisions/' + id + '/techniques/ensuring'
 export const MODERNIZATION = 'api/modernization'
+export const DECOMMISSIONED = 'api/decommissioned'
 
 //Документи
 export const ORDER_NOT_REGISTER = (id) => 'api/subdivisions/' + id + '/documents/orderNotRegister'
@@ -72,5 +75,5 @@ export const DOCUMENT_ALL = (id) => 'api/subdivisions/' + id + '/documents'
 export const DOCUMENT_DOWNLOAD_SCAN = (idSubdivision, idDocument) => 'api/subdivisions/' + idSubdivision + '/documents/' + idDocument + '/scan'
 export const DOCUMENT_DOWNLOAD_DOC = (idSubdivision, idDocument) => 'api/subdivisions/' + idSubdivision + '/documents/' + idDocument + '/doc'
 export const DOCUMENT_NOT_EXECUTION_OR_NOT_REGISTER = (idSubdivision) => 'api/subdivisions/' + idSubdivision + '/documents/orderNotExecutionOrRegister'
-
+export const DOCUMENT_CANCEL_ORDER = 'api/cancelOrder'
 export const UPLOAD = 'api/upload'

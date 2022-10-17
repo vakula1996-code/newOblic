@@ -1,6 +1,6 @@
 import {$authHost} from "./index";
 import {
-    DOCUMENT_ALL,
+    DOCUMENT_ALL, DOCUMENT_CANCEL_ORDER,
     DOCUMENT_DOWNLOAD_DOC,
     DOCUMENT_DOWNLOAD_SCAN,
     DOCUMENT_HISTORY,
@@ -69,7 +69,6 @@ export const documentHisory = async (id, idTechnique, idCategory) => {
 
 export const documentAll = async (id) => {
     // if (localStorage.getItem('token')) {
-    console.log(id)
     const {data} = await $authHost.get(DOCUMENT_ALL(id))
     return data
 
@@ -115,9 +114,16 @@ export const downloadPDF = async (idSubdivision, idDocument) => {
 }
 
 
-export const documentExecution = async (subdivisionId) => {
+export const documentExecution = async (subdivisionId,toSubdivisionId) => {
     // if (localStorage.getItem('token')) {
-    const {data} = await $authHost.get(DOCUMENT_NOT_EXECUTION_OR_NOT_REGISTER(subdivisionId))
+    const {data} = await $authHost.post(DOCUMENT_NOT_EXECUTION_OR_NOT_REGISTER(subdivisionId), toSubdivisionId)
+    return data
+    // }
+}
+
+export const documentCancel  = async (id)=>{
+    // if (localStorage.getItem('token')) {
+    const {data} = await $authHost.post(DOCUMENT_CANCEL_ORDER,{id})
     return data
     // }
 }

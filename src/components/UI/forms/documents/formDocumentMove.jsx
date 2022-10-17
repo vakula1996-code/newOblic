@@ -7,10 +7,8 @@ import DateNow from "../../calendar/dateNow";
 
 const FormDocumentMove = ({id, f, error}) => {
     const data = {
-        // documentNameId: null,
         toSubdivisionId: null,
         fromSubdivisionId: null,
-        documentDate: DateNow()
     }
     const [document, setDocument] = useState(data)
     useEffect(() => {
@@ -32,23 +30,12 @@ const FormDocumentMove = ({id, f, error}) => {
                     <thead>
                     <tr>
                         {/*<th>Назва документа</th>*/}
-                        <th>Дата документа</th>
                         <th>Відправник</th>
                         <th>Одержувач</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        {/*<td>*/}
-                        {/*    <Select label='Назва документа' nameSelect="typeDocumentCharity"*/}
-                        {/*            value={document.documentNameId} name='documentName'*/}
-                        {/*            getData={(data) => setDocument({...document, documentNameId: data.target.value})}/>*/}
-                        {/*</td>*/}
-                        <td>
-                            <InputDate value={document.documentDate}
-                                       getData={(data) => setDocument({...document, documentDate: data.target.value})}/>
-
-                        </td>
                         <td>
                             <Select label="Частина з якої" nameSelect="numberSubdivisions"
                                     value={document.fromSubdivisionId} name='subdivisionName'

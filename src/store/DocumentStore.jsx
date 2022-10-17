@@ -6,10 +6,12 @@ export default class DocumentStore {
         this._document = []
         this._typeDocumentComing = []
         this._typeNumberSubdivisions = []
+        this._typeNumberSubdivisionsAll = []
         this._listOrderNotRegister = []
         this._listOrderNotExecution = []
         this._documentConfirm = []
         this._documentConfirmChangedTechniques = []
+        this._documentExecutionList = []
         makeAutoObservable(this)
     }
 
@@ -29,6 +31,10 @@ export default class DocumentStore {
         return this._typeNumberSubdivisions
     }
 
+    get numberSubdivisionsAll() {
+        return toJS(this._typeNumberSubdivisionsAll)
+    }
+
     get listOrderNotRegister() {
         return this._listOrderNotRegister
     }
@@ -44,7 +50,9 @@ export default class DocumentStore {
     get documentConfirmChangedTechniques() {
         return this._documentConfirmChangedTechniques
     }
-
+    get documentExecutionList(){
+        return this._documentExecutionList
+    }
     setFiles(files) {
         this._files = files
     }
@@ -61,6 +69,10 @@ export default class DocumentStore {
         this._typeNumberSubdivisions = number
     }
 
+    setTypeNumberSubdivisionsAll(number) {
+        this._typeNumberSubdivisionsAll = number
+    }
+
     setListOrderNotRegister(list) {
         this._listOrderNotRegister = list
     }
@@ -75,6 +87,9 @@ export default class DocumentStore {
 
     setDocumentConfirmChangedTechniques(doc) {
         this._documentConfirmChangedTechniques = doc
+    }
+    setDocumentExecutionList(list){
+        this._documentExecutionList = list
     }
 
 }

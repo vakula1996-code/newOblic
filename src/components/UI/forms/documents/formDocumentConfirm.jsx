@@ -10,6 +10,9 @@ import DateNow from "../../calendar/dateNow";
 import MyButtonRemove from "../../button/MyButtonRemove";
 import {v4 as uuidv4} from 'uuid';
 import InputFile from "../../input/inputFile";
+import IconButton from "@mui/material/IconButton";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 
 const getEmptyData = (fileName) => ({
@@ -66,8 +69,10 @@ const FormDocumentConfirm = observer(() => {
                     <th>Дата документа</th>
                     <th>Номер документа</th>
                     <th>Прикріпити документ</th>
-                    <th><MyButton onClick={addDocument}>+</MyButton></th>
-
+                    <th><IconButton size='small'
+                                      onClick={addDocument}>
+                        <AddBoxIcon></AddBoxIcon></IconButton>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -106,9 +111,8 @@ const FormDocumentConfirm = observer(() => {
                             ?
                             <td>
 
-                                <MyButtonRemove onClick={onDelete(rowId)}>
-                                    Видалити
-                                </MyButtonRemove>
+                                <IconButton size='small'
+                                            onClick={onDelete(rowId)}><DeleteIcon></DeleteIcon></IconButton>
                             </td>
                             : <td></td>
                         }

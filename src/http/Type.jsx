@@ -5,7 +5,7 @@ import {
     TYPE_DOCUMENT_NAME,
     TYPE_ENSURING,
     TYPE_MEASUREMENTS_NAME,
-    TYPE_SUBDIVISION_NAME,
+    TYPE_SUBDIVISION_NAME, TYPE_SUBDIVISION_NAME_ALL,
     TYPE_TECHNIQUE,
     TYPE_TECHNIQUE_NAME,
 } from "../utils/const";
@@ -13,6 +13,12 @@ import {
 export const nameSubdivisions = async () => {
     // if (localStorage.getItem('token')) {
     const {data} = await $authHost.get(TYPE_SUBDIVISION_NAME)
+    return data
+    // }
+}
+export const nameSubdivisionsAll = async () => {
+    // if (localStorage.getItem('token')) {
+    const {data} = await $authHost.get(TYPE_SUBDIVISION_NAME_ALL)
     return data
     // }
 }

@@ -1,28 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Select from "../../components/UI/select/select";
-import {nameSubdivisions} from "../../http/Type";
 import {observer} from "mobx-react-lite";
-import {Context} from "../../index";
-import {documentExecution} from "../../http/Documents";
+import TableChooseSubdivisions from "../../components/UI/table/Move/tableChooseSubdivisions";
+import MyModal from "../../components/UI/modal/MyModal";
+import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
+import classesComing from "../coming/coming.module.css";
+import TableLookDocumentExecution from "../../components/UI/table/Move/tableLookDocumentExecution";
+
 
 const MoveDocumentExecution = observer(() => {
-    const {documents} = useContext(Context)
-    const [subdivisionId, setSubdivisionId] = useState()
-    const [listDocument, setListDocument] = useState([])
-    useEffect(() => {
-        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
-    }, [])
-    useEffect(() => {
-        if (subdivisionId) {
-            documentExecution(subdivisionId).then(data => setListDocument(data))
-        }
-    }, [subdivisionId])
-    console.log(listDocument)
+
     return (
         <div>
-            <Select label="Підрозділ" nameSelect="numberSubdivisions" value={subdivisionId}
-                    name='subdivisionName'
-                    getData={e => setSubdivisionId(e.target.value)}/>
+            <TableChooseSubdivisions/>
+            <TableLookDocumentExecution/>
         </div>
     );
 });

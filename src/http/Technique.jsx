@@ -1,7 +1,7 @@
 import {$authHost} from "./index";
 import {
     ADD_NEW_TECHNIQUE,
-    ADD_NEW_TECHNIQUE_OUTFIT,
+    ADD_NEW_TECHNIQUE_OUTFIT, DECOMMISSIONED,
     LOOK_TECHNIQUE,
     SUBDIVISIONS_TECHNIQUES,
     TECHNIQUE_ENSURING,
@@ -12,7 +12,6 @@ import {
 
 export const addNewTechniqueHttp = async (document, technique, type, files) => {
     // if (localStorage.getItem('token')) {
-
     const formData = new FormData()
     if (files !== null) {
         formData.append('data', JSON.stringify({documents: document, techniques: technique}))
@@ -76,6 +75,24 @@ export const techniqueEnsuring = async (id) => {
     const {data} = await $authHost.get(TECHNIQUE_ENSURING(id))
     return data
     // }
+}
+
+export const decommissionedTechnique = async(document,details,files)=>{
+    // if (localStorage.getItem('token')) {
+    const formData = new FormData()
+    if (files !== null) {
+        formData.append('data', JSON.stringify({document:document,details:details}))
+        document.map(({file, documentScanName}) => {
+            formData.append(documentScanName, file)
+        })
+        const {data} = await $authHost.post(DECOMMISSIONED, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        return data
+        // }
+    }
 }
 
 

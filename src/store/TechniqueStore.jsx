@@ -24,6 +24,8 @@ export default class TechniqueStore {
         this._listDeregistrationTechniqueId = []
         this._listModernizationTechnique = []
         this._listModernizationTechniqueId = []
+        this._writingOffTechnique = []
+        this._writingOffTechniqueId = []
         makeAutoObservable(this)
     }
 
@@ -105,6 +107,14 @@ export default class TechniqueStore {
 
     get listTechniqueForExcludedId() {
         return toJS(this._listTechniqueForExcludedId)
+    }
+
+    get writingOffTechnique() {
+        return this._writingOffTechnique
+    }
+
+    get writingOffTechniqueId() {
+        return this._writingOffTechniqueId
     }
 
     setListTechnique(list) {
@@ -190,6 +200,15 @@ export default class TechniqueStore {
     setListTechniqueForExcludeId(techniqueId) {
         this._listTechniqueForExcludedId = techniqueId
     }
+
+    setWritingOffTechnique(technique){
+        this._writingOffTechnique = technique
+    }
+
+    setWritingOffTechniqueId(techniqueId) {
+        this._writingOffTechniqueId = techniqueId
+    }
+
 
 }
 

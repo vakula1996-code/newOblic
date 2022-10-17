@@ -30,7 +30,6 @@ const MoveRegistrationOutfit = observer(() => {
 
     const addDocument = () => {
         orderNotRegister({
-            date: doc.date,
             toSubdivisionId: doc.toSubdivisionId
         }, id).then(data => documents.setListOrderNotRegister(data))
         setModalTechnique(true)
@@ -42,6 +41,7 @@ const MoveRegistrationOutfit = observer(() => {
         if (documents.listOrderNotRegister[0] !== undefined) {
             registerOrder({
                 documentNumber: doc.documentNumber,
+                documentDate: doc.date,
                 orderId: documents.listOrderNotRegister[0]['id']
             }).catch(data => {
                 if (data.response.data.detail) {

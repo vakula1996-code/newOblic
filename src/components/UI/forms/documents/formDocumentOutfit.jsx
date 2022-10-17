@@ -10,12 +10,14 @@ import DateNow from "../../calendar/dateNow";
 import InputFile from "../../input/inputFile";
 import {v4 as uuidv4} from "uuid";
 import hookDataChangeSimple from "../../../hook/hookDataChange/hookDataChangeSimple";
+import InputAutocomplit from "../../input/InputAutocomplit";
+import InputAutocomplitSubdivision from "../../input/inputAutocomplitSubdivision";
 
 
 const getEmptyData = (fileName) => ({
     documentNameId: null,
     toSubdivisionId: null,
-    fromSubdivisionId: null,
+    fromSubdivision: '',
     documentNumber: '',
     documentDate: DateNow(),
     documentScanName: fileName,
@@ -47,6 +49,23 @@ const FormDocumentOutfit = observer(({error}) => {
                 return docItem
             })
         })
+    }
+    console.log(doc)
+    const onChangeAutocomplit = (e,name,data)=>{
+        const list = doc[0]
+        if (e.target.innerHTML) {
+            if (e.target.innerHTML.includes('<path') !== true) {
+                list[name] = e.target.innerHTML
+                setDoc([list])
+            } else {
+                list[name] = ''
+                setDoc([list])
+            }
+        } else {
+            const {value} = e.target
+            list[name] = value
+            setDoc([list])
+        }
     }
 
     const onDelete = (id) => () => {
@@ -83,7 +102,7 @@ const FormDocumentOutfit = observer(({error}) => {
                 <tbody>
                 {doc.map(({
                               documentNameId,
-                              fromSubdivisionId,
+                              fromSubdivision,
                               toSubdivisionId,
                               documentNumber,
                               documentDate,
@@ -139,21 +158,12 @@ const FormDocumentOutfit = observer(({error}) => {
                                 }/>
                         </td>
                         <td>
-                            <Select
-                                label="Підрозділ"
-                                nameSelect="numberSubdivisions"
-                                value={fromSubdivisionId}
-                                name='subdivisionName'
-                                selectName='fromSubdivisionId'
-                                getData={hookDataChangeSimple(
-                                    {
-                                        data: doc,
-                                        setData: setDoc,
-                                        nameData: 'fromSubdivisionId',
-                                        id: rowId,
-                                        idName: 'rowId'
-                                    })
-                                }/>
+                            <InputAutocomplitSubdivision
+                            value={fromSubdivision}
+                            label="Підрозділ"
+                            getData={(e)=>onChangeAutocomplit(e,'fromSubdivision')}
+                            nameState='numberSubdivisionsAll'
+                        />
                         </td>
                         <td>
                             <Select
