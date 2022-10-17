@@ -371,3 +371,86 @@
 .tableShow tbody tr:last-child td {
     border-bottom: 1px solid #ddd;
 }
+
+.tableSecond {
+    overflow-x: scroll;
+    /*width: calc(45vw);*/
+    padding-bottom: 0;
+    /*height: calc(80vh - 10px);*/
+    max-width: calc(100vh);
+}
+
+.tableSecond table {
+    table-layout: fixed;
+    border: none;
+    margin-bottom: 20px;
+    border-collapse: separate;
+}
+
+.tableSecond thead th {
+    font-weight: bold;
+    border: none;
+    padding: 5px 8px;
+    background: #fafafa;
+    font-size: 12px;
+    border-top: 1px solid #b9b7b7;
+    border-bottom: 1px solid #b4b4b4;
+    text-align: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: -3px;
+    z-index: 2;
+}
+
+.tableSecond tbody td {
+    text-align: center;
+    border-left: 1px solid #8f8e8e;
+    border-right: 1px solid #9a9a9a;
+    padding: 10px 15px;
+    font-size: 12px;
+    vertical-align: center;
+}
+
+.tableSecond tbody tr:nth-child(even) {
+    background: #e1e1e1;
+}
+
+.tableSecond tbody tr:nth-child(odd) {
+    background: #ffffff;
+}
+
+
+.tableSecond tr th:first-child, .tableSecond tr td:first-child {
+    height: 49px;
+    border-left: 1px solid #ddd;
+}
+
+.tableSecond tr th:last-child, .tableSecond tr td:last-child {
+    border-right: 1px solid #ddd;
+}
+
+.tableSecond thead tr th:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+.tableSecond thead tr th:last-child {
+    border-radius: 0 20px 0 0;
+}
+
+.tableSecond tbody td {
+    text-align: center;
+    vertical-align: center;
+    border: none;
+    /*padding: 10px 15px;*/
+    font-size: 12px;
+    border-right: 1px solid #ddd;
+
+}
+
+.tableSecond tbody tr:nth-child(even) {
+    background: #F8F8F8;
+}
+
+.tableSecond tbody tr:last-child td {
+    border-bottom: 1px solid #ddd;
+}

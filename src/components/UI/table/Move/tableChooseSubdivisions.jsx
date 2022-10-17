@@ -5,8 +5,10 @@ import {nameSubdivisions} from "../../../../http/Type";
 import {documentExecution} from "../../../../http/Documents";
 import {observer} from "mobx-react-lite";
 import classes from '../table.module.css'
+import InputDate from "../../input/inputDate";
+import hookDataChangeSimple from "../../../hook/hookDataChange/hookDataChangeSimple";
 
-const TableChooseSubdivisions = observer(() => {
+const TableChooseSubdivisions = observer(({data, setData}) => {
     const {documents} = useContext(Context)
     const [fromSubdivisionId, setFromSubdivisionId] = useState()
     const [toSubdivisionId, setToSubdivisionId] = useState()
@@ -24,6 +26,7 @@ const TableChooseSubdivisions = observer(() => {
             <tr>
                 <th>Підрозділ з якого</th>
                 <th>Підрозділ в який</th>
+                <th>Дата відміни наряду</th>
             </tr>
             </thead>
             <tr>
@@ -36,6 +39,12 @@ const TableChooseSubdivisions = observer(() => {
                     <Select label="Підрозділ" nameSelect="numberSubdivisions" value={toSubdivisionId}
                             name='subdivisionName'
                             getData={e => setToSubdivisionId(e.target.value)}/>
+                </td>
+                <td  style={{backgroundColor:'white'}}>
+                    <InputDate
+                        value={data}
+                        name='documentDate'
+                        getData={(e)=>setData(e.target.value)}/>
                 </td>
             </tr>
             <tbody>

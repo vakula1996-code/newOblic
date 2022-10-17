@@ -121,9 +121,9 @@ export const documentExecution = async (subdivisionId,toSubdivisionId) => {
     // }
 }
 
-export const documentCancel  = async (id)=>{
+export const documentCancel  = async ({orderId,date})=>{
     // if (localStorage.getItem('token')) {
-    const {data} = await $authHost.post(DOCUMENT_CANCEL_ORDER,{id})
+    const {data} = await $authHost.post(DOCUMENT_CANCEL_ORDER,{orderId,date})
     return data
     // }
 }
