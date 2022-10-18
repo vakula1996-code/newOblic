@@ -22,29 +22,26 @@ const InventoryForSubdivision = observer(() => {
             })
         }
     }, [idSubdivision])
-    if(dataList['orders'])
-    console.log()
+    if (dataList['orders'] !== undefined) {
+        console.log(dataList['orders'].length)
+    }
     return (
         <div>
             <h1>Інвентризація</h1>
             <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
                     name='subdivisionName'
                     getData={e => setIdSubdivision(e.target.value)}/>
-            {/*{dataList['orders'] !== undefined*/}
-            {/*    ?*/}
-            {/*    dataList['ordered'].length > 0*/}
-            {/*        ?*/}
-            {/*        <TableLookOrders dataList={dataList}/>*/}
-            {/*        : <></>*/}
-            {/*    :*/}
-            {/*    <></>*/}
-            {/*}*/}
-            {/*{!dataList['orders']*/}
-            {/*    ?*/}
-            {/*    :<></>*/}
-
-            {/*}*/}
-            {/*<TableLookTechnique dataList={dataList}/>*/}
+            {dataList['orders'] !== undefined
+                ?
+                <TableLookOrders dataList={dataList['orders']}/>
+                :
+                <></>
+            }
+            {dataList['techniques'] !== undefined
+                ?
+                <TableLookTechnique dataList={dataList['techniques']}/>
+                : <></>
+            }
         </div>
     );
 });
