@@ -30,19 +30,23 @@ const TableDetailInfo = ({params}) => {
                     info.map(({
                                   subdivision,
                                   typeTechnique,
+                                  ensuringType,
                                   nameTechnique,
                                   serialNumber,
+                                  count,
+                                  measurement,
+                                  price,
                                   category
                               }, index) =>
                         <tr key={index}>
                             <td>{subdivision}</td>
                             <td>{typeTechnique}</td>
-                            <td></td>
+                            <td>{ensuringType}</td>
                             <td>{nameTechnique}</td>
                             <td>{serialNumber}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{count}</td>
+                            <td>{measurement}</td>
+                            <td>{price}</td>
                             <td>{category}</td>
                         </tr>
                     )}

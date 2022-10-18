@@ -26,82 +26,86 @@ const TableReportForSubdivsion = observer(() => {
             <Select label="Підрозділ" nameSelect="numberSubdivisions" value={subdivisionId}
                     name='subdivisionName'
                     getData={e => setSubdivisionId(e.target.value)}/>
-            <table className={classes.table}>
+            {listTechnique.length > 0
+                ?
+                <table className={classes.table}>
 
-                <thead>
-                <tr>
-                    <th>№</th>
-                    <th>Тип</th>
-                    <th>Найменування</th>
-                    <th>Підрозділ</th>
-                    <th>Одиниця виміру</th>
-                    <th>Додаткові дані</th>
-                </tr>
-                </thead>
-                <tbody>
-                {listTechnique.map(({
-                                        id,
-                                        typeTechnique,
-                                        nameTechniques,
-                                        subdivision,
-                                        measurement,
-                                        count,
-                                        techniqueDetails
-                                    }, index) =>
-                    <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{typeTechnique}</td>
-                        <td>{nameTechniques}</td>
-                        <td>{subdivision}</td>
-                        <td>{measurement}</td>
-                        <td>
-                            <Accordion>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon/>}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header">
-                                    <h4>Додаткові дані</h4>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <table className={classes.table}>
-                                        <thead>
-                                        <tr>
-                                            <th>№</th>
-                                            <th>Серійний номер</th>
-                                            <th>Кількість</th>
-                                            <th>Ціна за одиницю</th>
-                                            <th>Дата створення</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {techniqueDetails.map(({
-                                                                   id,
-                                                                   serialNumber,
-                                                                   price,
-                                                                   dateOfManufacture,
-                                                                   category,
-                                                                   categoryId,
-                                                                   count
-                                                               }, index) =>
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td><Link
-                                                    to={`/detailLookTechnique/${subdivisionId}/${id}/${categoryId}`}>{serialNumber}</Link>
-                                                </td>
-                                                <td>{count}</td>
-                                                <td>{price}</td>
-                                                <td>{dateOfManufacture}</td>
-                                            </tr>
-                                        )}
-                                        </tbody>
-                                    </table>
-                                </AccordionDetails>
-                            </Accordion>
-                        </td>
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Тип</th>
+                        <th>Найменування</th>
+                        <th>Підрозділ</th>
+                        <th>Одиниця виміру</th>
+                        <th>Додаткові дані</th>
                     </tr>
-                )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {listTechnique.map(({
+                                            id,
+                                            typeTechnique,
+                                            nameTechniques,
+                                            subdivision,
+                                            measurement,
+                                            count,
+                                            techniqueDetails
+                                        }, index) =>
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{typeTechnique}</td>
+                            <td>{nameTechniques}</td>
+                            <td>{subdivision}</td>
+                            <td>{measurement}</td>
+                            <td>
+                                <Accordion>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon/>}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header">
+                                        <h4>Додаткові дані</h4>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <table className={classes.table}>
+                                            <thead>
+                                            <tr>
+                                                <th>№</th>
+                                                <th>Серійний номер</th>
+                                                <th>Кількість</th>
+                                                <th>Ціна за одиницю</th>
+                                                <th>Дата створення</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {techniqueDetails.map(({
+                                                                       id,
+                                                                       serialNumber,
+                                                                       price,
+                                                                       dateOfManufacture,
+                                                                       category,
+                                                                       categoryId,
+                                                                       count
+                                                                   }, index) =>
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td><Link
+                                                        to={`/detailLookTechnique/${subdivisionId}/${id}/${categoryId}`}>{serialNumber}</Link>
+                                                    </td>
+                                                    <td>{count}</td>
+                                                    <td>{price}</td>
+                                                    <td>{dateOfManufacture}</td>
+                                                </tr>
+                                            )}
+                                            </tbody>
+                                        </table>
+                                    </AccordionDetails>
+                                </Accordion>
+                            </td>
+                        </tr>
+                    )}
+                    </tbody>
+                </table>
+                : <></>
+            }
         </div>
     );
 });

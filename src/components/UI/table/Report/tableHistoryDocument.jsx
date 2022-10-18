@@ -28,15 +28,18 @@ const TableHistoryDocument = ({params}) => {
                                   toSubdivision,
                                   fromSubdivision,
                                   date,
-                                  documents
+                                  documents,
+                                  expense,
+                                  receipts,
+                                  remainderEnd
                               }, index) =>
                     <tr key={index}>
                         <td>{date}</td>
                         <td>{fromSubdivision}</td>
                         <td>{toSubdivision}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{receipts}</td>
+                        <td>{expense}</td>
+                        <td>{remainderEnd}</td>
                         <td>
                             <table>
                                 <thead>

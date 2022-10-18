@@ -18,6 +18,7 @@ import classesComing from "../coming/coming.module.css";
 import MyButton from "../../components/UI/button/MyButton";
 import classesTable from "../../components/UI/table/table.module.css";
 import {addNewTechniqueHttp, decommissionedTechnique} from "../../http/Technique";
+import TableDeregistrationMove from "../../components/UI/table/Deregistration/tableDeregistrationMove";
 
 const DeregistrationMove = observer(() => {
     const {documents} = useContext(Context)
@@ -62,8 +63,9 @@ const DeregistrationMove = observer(() => {
             </div>
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Обрати майно для списання</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
-                <TableDeregistrationForSubdivision setVisibleWindow={setModalTechnique}
+                <TableDeregistrationMove setVisibleWindow={setModalTechnique}
                                                    filterId={filterId} setFilterId={setFilterId} dataList={dataList}/>
+
             </MyModal>
 
                 <TableDeregegistrationLook

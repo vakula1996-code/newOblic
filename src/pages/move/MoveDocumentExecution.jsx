@@ -12,9 +12,12 @@ import TableChooseDocumentExecution from "../../components/UI/table/Move/tableCh
 import ErrorAddData from "../../components/UI/error/errorAddData";
 import MyButton from "../../components/UI/button/MyButton";
 import classes from "../../components/UI/table/table.module.css";
+import MyButtonNotActivated from "../../components/UI/button/MyButtonNotActivated";
+import {toJS} from "mobx";
 
 
 const MoveDocumentExecution = observer(() => {
+    const {documents} = useContext(Context)
     const [documentsList, setDocumentsList] = useState([])
     const [data, setData] = useState('')
     const [error, setError] = useState('')
@@ -46,7 +49,10 @@ const MoveDocumentExecution = observer(() => {
             </div>
             <h2>Відміна наряду</h2>
             <TableChooseSubdivisions data={data} setData={setData}/>
-            <MyButtonAdd onClick={() => setModalDocument(true)}>Обрати документ для вилучення</MyButtonAdd>
+            {documents.documentExecutionList.length > 0
+                ? <MyButtonAdd onClick={() => setModalDocument(true)}>Обрати документ для вилучення</MyButtonAdd>
+                : <MyButtonNotActivated onClick={() => setModalDocument(true)}>Обрати документ для вилучення</MyButtonNotActivated>
+            }
             <MyModal visible={modalDocument} setVisible={setModalDocument}>
                 <TableLookDocumentExecution documentsList={documentsList} setDocumentsList={setDocumentsList}
                                             setModalDocument={setModalDocument}/>

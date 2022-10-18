@@ -1,18 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {observer} from "mobx-react-lite";
-import Select from "../../select/select";
-import classes from "../table.module.css";
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import React,{useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
+import {nameSubdivisions} from "../../../../http/Type";
 import {subdivisionsTechniques} from "../../../../http/Technique";
 import MyButtonLookFilter from "../../button/MyButtonLookFilter";
 import FilterWindow from "../../filter/filterWindow";
+import classes from "../table.module.css";
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MyButtonChoice from "../../button/MyButtonChoice";
-import {nameSubdivisions} from "../../../../http/Type";
 import MyButtonNotActivated from "../../button/MyButtonNotActivated";
+import {observer} from "mobx-react-lite";
 
-const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId, setFilterId}) => {
+const TableDeregistrationMove = observer(({setVisibleWindow, filterId, setFilterId}) => {
     const {technique} = useContext(Context)
     const {documents} = useContext(Context)
     const [dataList, setDataList] = useState([])
@@ -21,9 +20,10 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
         nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
     }, [])
     useEffect(() => {
-        setIdSubivision(idSubdivision)
-    }, [idSubdivision])
-
+        if(documents.document[0].fromSubdivisionId !== null){
+            setIdSubivision(documents.document[0].fromSubdivisionId)
+        }
+    }, [documents.document[0]])
     useEffect(() => {
         if (idSubdivision.length !== 0) {
             subdivisionsTechniques(idSubdivision).then(data => {
@@ -37,7 +37,7 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
             dataItem.techniqueDetails.filter(detailItem =>
                 detailItem.id === id
                     ?
-                    technique.setListDeregistrationTechnique([{
+                    technique.setWritingOffTechnique([...technique.writingOffTechnique,{
                         id: dataItem.id,
                         typeTechnique: dataItem.typeTechnique,
                         nameTechniques: dataItem.nameTechniques,
@@ -47,12 +47,9 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                         typeTechniqueId: dataItem.typeTechniqueId,
                     }])
                     ||
-                    technique.setListDeregistrationTechniqueId([...technique.listDeregistrationTechniqueId, {
-                        techniqueDetailId: detailItem.id,
+                    technique.setWritingOffTechniqueId([...technique.writingOffTechniqueId, {
                         howCategoryId: detailItem.categoryId,
-                        newName: '',
-                        newCategoryId: '',
-                        newPrice: '',
+                        count: detailItem.count,
                     }])
                     ||
                     setFilterId([...filterId, {idTechnique: dataItem.id, idTechniqueDetail: detailItem.id}])
@@ -60,7 +57,6 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                     detailItem
             )
         )
-        setVisibleWindow(false)
 
     }
     const [visible, setVisible] = useState(false)
@@ -89,9 +85,6 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                 dataFilter={dataFilter}
                 setDataFilter={setDataFilter}
             />
-            <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
-                    name='subdivisionName'
-                    getData={e => setIdSubivision(e.target.value)}/>
             <div className={classes.tableScroll}>
 
 
@@ -175,26 +168,26 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
                                                                        }, indexSerialNumber) =>
                                                     filterId.map(item => item.idTechniqueDetail).includes(id) === false
                                                         ?
-                                                    <tr key={indexSerialNumber}>
-                                                        <td>{indexSerialNumber + 1}</td>
-                                                        <td>{serialNumber}</td>
-                                                        <td>{price}</td>
-                                                        <td>{category}</td>
-                                                        <td>{count}</td>
-                                                        <td>{available}</td>
-                                                        <td>{dateOfManufacture}</td>
-                                                        <td>
-                                                            {available > 0
-                                                                ? <MyButtonChoice
-                                                                    onClick={() => addInList(id)}>Вибрати
-                                                                </MyButtonChoice>
-                                                                : <MyButtonNotActivated
-                                                                    style={{padding: '8px 16px'}}
-                                                                    onClick={() => addInList(id)}>Вибрати
-                                                                </MyButtonNotActivated>
-                                                            }
-                                                        </td>
-                                                    </tr>
+                                                        <tr key={indexSerialNumber}>
+                                                            <td>{indexSerialNumber + 1}</td>
+                                                            <td>{serialNumber}</td>
+                                                            <td>{price}</td>
+                                                            <td>{category}</td>
+                                                            <td>{count}</td>
+                                                            <td>{available}</td>
+                                                            <td>{dateOfManufacture}</td>
+                                                            <td>
+                                                                {available > 0
+                                                                    ? <MyButtonChoice
+                                                                        onClick={() => addInList(id)}>Вибрати
+                                                                    </MyButtonChoice>
+                                                                    : <MyButtonNotActivated
+                                                                        style={{padding: '8px 16px'}}
+                                                                        onClick={() => addInList(id)}>Вибрати
+                                                                    </MyButtonNotActivated>
+                                                                }
+                                                            </td>
+                                                        </tr>
                                                         :
                                                         <></>
                                                 )}
@@ -213,4 +206,4 @@ const TableDeregistrationForSubdivision = observer(({setVisibleWindow, filterId,
     );
 });
 
-export default TableDeregistrationForSubdivision;
+export default TableDeregistrationMove;

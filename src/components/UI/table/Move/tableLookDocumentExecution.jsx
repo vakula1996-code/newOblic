@@ -96,7 +96,7 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
                             {doc === true
                                 ?
                                 <a
-                                    onClick={() => onClickDownloadPDF(id)}
+                                    onClick={() => onClickDownloadPDF(id,fromSubdivisionId)}
                                     download
                                     className={classes.file}><span>Скачати</span><span>PDF</span></a>
                                 :<></>

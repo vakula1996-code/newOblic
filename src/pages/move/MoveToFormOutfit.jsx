@@ -118,7 +118,6 @@ const MoveToFormOutfit = observer(() => {
                     ? <MyButtonAdd onClick={() => setModalTechnique(true)}>Обрати майно</MyButtonAdd>
                     : <MyButtonNotActivated onClick={() => setModalTechnique(true)}>Обрати майно</MyButtonNotActivated>
                 }
-
                 {technique.moveTechnique.length > 0
 
                     ? <TableLookMove list={setListMoveTechnique} error={error}

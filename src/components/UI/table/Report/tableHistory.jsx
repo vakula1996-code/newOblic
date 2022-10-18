@@ -20,8 +20,6 @@ const TableHistory = ({params}) => {
         })
 
     }
-
-
     useEffect(() => {
         documentHisory(params.subdivisionId, params.id, params.categoryId).then(data => setHistoryDocument(data))
     }, [])
@@ -43,13 +41,14 @@ const TableHistory = ({params}) => {
                                           fromSubdivision,
                                           date,
                                           status,
-                                          documents
+                                          documents,
+
                                       }, index) =>
                     <tr key={index}>
                         <td>{fromSubdivision}</td>
                         <td>{toSubdivision}</td>
                         <td>{date}</td>
-                        <td><input type="checkbox" checked={status}/></td>
+                        <td>{status}</td>
                         <td>
                             <table>
                                 <thead>
@@ -61,21 +60,31 @@ const TableHistory = ({params}) => {
                                 </thead>
                                 <tbody>
                                 {documents ?
-                                    documents.map(({documentId, numberDocument, nameDocument}, index) =>
+                                    documents.map(({documentId, numberDocument, nameDocument,scan, doc}, index) =>
                                         <tr key={index}>
                                             <td>{numberDocument}</td>
                                             <td>{nameDocument}</td>
                                             <td>
-                                                <a
-                                                    onClick={() => onClickDownloadPDF(documentId)}
-                                                    download
-                                                    className={classes.file}><span>Скачати</span><span>PDF</span></a>
-                                                <a
-                                                    onClick={() => onClickDownloadDOC(documentId)}
-                                                    download
-                                                    className={classes.file}><span
-                                                    style={{background: "blue"}}>Скачати</span><span
-                                                    style={{background: "blue"}}>WORD</span></a>
+                                                {scan === true
+                                                    ?
+                                                    <a
+                                                        onClick={() => onClickDownloadPDF(documentId)}
+                                                        download
+                                                        className={classes.file}><span>Скачати</span><span>PDF</span></a>
+                                                    : <></>
+                                                }
+                                                {doc === true
+                                                    ?
+                                                    <a
+                                                        onClick={() => onClickDownloadDOC(documentId)}
+                                                        download
+                                                        className={classes.file}><span
+                                                        style={{background: "blue"}}>Скачати</span><span
+                                                        style={{background: "blue"}}>WORD</span></a>
+                                                    : <></>
+
+                                                }
+
                                             </td>
                                         </tr>
                                     )
