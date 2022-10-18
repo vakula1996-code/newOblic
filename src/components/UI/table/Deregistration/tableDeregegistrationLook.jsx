@@ -122,7 +122,7 @@ const TableDeregegistrationLook = observer(({list, error, filterId, setFilterId}
 
 
             </div>
-                : <h2>Добавте майно для передачі</h2>
+                : <h2>Добавте майно для списання</h2>
             }
         </div>
 
