@@ -93,7 +93,7 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
                             </table>
                         </td>
                         <td>
-                            {doc === true
+                            {scan === true
                                 ?
                                 <a
                                     onClick={() => onClickDownloadPDF(id,fromSubdivisionId)}
@@ -101,7 +101,7 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
                                     className={classes.file}><span>Скачати</span><span>PDF</span></a>
                                 :<></>
                             }
-                            {scan === true
+                            {doc === true
                                 ?
                                 <a
                                     onClick={() => onClickDownloadDOC(id,fromSubdivisionId)}

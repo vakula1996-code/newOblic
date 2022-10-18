@@ -28,6 +28,8 @@ export const DETAIL_LOOK_TECHNIQUE = '/detailLookTechnique'
 
 export const ENSURING = '/techniqueEnsuring'
 
+export const INVENTORY = '/inventory'
+
 export const ADMIN_PANEL = '/adminPanel'
 
 
@@ -64,6 +66,7 @@ export const TECHNIQUE_HISTORY = (id) => 'api/subdivisions/' + id + '/techniques
 export const TECHNIQUE_ENSURING = (id) => 'api/subdivisions/' + id + '/techniques/ensuring'
 export const MODERNIZATION = 'api/modernization'
 export const DECOMMISSIONED = 'api/decommissioned'
+export const INVENTORY_FOR_SUBDIVISION = (id) => 'api/subdivisions/'+id+'/inventory '
 
 //Документи
 export const ORDER_NOT_REGISTER = (id) => 'api/subdivisions/' + id + '/documents/orderNotRegister'

@@ -70,7 +70,7 @@ const TableDeregegistrationLook = observer(({list, error, filterId, setFilterId}
                             Кількість
                         </th>
                         <th>
-                            Кількість, яку передати
+                            Кількість, яку списати
                         </th>
 
                         <th>Серійний номер</th>
@@ -122,7 +122,7 @@ const TableDeregegistrationLook = observer(({list, error, filterId, setFilterId}
 
 
             </div>
-                : <h2>Добавте майно для списання</h2>
+                : <h2>Додайте майно для списання</h2>
             }
         </div>
 

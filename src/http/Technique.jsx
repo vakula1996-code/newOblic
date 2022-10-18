@@ -1,7 +1,7 @@
 import {$authHost} from "./index";
 import {
     ADD_NEW_TECHNIQUE,
-    ADD_NEW_TECHNIQUE_OUTFIT, DECOMMISSIONED,
+    ADD_NEW_TECHNIQUE_OUTFIT, DECOMMISSIONED, INVENTORY_FOR_SUBDIVISION,
     LOOK_TECHNIQUE,
     SUBDIVISIONS_TECHNIQUES,
     TECHNIQUE_ENSURING,
@@ -93,4 +93,10 @@ export const decommissionedTechnique = async(document,details,files)=>{
     }
 }
 
+export const inventory = async(id)=>{
+    // if (localStorage.getItem('token')) {
+    const {data} = await $authHost.get(INVENTORY_FOR_SUBDIVISION(id))
+    return data
+    // }
+}
 

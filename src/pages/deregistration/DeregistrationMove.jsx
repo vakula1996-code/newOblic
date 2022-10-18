@@ -1,4 +1,4 @@
-import React, {useContext, useEffect,useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import TableDeregistrationForSubdivision
     from "../../components/UI/table/Deregistration/tableDeregistrationForSubdivision";
 import MyModal from "../../components/UI/modal/MyModal";
@@ -36,7 +36,7 @@ const DeregistrationMove = observer(() => {
     const [doc, setDoc] = useState({})
 
     const decommissioned = () => {
-        decommissionedTechnique(documents.document,listMoveTechnique, 'doc').catch(data => {
+        decommissionedTechnique(documents.document, listMoveTechnique, 'doc').catch(data => {
             if (data.response.data.detail) {
                 setError(data.response.data.detail)
                 setErrorMessages(data.response.data.detail)
@@ -64,17 +64,15 @@ const DeregistrationMove = observer(() => {
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Обрати майно для списання</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <TableDeregistrationMove setVisibleWindow={setModalTechnique}
-                                                   filterId={filterId} setFilterId={setFilterId} dataList={dataList}/>
+                                         filterId={filterId} setFilterId={setFilterId} dataList={dataList}/>
 
             </MyModal>
-
+            <div className={classes.tableDocument}>
                 <TableDeregegistrationLook
-                list={setListMoveTechnique} error={error}
-                filterId={filterId} setFilterId={setFilterId}
+                    list={setListMoveTechnique} error={error}
+                    filterId={filterId} setFilterId={setFilterId}
                 />
-
-
-
+            </div>
         </ErrorAddData>
     );
 });

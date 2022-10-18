@@ -19,7 +19,7 @@ const TableChooseSubdivisions = observer(({data, setData}) => {
         if (toSubdivisionId) {
             documentExecution(fromSubdivisionId, {toSubdivisionId}).then(data => documents.setDocumentExecutionList(data))
         }
-    }, [toSubdivisionId])
+    }, [toSubdivisionId,fromSubdivisionId])
     return (
         <table className={classes.tableShow}>
             <thead>

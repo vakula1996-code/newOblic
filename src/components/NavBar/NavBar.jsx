@@ -29,7 +29,7 @@ import {
     COMING_PURCHASE,
     DEREGISTRATION_MOVE,
     DEREGISTRATION_REPAIR,
-    ENSURING,
+    ENSURING, INVENTORY,
     LOOK_DOCUMENTS,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_DOCUMENT_EXECUTION,
@@ -240,7 +240,6 @@ export default function NavBar() {
                             </ListItemButton>
                         </NavLink>
                         <NavLink to={LOOK_DOCUMENTS} className={classes.link}>
-
                             <ListItemButton sx={{pl: 4}}>
                                 <ListItemIcon>
                                     <FiberManualRecordIcon fontSize='small'/>
@@ -259,12 +258,14 @@ export default function NavBar() {
                 </ListItemButton>
                 <Collapse in={open5} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton sx={{pl: 4}}>
-                            <ListItemIcon>
-                                <FiberManualRecordIcon fontSize='small'/>
-                            </ListItemIcon>
-                            <ListItemText primary="За підрозділ"/>
-                        </ListItemButton>
+                        <NavLink to={INVENTORY} className={classes.link}>
+                            <ListItemButton sx={{pl: 4}}>
+                                <ListItemIcon>
+                                    <FiberManualRecordIcon fontSize='small'/>
+                                </ListItemIcon>
+                                <ListItemText primary="За підрозділ"/>
+                            </ListItemButton>
+                        </NavLink>
                     </List>
                 </Collapse>
                 <ListItemButton onClick={handleClick6}>

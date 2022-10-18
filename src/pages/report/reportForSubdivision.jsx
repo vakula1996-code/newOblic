@@ -6,6 +6,7 @@ import TableReportForSubdivsion from "../../components/UI/table/Report/tableRepo
 const ReportForSubdivision = observer(() => {
     return (
         <div>
+            <h1 style={{whiteSpace:'nowrap'}}>Перегляд майна</h1>
             <TableReportForSubdivsion/>
         </div>
     );

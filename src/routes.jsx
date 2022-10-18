@@ -13,7 +13,7 @@ import {
     DEREGISTRATION_MOVE,
     DEREGISTRATION_REPAIR,
     DETAIL_LOOK_TECHNIQUE,
-    ENSURING,
+    ENSURING, INVENTORY,
     LOOK_DOCUMENTS,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_DOCUMENT_EXECUTION,
@@ -41,6 +41,7 @@ import AdminPanelRecord from "./pages/adminPanel/adminPanelRecord";
 import AdminPanelUsers from "./pages/adminPanel/adminPanelUsers";
 import LookDocuments from "./pages/report/lookDocuments";
 import MoveDocumentExecution from "./pages/move/MoveDocumentExecution";
+import InventoryForSubdivision from "./pages/inventory/InventoryForSubdivision";
 
 
 export const authRouter = [
@@ -95,6 +96,10 @@ export const authRouter = [
     {
         path: LOOK_DOCUMENTS,
         Component: <LookDocuments/>
+    },
+    {
+      path: INVENTORY,
+      Component: <InventoryForSubdivision/>
     },
     {
         path: ADMIN_PANEL_SUBDIVISION,
