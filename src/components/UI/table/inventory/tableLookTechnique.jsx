@@ -10,7 +10,7 @@ const TableLookTechnique = ({dataList}) => {
         dataList.length > 0
             ?
             <div className={classes.tableScroll}>
-                <h2>Техніка за підрозділ</h2>
+                <h2>Майно за підрозділ</h2>
                 <table>
                     <thead>
                     <tr>

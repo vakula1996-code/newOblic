@@ -14,7 +14,7 @@ const TableLookOrders = ({dataList=[]}) => {
         dataList.length > 0
         ?
         <div className={classes.tableShow}>
-            <h2>Не завершені наряди</h2>
+            <h2>Не підтверджені наряди</h2>
             <table>
                 <thead>
                     <tr>

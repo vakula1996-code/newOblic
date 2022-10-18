@@ -83,8 +83,8 @@ const InventoryForSubdivision = observer(() => {
 
                     <Box sx={{borderBottom: 1, borderColor: 'divider'}} style={{width: 'max-content'}}>
                         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                            <Tab label="Не завершені наряди" {...a11yProps(0)} />
-                            <Tab label="Техніка за підрозділ" {...a11yProps(1)} />
+                            <Tab label="Не підтверджені наряди" {...a11yProps(0)} />
+                            <Tab label="Майно за підрозділ" {...a11yProps(1)} />
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
