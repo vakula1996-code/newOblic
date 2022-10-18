@@ -83,7 +83,7 @@ export const downloadDOC = async (idSubdivision, idDocument) => {
         const objectURL = URL.createObjectURL(response.data)
         const a = document.createElement('a')
         a.setAttribute('href', objectURL)
-        a.setAttribute('download', 'file.pdf')
+        a.setAttribute('download', 'file.docx')
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
