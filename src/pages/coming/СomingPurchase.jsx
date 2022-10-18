@@ -19,6 +19,7 @@ import ErrorAddData from "../../components/UI/error/errorAddData";
 import MyButton from "../../components/UI/button/MyButton";
 import classesTable from "../../components/UI/table/table.module.css";
 import classesComing from "./coming.module.css";
+import FormDocumentCharityPurchase from "../../components/UI/forms/coming/formDocumentCharityPurchase";
 
 const ComingPurchase = observer(() => {
     const {documents} = useContext(Context)
@@ -62,7 +63,7 @@ const ComingPurchase = observer(() => {
             </div>
             <h1>Закупка </h1>
             <div className={classesComing.tableDocument}>
-                <FormDocument error={error}/>
+                <FormDocumentCharityPurchase error={error}/>
             </div>
             <div className={classesComing.tableTechnique}>
                 <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>

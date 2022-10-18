@@ -18,6 +18,7 @@ import MyButton from "../../components/UI/button/MyButton";
 import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
 import classesComing from './coming.module.css'
 import Table from "../../components/UI/table/table";
+import FormDocumentCharityPurchase from "../../components/UI/forms/coming/formDocumentCharityPurchase";
 
 const ComingCharity = observer(() => {
     const {documents} = useContext(Context)
@@ -59,7 +60,7 @@ const ComingCharity = observer(() => {
             </div>
             <h1>Шефська допомога</h1>
             <div className={classesComing.tableDocument}>
-                <FormDocument error={error}/>
+                <FormDocumentCharityPurchase error={error}/>
             </div>
             <div className={classesComing.tableTechnique}>
                 <MyButtonAdd onClick={() => setModalTechnique(true)}>Додати майно</MyButtonAdd>

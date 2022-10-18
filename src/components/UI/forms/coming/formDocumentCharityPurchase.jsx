@@ -14,7 +14,7 @@ import hookDataChangeSimple from "../../../hook/hookDataChange/hookDataChangeSim
 
 const getEmptyData = (fileName) => ({
     documentNameId: null,
-    fromSubdivisionId: null,
+    toSubdivisionId: null,
     documentNumber: '',
     documentDate: DateNow(),
     documentScanName: fileName,
@@ -23,7 +23,7 @@ const getEmptyData = (fileName) => ({
 })
 
 
-const FormDocument = observer(({error}) => {
+const FormDocumentCharityPurchase = observer(({error}) => {
     const {documents} = useContext(Context)
 
     const [doc, setDoc] = useState([getEmptyData('file1')])
@@ -72,7 +72,7 @@ const FormDocument = observer(({error}) => {
                 <tbody>
                 {doc.map(({
                               documentNameId,
-                              fromSubdivisionId,
+                              toSubdivisionId,
                               documentNumber,
                               documentDate,
                               rowId,
@@ -130,14 +130,14 @@ const FormDocument = observer(({error}) => {
                             <Select
                                 label="Підрозділ"
                                 nameSelect="numberSubdivisions"
-                                value={fromSubdivisionId}
+                                value={toSubdivisionId}
                                 name='subdivisionName'
-                                selectName='fromSubdivisionId'
+                                selectName='toSubdivisionId'
                                 getData={hookDataChangeSimple(
                                     {
                                         data: doc,
                                         setData: setDoc,
-                                        nameData: 'fromSubdivisionId',
+                                        nameData: 'toSubdivisionId',
                                         id: rowId,
                                         idName: 'rowId'
                                     })
@@ -169,4 +169,4 @@ const FormDocument = observer(({error}) => {
         ;
 });
 
-export default FormDocument;
+export default FormDocumentCharityPurchase;
