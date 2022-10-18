@@ -14,7 +14,7 @@ import hookDataChangeSimple from "../../../hook/hookDataChange/hookDataChangeSim
 
 const getEmptyData = (fileName) => ({
     documentNameId: null,
-    fromSubdivisionId: null,
+    toSubdivisionId: null,
     documentNumber: '',
     documentDate: DateNow(),
     documentScanName: fileName,
