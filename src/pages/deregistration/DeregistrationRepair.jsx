@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import {Context} from "../../index";
 import TableTechniqueForModernization from "../../components/UI/table/Deregistration/tableTechniqueForModernization";
 import {
-    modernization,
+    modernization, nameDocument,
     nameEnsuring,
     nameMeasurements,
     nameSubdivisions,
@@ -29,6 +29,7 @@ import Select from "../../components/UI/select/select";
 import {subdivisionsTechniques} from "../../http/Technique";
 import FormDeregistrationNewTechnique from "../../components/UI/forms/deregistration/formDeregistrationNewTechnique";
 import TableDeregastrationNewTechnique from "../../components/UI/table/Deregistration/tableDeregastrationNewTechnique";
+import FormDocumentRepair from "../../components/UI/forms/deregistration/formDocumentRepair";
 
 
 function a11yProps(index) {
@@ -77,6 +78,12 @@ const DeregistrationRepair = observer(() => {
     const [idSubdivision, setIdSubdivision] = useState()
     const [dataList, setDataList] = useState([])
 
+
+    useEffect(() => {
+        nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
+        nameDocument(3).then(data => documents.setTypeDocumentComing(data))
+    }, [])
+
     useEffect(() => {
         if (idSubdivision !== undefined) {
             subdivisionsTechniques(idSubdivision).then(data => {
@@ -117,23 +124,29 @@ const DeregistrationRepair = observer(() => {
             newCategoryId: technique.listDeregistrationTechniqueId[0].newCategoryId,
             input: technique.listModernizationTechniqueId,
             output: technique.listNewTechniqueFromModernization,
-            expendables: technique.listTechniqueForExcludedId
+            expendables: technique.listTechniqueForExcludedId,
+            document: documents.document[0]
         }
-        modernization(data).catch(data => {
+
+        modernization(data)
+            .catch(data => {
             if (data.response.data.detail) {
                 setError(data.response.data.detail)
                 setErrorMessages(data.response.data.detail)
+            } else if (data.response.status === 200) {
+                console.log(data)
             }
         }).then(data => {
             if (data !== undefined) {
-                window.location.reload()
                 setError(data)
                 setErrorMessages(data)
+                window.location.reload()
             }
         })
     }
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
+            <FormDocumentRepair error={error}/>
             <h2>Модернізація</h2>
             <MyButtonAdd onClick={() => setModalTechnique(true)}>Обрати майно для модернізації (ремонту)</MyButtonAdd>
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>

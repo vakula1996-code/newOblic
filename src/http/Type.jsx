@@ -1,5 +1,6 @@
 import {$authHost} from "./index";
 import {
+    DECOMMISSIONED,
     MODERNIZATION,
     TYPE_CATEGORY_NAME,
     TYPE_DOCUMENT_NAME,
@@ -63,8 +64,16 @@ export const nameEnsuring = async () => {
 }
 
 export const modernization = async (technique) => {
-    // if (localStorage.getItem('token')) {
-    const {data} = await $authHost.post(MODERNIZATION, technique)
+    // // if (localStorage.getItem('token')) {
+    console.log(technique)
+    const formData = new FormData()
+    formData.append('data', JSON.stringify(technique))
+    formData.append(technique.document.documentScanName, technique.document.file)
+    const {data} = await $authHost.post(MODERNIZATION, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
     return data
-    // }
+    // // }
 }
