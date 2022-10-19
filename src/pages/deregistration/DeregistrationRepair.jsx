@@ -122,6 +122,7 @@ const DeregistrationRepair = observer(() => {
             howCategoryId: technique.listDeregistrationTechniqueId[0].howCategoryId,
             newName: technique.listDeregistrationTechniqueId[0].newName,
             newCategoryId: technique.listDeregistrationTechniqueId[0].newCategoryId,
+            newPrice: technique.listDeregistrationTechniqueId[0].newPrice,
             input: technique.listModernizationTechniqueId,
             output: technique.listNewTechniqueFromModernization,
             expendables: technique.listTechniqueForExcludedId,
