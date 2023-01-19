@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import classes from "../table.module.css";
 import MyInput from "../../input/MyInput";
-import MyButtonRemove from "../../button/MyButtonRemove";
 import {Context} from "../../../../index";
 import {observer} from "mobx-react-lite";
 import IconButton from "@mui/material/IconButton";
@@ -51,77 +50,75 @@ const TableDeregegistrationLook = observer(({list, error, filterId, setFilterId}
         <div>
             {listMove.length
                 ?
-            <div className={classes.tableShow}>
-                <h3>Список обраного майна для списання</h3>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>
-                            Тип майна
-                        </th>
-                        <th>
-                            Найменування
-                        </th>
-                        <th>
-                            Одиниця виміру
-                        </th>
-                        <th>
-                            Кількість
-                        </th>
-                        <th>
-                            Кількість, яку списати
-                        </th>
+                <div className={classes.tableScroll}>
+                    <h3>Список обраного майна для списання</h3>
+                    <table width={'100%'}>
+                        <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>
+                                Тип майна
+                            </th>
+                            <th>
+                                Найменування
+                            </th>
+                            <th>
+                                Одиниця виміру
+                            </th>
+                            <th>
+                                Кількість
+                            </th>
+                            <th>
+                                Кількість, яку списати
+                            </th>
 
-                        <th>Серійний номер</th>
-                        <th>Ціна</th>
-                        <th>Категорія</th>
-                        <th>Дата створення</th>
-                        <th>Дія</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {listMove.map(({
-                                       id,
-                                       typeTechnique,
-                                       nameTechniques,
-                                       measurement,
-                                       subdivision,
-                                       techniqueDetails,
-                                       count
-                                   }, indexTechnique) =>
-                        <tr key={id}>
-                            <td>{indexTechnique + 1}</td>
-                            <td>{typeTechnique}</td>
-                            <td>{nameTechniques}</td>
-                            <td>{measurement}</td>
-                            <td>{techniqueDetails.count}</td>
-                            <td>
-                                {techniqueDetails.count > 1
-                                    ?
-                                    <MyInput value={moveId[indexTechnique].count}
-                                             style={{textAlign: 'center', width: '50%'}}
-                                             onChange={(e) => handleCountChange(e, indexTechnique)}/>
-                                    : techniqueDetails.count
-                                }
-                            </td>
-                            <td>{techniqueDetails.serialNumber}</td>
-                            <td>{techniqueDetails.price}</td>
-                            <td>{techniqueDetails.category}</td>
-                            <td>{techniqueDetails.dateOfManufacture}</td>
-                            <td>
-                                <IconButton size='small'
-                                            onClick={() => handleRemove(id)}><DeleteIcon></DeleteIcon></IconButton>
-                            </td>
+                            <th>Серійний номер</th>
+                            <th>Ціна</th>
+                            <th>Категорія</th>
+                            <th>Дата створення</th>
+                            <th>Дія</th>
                         </tr>
-                    )}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {listMove.map(({
+                                           id,
+                                           typeTechnique,
+                                           nameTechniques,
+                                           measurement,
+                                           subdivision,
+                                           techniqueDetails,
+                                           count
+                                       }, indexTechnique) =>
+                            <tr key={id}>
+                                <td>{indexTechnique + 1}</td>
+                                <td>{typeTechnique}</td>
+                                <td>{nameTechniques}</td>
+                                <td>{measurement}</td>
+                                <td>{techniqueDetails.count}</td>
+                                <td>
+                                    {techniqueDetails.count > 1
+                                        ?
+                                        <MyInput value={moveId[indexTechnique].count}
+                                                 style={{textAlign: 'center', width: '50%'}}
+                                                 onChange={(e) => handleCountChange(e, indexTechnique)}/>
+                                        : techniqueDetails.count
+                                    }
+                                </td>
+                                <td>{techniqueDetails.serialNumber}</td>
+                                <td>{techniqueDetails.price}</td>
+                                <td>{techniqueDetails.category}</td>
+                                <td>{techniqueDetails.dateOfManufacture}</td>
+                                <td>
+                                    <IconButton size='small'
+                                                onClick={() => handleRemove(id)}><DeleteIcon></DeleteIcon></IconButton>
+                                </td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </table>
 
 
-
-
-            </div>
+                </div>
                 : <h2>Додайте майно для списання</h2>
             }
         </div>

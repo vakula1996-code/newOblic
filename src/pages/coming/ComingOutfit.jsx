@@ -6,7 +6,8 @@ import {
     nameDocument,
     nameEnsuring,
     nameMeasurements,
-    nameSubdivisions, nameSubdivisionsAll,
+    nameSubdivisions,
+    nameSubdivisionsAll,
     nameTechnique,
     nameTechniqueType
 } from "../../http/Type";
@@ -19,10 +20,12 @@ import ErrorAddData from "../../components/UI/error/errorAddData";
 import MyButton from "../../components/UI/button/MyButton";
 import classes from "../../components/UI/table/table.module.css";
 import classesComing from "./coming.module.css";
+import LoaderAll from "../../components/UI/loader/loaderAll";
 
 const ComingOutfit = observer(() => {
     const {documents} = useContext(Context)
     const {technique} = useContext(Context)
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
         nameSubdivisionsAll().then(data => documents.setTypeNumberSubdivisionsAll(data))
@@ -31,6 +34,7 @@ const ComingOutfit = observer(() => {
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
         nameTechnique().then(data => technique.setNameTechnique(data))
         nameMeasurements().then(data => technique.setMeasurements(data))
+        technique.setListTechniqueForTable([])
     }, [])
 
     const [modalTechnique, setModalTechnique] = useState(false)
@@ -55,11 +59,13 @@ const ComingOutfit = observer(() => {
                 }
             }).then(data => {
                 if (data !== undefined) {
+                    setLoading(true)
                     setError(data)
                     setErrorMessages(data)
                     window.location.reload()
                 }
             })
+                .finally(setLoading(false))
         } else if (documents.document[0].fromSubdivisionId === documents.document[0].toSubdivisionId &&
             documents.document[0].fromSubdivisionId !== null &&
             documents.document[0].toSubdivisionId !== null) {
@@ -73,6 +79,10 @@ const ComingOutfit = observer(() => {
 
 
     }
+    if (loading) {
+        return <LoaderAll/>
+    }
+
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <div className={classesComing.buttonSave}>

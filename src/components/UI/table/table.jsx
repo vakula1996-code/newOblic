@@ -62,8 +62,8 @@ const Table = observer(({error}) => {
         <Box className={classes.containerTable}>
             {technique.listTechniqueForTable.length > 0
                 ?
-                <div>
-                    <table className={classes.table}>
+                <div className={classes.tableScroll}>
+                    <table>
                         <caption><h2>Майно</h2></caption>
                         <thead>
                         <tr>
@@ -100,7 +100,7 @@ const Table = observer(({error}) => {
                                             <h4>Додаткові дані</h4>
                                         </AccordionSummary>
                                         <AccordionDetails>
-                                            <table>
+                                            <table style={{width: '100%'}}>
                                                 <thead>
                                                 <tr>
                                                     <th>Кількість</th>

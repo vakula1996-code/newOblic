@@ -11,16 +11,18 @@ import FilterWindow from "../../filter/filterWindow";
 import MyButtonNotActivated from "../../button/MyButtonNotActivated";
 
 
-const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setFilterId}) => {
+const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setFilterId, setLoadingData}) => {
     const {technique} = useContext(Context)
     const [dataList, setDataList] = useState([])
 
     useEffect(() => {
         if (idSubdivision) {
+            setLoadingData(true)
             subdivisionsTechniques(idSubdivision).then(data => {
                 setDataList(data);
                 setData(data)
-            })
+            }).finally(reason => setLoadingData(false))
+
         }
     }, [idSubdivision])
     const addInList = (id) => {
@@ -39,7 +41,7 @@ const TableMoveChoice = observer(({idSubdivision, setData, error, filterId, setF
                     ||
                     technique.setMoveTechniqueId([...technique.moveTechniqueId, {
                         techniqueDetailId: detailItem.id,
-                        count: detailItem.count,
+                        count: detailItem.available,
                         howCategoryId: detailItem.categoryId
                     }])
                     ||

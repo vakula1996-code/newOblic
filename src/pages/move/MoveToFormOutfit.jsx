@@ -13,12 +13,14 @@ import ErrorAddData from "../../components/UI/error/errorAddData";
 import classes from './move.module.css'
 import {$authHost} from "../../http";
 import {CREATE_ORDER} from "../../utils/const";
+import LoaderAll from "../../components/UI/loader/loaderAll";
 
 
 const MoveToFormOutfit = observer(() => {
     const {documents} = useContext(Context)
     const {technique} = useContext(Context)
-
+    const [loadingMove, setLoadingMove] = useState(false)
+    const [loadingData, setLoadingData] = useState(false)
     const [filterId, setFilterId] = useState([])
 
     useEffect(() => {
@@ -40,6 +42,7 @@ const MoveToFormOutfit = observer(() => {
             doc.toSubdivisionId !== doc.fromSubdivisionId
         ) {
             try {
+                setLoadingMove(true)
                 const response = await $authHost.post(CREATE_ORDER, {
                     document: doc,
                     techniques: listMoveTechnique
@@ -56,6 +59,7 @@ const MoveToFormOutfit = observer(() => {
                 URL.revokeObjectURL(objectURL)
                 // window.location.reload()
             } catch (error) {
+                setLoadingMove(false)
                 console.log(error)
                 if (
                     error.request.responseType === 'blob' &&
@@ -84,6 +88,8 @@ const MoveToFormOutfit = observer(() => {
                 }
                 console.log(JSON.parse(error.response.data))
 
+            } finally {
+                setLoadingMove(false)
             }
         } else if (
             doc.toSubdivisionId === doc.fromSubdivisionId &&
@@ -99,11 +105,17 @@ const MoveToFormOutfit = observer(() => {
 
     }
 
-
     return (
+
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <div className={classes.buttonSave}>
-                <MyButton onClick={move}>Сформувати наряд</MyButton>
+                {
+                    loadingMove
+                        ?
+                        <LoaderAll/>
+                        :
+                        <MyButton onClick={move}>Сформувати наряд</MyButton>
+                }
             </div>
             <h1>Формування наряду</h1>
             <div className={classes.tableDocument}>
@@ -114,13 +126,20 @@ const MoveToFormOutfit = observer(() => {
                 />
             </div>
             <div className={classes.tableTechnique}>
-                {data.length > 0
-                    ? <MyButtonAdd onClick={() => setModalTechnique(true)}>Обрати майно</MyButtonAdd>
-                    : <MyButtonNotActivated onClick={() => setModalTechnique(true)}>Обрати майно</MyButtonNotActivated>
+                {
+                    loadingData
+                        ?
+                        <LoaderAll/>
+                        :
+                        data.length > 0
+                            ? <MyButtonAdd onClick={() => setModalTechnique(true)}>Обрати майно</MyButtonAdd>
+                            : <MyButtonNotActivated onClick={() => setModalTechnique(true)}>Обрати
+                                майно</MyButtonNotActivated>
                 }
                 {technique.moveTechnique.length > 0
 
-                    ? <TableLookMove list={setListMoveTechnique} error={error}
+                    ? <TableLookMove list={setListMoveTechnique}
+                                     error={error}
                                      filterId={filterId} setFilterId={setFilterId}
                     />
                     : <h2>Оберіть майно для передачі</h2>
@@ -130,6 +149,7 @@ const MoveToFormOutfit = observer(() => {
                 <div className={classes.blockTable}>
                     <TableMoveChoice idSubdivision={idSubdivision} setData={setData} error={error}
                                      filterId={filterId} setFilterId={setFilterId}
+                                     setLoadingData={setLoadingData}
                     />
                 </div>
             </MyModal>

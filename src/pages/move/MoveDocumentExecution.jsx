@@ -1,11 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import TableChooseSubdivisions from "../../components/UI/table/Move/tableChooseSubdivisions";
 import MyModal from "../../components/UI/modal/MyModal";
 import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
-import classesComing from "../coming/coming.module.css";
+import classesComing from "../move/move.module.css";
 import TableLookDocumentExecution from "../../components/UI/table/Move/tableLookDocumentExecution";
-import MyButtonChoice from "../../components/UI/button/MyButtonChoice";
 import {documentCancel} from "../../http/Documents";
 import {Context} from "../../index";
 import TableChooseDocumentExecution from "../../components/UI/table/Move/tableChooseDocumentExecution";
@@ -13,7 +12,6 @@ import ErrorAddData from "../../components/UI/error/errorAddData";
 import MyButton from "../../components/UI/button/MyButton";
 import classes from "../../components/UI/table/table.module.css";
 import MyButtonNotActivated from "../../components/UI/button/MyButtonNotActivated";
-import {toJS} from "mobx";
 
 
 const MoveDocumentExecution = observer(() => {
@@ -45,22 +43,29 @@ const MoveDocumentExecution = observer(() => {
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <div className={classesComing.buttonSave}>
-                <MyButton className={classes.button} onClick={onDocumentExecution}>Вилучити наряд</MyButton>
+                <MyButton className={classes.button} onClick={onDocumentExecution}>Скасувати наряд</MyButton>
             </div>
-            <h2>Відміна наряду</h2>
-            <TableChooseSubdivisions data={data} setData={setData}/>
-            {documents.documentExecutionList.length > 0
-                ? <MyButtonAdd onClick={() => setModalDocument(true)}>Обрати документ для вилучення</MyButtonAdd>
-                : <MyButtonNotActivated onClick={() => setModalDocument(true)}>Обрати документ для вилучення</MyButtonNotActivated>
-            }
+            <h2>Скасування наряду</h2>
+            <div className={classesComing.tableDocument}>
+                <TableChooseSubdivisions data={data} setData={setData}/>
+            </div>
+            <div className={classesComing.tableTechnique}>
+
+                {documents.documentExecutionList.length > 0
+                    ? <MyButtonAdd onClick={() => setModalDocument(true)}>Обрати документ для скасування</MyButtonAdd>
+                    : <MyButtonNotActivated onClick={() => setModalDocument(true)}>Обрати документ для
+                        скасування</MyButtonNotActivated>
+                }
+                {documentsList.length > 0
+                    ? <TableChooseDocumentExecution documentsList={documentsList} setDocumentsList={setDocumentsList}/>
+                    : <h2>Виберіть наряд</h2>
+                }
+            </div>
             <MyModal visible={modalDocument} setVisible={setModalDocument}>
                 <TableLookDocumentExecution documentsList={documentsList} setDocumentsList={setDocumentsList}
                                             setModalDocument={setModalDocument}/>
             </MyModal>
-            {documentsList.length > 0
-                ? <TableChooseDocumentExecution documentsList={documentsList} setDocumentsList={setDocumentsList}/>
-                : <></>
-            }
+
         </ErrorAddData>
     );
 });

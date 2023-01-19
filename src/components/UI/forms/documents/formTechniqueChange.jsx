@@ -21,12 +21,13 @@ const FormTechnique = observer(({setVisible, idTechnique}) => {
         const [listTechnique, setListTechnique] = useState(technique.listTechnique.filter(listItem => listItem.id === idTechnique)[0])
         const [listTechniqueForTable, setListTechniqueForTable] = useState(technique.listTechniqueForTable.filter(listItem => listItem.id === idTechnique)[0])
         const [listDataValid, setListDataValid] = useState(technique.listTechniqueValid.filter(listItem => listItem.id === idTechnique)[0])
-        console.log(listTechniqueForTable)
+
         useEffect(() => {
             setListTechnique(technique.listTechnique.filter(listItem => listItem.id === idTechnique)[0])
             setListTechniqueForTable(technique.listTechniqueForTable.filter(listItem => listItem.id === idTechnique)[0])
             setListDataValid(technique.listTechniqueValid.filter(listItem => listItem.id === idTechnique)[0])
         }, [idTechnique])
+        console.log(listTechnique)
         const handleTechniqueChange = (e, name, data) => {
             if (e.target.innerHTML) {
                 const list = {...listTechnique};
@@ -98,7 +99,6 @@ const FormTechnique = observer(({setVisible, idTechnique}) => {
             })
         }
         const handleSerialNumberChange = (e, index, name, data) => {
-
             const {value} = e.target;
             const list = {...listTechnique};
             if (name === 'count') {

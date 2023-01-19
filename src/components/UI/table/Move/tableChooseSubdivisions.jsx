@@ -1,4 +1,4 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Select from "../../select/select";
 import {Context} from "../../../../index";
 import {nameSubdivisions} from "../../../../http/Type";
@@ -6,7 +6,6 @@ import {documentExecution} from "../../../../http/Documents";
 import {observer} from "mobx-react-lite";
 import classes from '../table.module.css'
 import InputDate from "../../input/inputDate";
-import hookDataChangeSimple from "../../../hook/hookDataChange/hookDataChangeSimple";
 
 const TableChooseSubdivisions = observer(({data, setData}) => {
     const {documents} = useContext(Context)
@@ -19,32 +18,32 @@ const TableChooseSubdivisions = observer(({data, setData}) => {
         if (toSubdivisionId) {
             documentExecution(fromSubdivisionId, {toSubdivisionId}).then(data => documents.setDocumentExecutionList(data))
         }
-    }, [toSubdivisionId,fromSubdivisionId])
+    }, [toSubdivisionId, fromSubdivisionId])
     return (
         <table className={classes.tableShow}>
             <thead>
             <tr>
                 <th>Відправник</th>
                 <th>Одержувач</th>
-                <th>Дата відміни наряду</th>
+                <th>Дата скасування наряду</th>
             </tr>
             </thead>
             <tr>
-                <td style={{backgroundColor:'white'}}>
+                <td style={{backgroundColor: 'white'}}>
                     <Select label="Підрозділ" nameSelect="numberSubdivisions" value={fromSubdivisionId}
                             name='subdivisionName'
                             getData={e => setFromSubdivisionId(e.target.value)}/>
                 </td>
-                <td style={{backgroundColor:'white'}}>
+                <td style={{backgroundColor: 'white'}}>
                     <Select label="Підрозділ" nameSelect="numberSubdivisions" value={toSubdivisionId}
                             name='subdivisionName'
                             getData={e => setToSubdivisionId(e.target.value)}/>
                 </td>
-                <td  style={{backgroundColor:'white'}}>
+                <td style={{backgroundColor: 'white'}}>
                     <InputDate
                         value={data}
                         name='documentDate'
-                        getData={(e)=>setData(e.target.value)}/>
+                        getData={(e) => setData(e.target.value)}/>
                 </td>
             </tr>
             <tbody>

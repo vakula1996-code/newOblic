@@ -1,23 +1,23 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
 import MyButtonChoice from "../../button/MyButtonChoice";
 import classes from '../table.module.css'
-import {documentCancel, downloadDOC, downloadPDF} from "../../../../http/Documents";
+import {downloadDOC, downloadPDF} from "../../../../http/Documents";
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,setModalDocument}) => {
+const TableLookDocumentExecution = observer(({documentsList, setDocumentsList, setModalDocument}) => {
     const {documents} = useContext(Context)
     const onChange = (id) => {
         setDocumentsList(documents.documentExecutionList.filter(item => item.id === id))
         setModalDocument(false)
     }
-    const onClickDownloadPDF = (documentId,fromSubdivisionId) => {
+    const onClickDownloadPDF = (documentId, fromSubdivisionId) => {
         downloadPDF(fromSubdivisionId, documentId)
     }
 
-    const onClickDownloadDOC = (documentId,fromSubdivisionId) => {
+    const onClickDownloadDOC = (documentId, fromSubdivisionId) => {
         downloadDOC(fromSubdivisionId, documentId)
     }
     return (
@@ -25,15 +25,26 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
             <table>
                 <thead>
                 <tr>
+
+
                     <th>Назва документа</th>
                     <th>Дата документа</th>
                     <th>Майно</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {documents.documentExecutionList.map(({id,fromSubdivisionId, documentName, date, techniques,doc,scan}) =>
+                {documents.documentExecutionList.map(({
+                                                          id,
+                                                          fromSubdivisionId,
+                                                          documentName,
+                                                          date,
+                                                          techniques,
+                                                          doc,
+                                                          scan
+                                                      }) =>
                     <tr key={id}>
                         <td>{documentName}</td>
                         <td>{date}</td>
@@ -73,7 +84,13 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        {details.map(({serialNumber,price,category,count,dateOfManufacture})=>
+                                                        {details.map(({
+                                                                          serialNumber,
+                                                                          price,
+                                                                          category,
+                                                                          count,
+                                                                          dateOfManufacture
+                                                                      }) =>
                                                             <tr>
                                                                 <td>{serialNumber}</td>
                                                                 <td>{price}</td>
@@ -93,27 +110,23 @@ const TableLookDocumentExecution = observer(({documentsList, setDocumentsList,se
                             </table>
                         </td>
                         <td>
-                            {scan === true
-                                ?
-                                <a
-                                    onClick={() => onClickDownloadPDF(id,fromSubdivisionId)}
-                                    download
-                                    className={classes.file}><span>Скачати</span><span>PDF</span></a>
-                                :<></>
-                            }
-                            {doc === true
-                                ?
-                                <a
-                                    onClick={() => onClickDownloadDOC(id,fromSubdivisionId)}
-                                    download
-                                    className={classes.file}><span
-                                    style={{background: "blue"}}>Скачати</span><span
-                                    style={{background: "blue"}}>WORD</span></a>
-                                :<></>
-                            }
+                            <a
+                                style={doc === true ? {} : {visibility: 'collapse'}}
+                                onClick={() => onClickDownloadDOC(id, fromSubdivisionId)}
+                                download
+                                className={classes.file}><span
+                                style={{background: "blue"}}>Скачати</span><span
+                                style={{background: "blue"}}>WORD</span></a>
                         </td>
                         <td>
-                            <MyButtonChoice onClick={() => onChange(id,fromSubdivisionId)}>Вибрати</MyButtonChoice>
+                            <a
+                                style={scan === true ? {} : {visibility: 'collapse'}}
+                                onClick={() => onClickDownloadPDF(id, fromSubdivisionId)}
+                                download
+                                className={classes.file}><span>Скачати</span><span>PDF</span></a>
+                        </td>
+                        <td>
+                            <MyButtonChoice onClick={() => onChange(id, fromSubdivisionId)}>Вибрати</MyButtonChoice>
                         </td>
                     </tr>
                 )}

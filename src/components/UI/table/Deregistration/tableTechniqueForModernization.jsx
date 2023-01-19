@@ -13,7 +13,6 @@ const TableTechniqueForModernization = observer(({filterId, setFilterId}) => {
         setListMoveId(technique.listModernizationTechniqueId)
         setListMove(technique.listModernizationTechnique)
     }, [technique.listModernizationTechnique])
-    console.log(technique.listModernizationTechniqueId, listMoveId)
     const handleRemove = (id) => {
         technique.setListModernizationTechnique(technique.listModernizationTechnique.filter(item => item.id !== id))
         technique.setListModernizationTechniqueId(technique.listModernizationTechniqueId.filter(item => item.id !== id))

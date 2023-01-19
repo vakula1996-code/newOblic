@@ -14,13 +14,15 @@ const TableHistoryDocument = ({params}) => {
 
             <table className={classes.table}>
                 <thead>
-                <th>Дата документа</th>
-                <th>Від кого отримано</th>
-                <th>Куди убило (прибуло)</th>
-                <th>Надходження</th>
-                <th>Видаток</th>
-                <th>Залишок</th>
-                <th>Файл</th>
+                <tr>
+                    <th>Дата документа</th>
+                    <th>Від кого отримано</th>
+                    <th>Куди убило (прибуло)</th>
+                    <th>Надходження</th>
+                    <th>Видаток</th>
+                    <th>Залишок</th>
+                    <th>Файл</th>
+                </tr>
                 </thead>
                 <tbody>
                 {history.map(({

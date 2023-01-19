@@ -1,13 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
-import classes from "../../../../pages/coming/coming.module.css";
+import classes from "../../table/table.module.css";
 import Select from "../../select/select";
 import InputDate from "../../input/inputDate";
 import InputMui from "../../input/inputMui";
 import {observer} from "mobx-react-lite";
-import MyButton from "../../button/MyButton";
 import DateNow from "../../calendar/dateNow";
-import MyButtonRemove from "../../button/MyButtonRemove";
 import {v4 as uuidv4} from 'uuid';
 import InputFile from "../../input/inputFile";
 import IconButton from "@mui/material/IconButton";
@@ -60,24 +58,26 @@ const FormDocumentConfirm = observer(() => {
 
 
     return (
-        <div>
+        <div className={classes.tableScroll} style={{maxHeight: 'calc(100vh - 800px)'}}>
             <h2>Супроводжуючі документи</h2>
-            <table className={classes.table}>
+            <table width={'100%'}>
                 <thead>
                 <tr>
+                    <th>№</th>
                     <th>Назва документа</th>
                     <th>Дата документа</th>
                     <th>Номер документа</th>
                     <th>Прикріпити документ</th>
                     <th><IconButton size='small'
-                                      onClick={addDocument}>
+                                    onClick={addDocument}>
                         <AddBoxIcon></AddBoxIcon></IconButton>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                {doc.map(({documentNameId, documentDate, documentNumber, documentScanName, rowId, file}) => (
+                {doc.map(({documentNameId, documentDate, documentNumber, documentScanName, rowId, file}, index) => (
                     <tr key={rowId}>
+                        <td>{index + 1}</td>
                         <td>
                             <Select
                                 label='Назва документа'

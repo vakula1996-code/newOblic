@@ -1,23 +1,17 @@
 import React, {useContext, useEffect, useState} from 'react';
-import TableDeregistrationForSubdivision
-    from "../../components/UI/table/Deregistration/tableDeregistrationForSubdivision";
 import MyModal from "../../components/UI/modal/MyModal";
 import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
 import TableDeregegistrationLook from "../../components/UI/table/Deregistration/tableDeregegistrationLook";
 import classes from "../move/move.module.css";
-import FormDocumentMove from "../../components/UI/forms/documents/formDocumentMove";
 import ErrorAddData from "../../components/UI/error/errorAddData";
 import FormDocument from "../../components/UI/forms/documents/formDocument";
 import {observer} from "mobx-react-lite";
-import {
-    nameDocument,
-    nameSubdivisions,
-} from "../../http/Type";
+import {nameDocument, nameSubdivisions,} from "../../http/Type";
 import {Context} from "../../index";
 import classesComing from "../coming/coming.module.css";
 import MyButton from "../../components/UI/button/MyButton";
 import classesTable from "../../components/UI/table/table.module.css";
-import {addNewTechniqueHttp, decommissionedTechnique} from "../../http/Technique";
+import {decommissionedTechnique} from "../../http/Technique";
 import TableDeregistrationMove from "../../components/UI/table/Deregistration/tableDeregistrationMove";
 
 const DeregistrationMove = observer(() => {
@@ -67,7 +61,7 @@ const DeregistrationMove = observer(() => {
                                          filterId={filterId} setFilterId={setFilterId} dataList={dataList}/>
 
             </MyModal>
-            <div className={classes.tableDocument}>
+            <div className={classes.tableTechnique}>
                 <TableDeregegistrationLook
                     list={setListMoveTechnique} error={error}
                     filterId={filterId} setFilterId={setFilterId}

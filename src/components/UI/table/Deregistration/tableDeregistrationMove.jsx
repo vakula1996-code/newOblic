@@ -1,4 +1,4 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../../../index";
 import {nameSubdivisions} from "../../../../http/Type";
 import {subdivisionsTechniques} from "../../../../http/Technique";
@@ -20,7 +20,7 @@ const TableDeregistrationMove = observer(({setVisibleWindow, filterId, setFilter
         nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
     }, [])
     useEffect(() => {
-        if(documents.document[0].fromSubdivisionId !== null){
+        if (documents.document[0].fromSubdivisionId !== null) {
             setIdSubivision(documents.document[0].fromSubdivisionId)
         }
     }, [documents.document[0]])
@@ -37,7 +37,7 @@ const TableDeregistrationMove = observer(({setVisibleWindow, filterId, setFilter
             dataItem.techniqueDetails.filter(detailItem =>
                 detailItem.id === id
                     ?
-                    technique.setWritingOffTechnique([...technique.writingOffTechnique,{
+                    technique.setWritingOffTechnique([...technique.writingOffTechnique, {
                         id: dataItem.id,
                         typeTechnique: dataItem.typeTechnique,
                         nameTechniques: dataItem.nameTechniques,
@@ -102,7 +102,7 @@ const TableDeregistrationMove = observer(({setVisibleWindow, filterId, setFilter
                         </th>
 
                         <th>
-                            Підрозділ де знаходиться
+                            Підрозділ, де знаходиться
                         </th>
                         <th>
                             Одиниця виміру

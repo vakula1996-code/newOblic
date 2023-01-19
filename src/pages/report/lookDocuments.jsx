@@ -22,11 +22,11 @@ const LookDocuments = observer(() => {
     }, [idSubdivision])
     return (
         <div>
-            <h1 style={{whiteSpace:'nowrap'}}>Перегляд документів</h1>
+            <h1 style={{whiteSpace: 'nowrap'}}>Перегляд документів</h1>
             <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
                     name='subdivisionName'
                     getData={e => setIdSubdivision(e.target.value)}/>
-            <TableDocumentsAll/>
+            <TableDocumentsAll dataList={dataList}/>
         </div>
     );
 });

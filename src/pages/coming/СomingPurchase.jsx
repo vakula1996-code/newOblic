@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
-import FormDocument from "../../components/UI/forms/documents/formDocument";
 import Table from "../../components/UI/table/table";
 import FormTechnique from "../../components/UI/forms/documents/formTechnique";
 import {
@@ -20,18 +19,20 @@ import MyButton from "../../components/UI/button/MyButton";
 import classesTable from "../../components/UI/table/table.module.css";
 import classesComing from "./coming.module.css";
 import FormDocumentCharityPurchase from "../../components/UI/forms/coming/formDocumentCharityPurchase";
+import LoaderAll from "../../components/UI/loader/loaderAll";
 
 const ComingPurchase = observer(() => {
     const {documents} = useContext(Context)
     const {technique} = useContext(Context)
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
         nameDocument(2).then(data => documents.setTypeDocumentComing(data))
         nameTechniqueType().then(data => technique.setTypeTechnique(data))
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
-
         nameTechnique().then(data => technique.setNameTechnique(data))
         nameMeasurements().then(data => technique.setMeasurements(data))
+        technique.setListTechniqueForTable([])
     }, [])
 
     const [modalTechnique, setModalTechnique] = useState(false)
@@ -49,13 +50,19 @@ const ComingPurchase = observer(() => {
             }
         }).then(data => {
             if (data !== undefined) {
+                setLoading(true)
                 setError(data)
                 setErrorMessages(data)
                 window.location.reload()
             }
         })
+            .finally(setLoading(false))
 
     }
+    if (loading) {
+        return <LoaderAll/>
+    }
+
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <div className={classesComing.buttonSave}>

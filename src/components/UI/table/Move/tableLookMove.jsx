@@ -2,8 +2,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
 import classes from "../table.module.css";
-import MyButtonRemove from "../../button/MyButtonRemove";
 import MyInput from "../../input/MyInput";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
     const [listMove, setListMove] = useState([])
@@ -12,16 +13,16 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
     useEffect(() => {
         setMoveId(technique.moveTechniqueId)
         setListMove(technique.moveTechnique)
-    }, [technique.moveTechnique])
+    }, [technique.moveTechnique, technique.moveTechniqueId])
 
     const handleCountChange = (e, index) => {
         if (e.target.value.length === 0) {
             const list = [...moveId]
             list[index]['count'] = 0
             setMoveId(list)
-        } else if (listMove[index].techniqueDetails.count < e.target.value) {
+        } else if (listMove[index].techniqueDetails.available < e.target.value) {
             const list = [...moveId]
-            list[index]['count'] = parseInt(listMove[index].techniqueDetails.count)
+            list[index]['count'] = parseInt(listMove[index].techniqueDetails.available)
             setMoveId(list)
         } else {
             const {value} = e.target
@@ -33,7 +34,7 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
     }
     const handleRemove = (id) => {
         technique.setMoveTechnique(technique.moveTechnique.filter(item => item.id !== id))
-        technique.setMoveTechniqueId(technique.moveTechniqueId.filter(item => item.id !== id))
+        technique.setMoveTechniqueId(technique.moveTechniqueId.filter(item => item.techniqueDetailId !== id))
         setFilterId((filterLocal) => filterLocal.filter(item => item.idTechniqueDetail !== id))
     }
     useEffect(() => {
@@ -48,8 +49,8 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
     return (
         <div>
             <h3>Список обраного майна для передачі</h3>
-            <div className={classes.tableShow}>
-                <table>
+            <div className={classes.tableScroll}>
+                <table width={'100%'}>
                     <thead>
                     <tr>
                         <th>№</th>
@@ -64,6 +65,9 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
                         </th>
                         <th>
                             Кількість
+                        </th>
+                        <th>
+                            Доступно
                         </th>
                         <th>
                             Кількість, яку передати
@@ -84,7 +88,8 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
                                        measurement,
                                        subdivision,
                                        techniqueDetails,
-                                       count
+                                       count,
+                                       available
                                    }, indexTechnique) =>
                         <tr key={id}>
                             <td>{indexTechnique + 1}</td>
@@ -92,6 +97,7 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
                             <td>{nameTechniques}</td>
                             <td>{measurement}</td>
                             <td>{techniqueDetails.count}</td>
+                            <td>{techniqueDetails.available}</td>
                             <td>
                                 {techniqueDetails.count > 1
                                     ?
@@ -105,8 +111,10 @@ const TableLookMove = observer(({list, error, filterId, setFilterId}) => {
                             <td>{techniqueDetails.price}</td>
                             <td>{techniqueDetails.category}</td>
                             <td>{techniqueDetails.dateOfManufacture}</td>
-                            <td><MyButtonRemove
-                                onClick={() => handleRemove(id)}>Видалити</MyButtonRemove></td>
+                            <td>
+                                <IconButton size='small'
+                                            onClick={() => handleRemove(id)}><DeleteIcon></DeleteIcon></IconButton>
+                            </td>
                         </tr>
                     )}
                     </tbody>

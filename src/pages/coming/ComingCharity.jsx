@@ -13,16 +13,17 @@ import {addNewTechniqueHttp} from "../../http/Technique";
 import ErrorAddData from "../../components/UI/error/errorAddData";
 import MyModal from "../../components/UI/modal/MyModal";
 import FormTechnique from "../../components/UI/forms/documents/formTechnique";
-import FormDocument from "../../components/UI/forms/documents/formDocument";
 import MyButton from "../../components/UI/button/MyButton";
 import MyButtonAdd from "../../components/UI/button/MyButtonAdd";
 import classesComing from './coming.module.css'
 import Table from "../../components/UI/table/table";
 import FormDocumentCharityPurchase from "../../components/UI/forms/coming/formDocumentCharityPurchase";
+import LoaderAll from "../../components/UI/loader/loaderAll";
 
 const ComingCharity = observer(() => {
     const {documents} = useContext(Context)
     const {technique} = useContext(Context)
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         nameSubdivisions().then(data => documents.setTypeNumberSubdivisions(data))
         nameDocument(1).then(data => documents.setTypeDocumentComing(data))
@@ -30,6 +31,7 @@ const ComingCharity = observer(() => {
         nameEnsuring().then(data => technique.setTypeEnsuring(data))
         nameTechnique().then(data => technique.setNameTechnique(data))
         nameMeasurements().then(data => technique.setMeasurements(data))
+        technique.setListTechniqueForTable([])
     }, [])
     const [modalTechnique, setModalTechnique] = useState(false)
 
@@ -45,12 +47,18 @@ const ComingCharity = observer(() => {
             }
         }).then(data => {
             if (data !== undefined) {
+                setLoading(true)
                 setError(data)
                 setErrorMessages(data)
                 window.location.reload()
             }
         })
+            .finally(setLoading(false))
 
+    }
+
+    if (loading) {
+        return <LoaderAll/>
     }
 
     return (

@@ -7,13 +7,15 @@ import {
     ADMIN_PANEL_TYPE,
     ADMIN_PANEL_TYPE_ENSURING,
     ADMIN_PANEL_USERS,
+    AUTH,
     COMING_CHARITY,
     COMING_OUTFIT,
     COMING_PURCHASE,
     DEREGISTRATION_MOVE,
     DEREGISTRATION_REPAIR,
     DETAIL_LOOK_TECHNIQUE,
-    ENSURING, INVENTORY,
+    ENSURING,
+    INVENTORY,
     LOOK_DOCUMENTS,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_DOCUMENT_EXECUTION,
@@ -42,6 +44,7 @@ import AdminPanelUsers from "./pages/adminPanel/adminPanelUsers";
 import LookDocuments from "./pages/report/lookDocuments";
 import MoveDocumentExecution from "./pages/move/MoveDocumentExecution";
 import InventoryForSubdivision from "./pages/inventory/InventoryForSubdivision";
+import AuthPage from "./pages/auth/authPage";
 
 
 export const authRouter = [
@@ -81,10 +84,7 @@ export const authRouter = [
         path: DETAIL_LOOK_TECHNIQUE + '/:subdivisionId' + '/:id' + '/:categoryId',
         Component: <DetailLookTechnique/>
     },
-    {
-        path: ENSURING,
-        Component: <ReportEnsuring/>
-    },
+
     {
         path: DEREGISTRATION_REPAIR,
         Component: <DeregistrationRepair/>
@@ -98,9 +98,20 @@ export const authRouter = [
         Component: <LookDocuments/>
     },
     {
-      path: INVENTORY,
-      Component: <InventoryForSubdivision/>
+        path: INVENTORY,
+        Component: <InventoryForSubdivision/>
     },
+
+]
+
+export const publicRoutes = [
+    {
+        path: AUTH,
+        Component: <AuthPage/>
+    },
+]
+
+export const adminRoutes = [
     {
         path: ADMIN_PANEL_SUBDIVISION,
         Component: <AdminPanelSubdivision/>
@@ -129,6 +140,8 @@ export const authRouter = [
         path: ADMIN_PANEL_USERS,
         Component: <AdminPanelUsers/>
     },
-
-
+    {
+        path: ENSURING,
+        Component: <ReportEnsuring/>
+    },
 ]

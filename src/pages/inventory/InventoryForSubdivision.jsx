@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 import {nameSubdivisions} from "../../http/Type";
-import {documentAll} from "../../http/Documents";
 import {inventory} from "../../http/Technique";
 import Select from "../../components/UI/select/select";
 import TableLookTechnique from "../../components/UI/table/inventory/tableLookTechnique";
@@ -11,8 +10,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import * as PropTypes from "prop-types";
 import {Tab, Tabs} from "@mui/material";
-import TableDetailInfo from "../../components/UI/table/Report/tableDetailInfo";
-import TableHistoryDocument from "../../components/UI/table/Report/tableHistoryDocument";
 
 function a11yProps(index) {
     return {
@@ -73,7 +70,7 @@ const InventoryForSubdivision = observer(() => {
     };
     return (
         <div>
-            <h1>Інвентризація</h1>
+            <h1>Інвентаризація</h1>
             <Select label="Підрозділ" nameSelect="numberSubdivisions" value={idSubdivision}
                     name='subdivisionName'
                     getData={e => setIdSubdivision(e.target.value)}/>

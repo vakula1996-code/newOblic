@@ -59,8 +59,8 @@ const TableDeregastrationNewTechnique = observer(({error}) => {
         <Box className={classes.containerTable}>
             {technique.listNewTechniqueFromModernizationForTable.length > 0
                 ?
-                <div>
-                    <table className={classes.table}>
+                <div className={classes.tableScroll} style={{height: 'calc(100vh - 900px)'}}>
+                    <table>
                         <caption><h2>Список техніки</h2></caption>
                         <thead>
                         <tr>
@@ -100,7 +100,7 @@ const TableDeregastrationNewTechnique = observer(({error}) => {
                                             <h4>Додаткові дані</h4>
                                         </AccordionSummary>
                                         <AccordionDetails>
-                                            <table>
+                                            <table width={'100%'}>
                                                 <thead>
                                                 <tr>
                                                     <th>Кількість</th>
@@ -152,7 +152,7 @@ const TableDeregastrationNewTechnique = observer(({error}) => {
                     </table>
                 </div>
 
-                : <h2>Добавте майно в список</h2>
+                : <h2>Додайте майно в список</h2>
 
             }
             {idTechnique !== ''

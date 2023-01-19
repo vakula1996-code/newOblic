@@ -58,6 +58,7 @@ const MoveConfirmTransmission = observer(() => {
             }
         })
     }
+    console.log(toJS(documents.listOrderNotExecution.length))
     return (
         <ErrorAddData error={error} setError={setError} errorMessages={errorMessages}>
             <div className={classes.buttonSave}>
@@ -75,10 +76,12 @@ const MoveConfirmTransmission = observer(() => {
                     setChangeData={setChangeData}
                 />
             </div>
-            <div className={classes.tableDocument}>
-                <FormDocumentConfirm/>
-            </div>
-
+            {documents.listOrderNotExecution.length === undefined
+                &&
+                <div className={classes.tableDocument} style={{padding: 20}}>
+                    <FormDocumentConfirm/>
+                </div>
+            }
             <MyModal visible={modalTechnique} setVisible={setModalTechnique}>
                 <FormDocumentRegistration
                     setVisible={setModalTechnique}

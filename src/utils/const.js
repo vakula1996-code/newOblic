@@ -1,16 +1,18 @@
 //Головні
 // export const LOCAL_URLS = "http://127.0.0.1:8000/"
-export const LOCAL_URLS = "http://127.0.0.1:8000/"
+// export const LOCAL_URLS = "http://127.0.0.1:8000/"
 // export const LOCAL_URLS = "http://192.168.0.93:8080/"
 // export const GLOBAL_URLS = 'http://192.168.0.11:8000/'
 // export const GLOBAL_URLS = "http://192.168.0.93:8080/"
-// export const LOCAL_URLS = 'http://192.168.0.11:8000/'
+export const LOCAL_URLS = "http://0.0.0.0/"
+// export const LOCAL_URLS = window._env_.REACT_APP_HOST_IP_ADDRESS
 //Аунтентифікація
 export const LOGIN = 'api/login'
 export const CHECK_TOKEN = 'api/checkToken'
 
 
 //Рути
+export const AUTH = '/auth'
 export const COMING_CHARITY = '/charity'
 export const COMING_OUTFIT = '/outfit'
 export const COMING_PURCHASE = '/purchase'
@@ -66,7 +68,7 @@ export const TECHNIQUE_HISTORY = (id) => 'api/subdivisions/' + id + '/techniques
 export const TECHNIQUE_ENSURING = (id) => 'api/subdivisions/' + id + '/techniques/ensuring'
 export const MODERNIZATION = 'api/modernization'
 export const DECOMMISSIONED = 'api/decommissioned'
-export const INVENTORY_FOR_SUBDIVISION = (id) => 'api/subdivisions/'+id+'/inventory '
+export const INVENTORY_FOR_SUBDIVISION = (id) => 'api/subdivisions/' + id + '/inventory'
 
 //Документи
 export const ORDER_NOT_REGISTER = (id) => 'api/subdivisions/' + id + '/documents/orderNotRegister'

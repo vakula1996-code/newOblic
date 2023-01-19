@@ -1,31 +1,30 @@
 import React, {useContext, useEffect, useState} from 'react';
-import classes from "./form.module.css";
-import Box from "@mui/material/Box";
-import InputMui from "../../input/inputMui";
-import Select from "../../select/select";
-import InputDate from "../../input/inputDate";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
-import {nameCategory} from "../../../../http/Type";
-import DateNow from "../../calendar/dateNow";
-import InputAutocomplit from "../../input/InputAutocomplit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import Select from "../../select/select";
+import InputAutocomplit from "../../input/InputAutocomplit";
+import InputMui from "../../input/inputMui";
+import InputDate from "../../input/inputDate";
+import DateNow from "../../calendar/dateNow";
+import {nameCategory} from "../../../../http/Type";
+import classes from './form.module.css';
+import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import SaveIcon from '@mui/icons-material/Save';
 
 
 const FormTechniqueChangeDeregistration = observer(({setVisible, idTechnique}) => {
         const {technique} = useContext(Context)
-        const [listTechnique, setListTechnique] = useState(technique.listNewTechniqueFromModernization[idTechnique])
-        const [listTechniqueForTable, setListTechniqueForTable] = useState(technique.listNewTechniqueFromModernizationForTable[idTechnique])
-        const [listDataValid, setListDataValid] = useState(technique.listTechniqueValid[idTechnique])
+        const [listTechnique, setListTechnique] = useState(technique.listNewTechniqueFromModernization.filter(listItem => listItem.id === idTechnique)[0])
+        const [listTechniqueForTable, setListTechniqueForTable] = useState(technique.listNewTechniqueFromModernizationForTable.filter(listItem => listItem.id === idTechnique)[0])
+        const [listDataValid, setListDataValid] = useState(technique.listTechniqueValid.filter(listItem => listItem.id === idTechnique)[0])
         useEffect(() => {
-            setListTechnique(technique.listNewTechniqueFromModernization[idTechnique])
-            setListTechniqueForTable(technique.listNewTechniqueFromModernizationForTable[idTechnique])
-            setListDataValid(technique.listTechniqueValid[idTechnique])
+            setListTechnique(technique.listNewTechniqueFromModernization.filter(listItem => listItem.id === idTechnique)[0])
+            setListTechniqueForTable(technique.listNewTechniqueFromModernizationForTable.filter(listItem => listItem.id === idTechnique)[0])
+            setListDataValid(technique.listTechniqueValid.filter(listItem => listItem.id === idTechnique)[0])
         }, [idTechnique])
-        console.log(listDataValid)
         const handleTechniqueChange = (e, name, data) => {
             if (e.target.innerHTML) {
                 const list = {...listTechnique};
@@ -131,12 +130,20 @@ const FormTechniqueChangeDeregistration = observer(({setVisible, idTechnique}) =
             listDataValid['detail'].splice(index, 1)
             setListDataValid(listDataValid)
         };
+        // technique.setListNewTechniqueFromModernization
+        // technique.listNewTechniqueFromModernization
+        //
+        // technique.setListNewTechniqueFromModernizationForTable
+        // technique.listNewTechniqueFromModernizationForTable
+        //
+        // technique.setListTechniqueValid
+        // technique.listTechniqueValid
+
         const addInListTeqchnique = () => {
             if (
                 listTechnique.techniqueTypeId !== '' &&
                 listTechnique.ensuringTypeId !== '' &&
                 listTechnique.techniqueName !== '' &&
-                listTechnique.techniqueName !== undefined &&
                 listTechnique.measurementId !== ''
             ) {
                 if (listTechnique.detail.map(({count, serialNumber, price, categoryId, dateOfManufacture}, index) => {
@@ -147,33 +154,177 @@ const FormTechniqueChangeDeregistration = observer(({setVisible, idTechnique}) =
                         categoryId !== '' &&
                         dateOfManufacture !== ''
                     ) {
+                        setListDataValid({
+                            ...listDataValid,
+                            techniqueName: (
+                                listTechnique.techniqueName === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            techniqueTypeId: (
+                                listTechnique.techniqueTypeId === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            ensuringTypeId: (
+                                listTechnique.ensuringTypeId === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            measurementId: (
+                                listTechnique.measurementId === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            detail: listDataValid.detail.map((item, index) => {
+                                return {
+                                    ...item,
+                                    count: (
+                                        listTechnique.detail[index].count === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    serialNumber: (
+                                        listTechnique.detail[index].serialNumber === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    price: (
+                                        listTechnique.detail[index].price === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    categoryId: (
+                                        listTechnique.detail[index].categoryId === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    dateOfManufacture: (
+                                        listTechnique.detail[index].dateOfManufacture === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    )
+                                }
+                            })
+                        })
                         return true
                     } else {
+                        setListDataValid({
+                            ...listDataValid,
+                            techniqueName: (
+                                listTechnique.techniqueName === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            techniqueTypeId: (
+                                listTechnique.techniqueTypeId === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            ensuringTypeId: (
+                                listTechnique.ensuringTypeId === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            measurementId: (
+                                listTechnique.measurementId === ''
+                                    ?
+                                    true
+                                    :
+                                    false
+                            ),
+                            detail: listDataValid.detail.map((item, index) => {
+                                return {
+                                    ...item,
+                                    count: (
+                                        listTechnique.detail[index].count === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    serialNumber: (
+                                        listTechnique.detail[index].serialNumber === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    price: (
+                                        listTechnique.detail[index].price === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    categoryId: (
+                                        listTechnique.detail[index].categoryId === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    ),
+                                    dateOfManufacture: (
+                                        listTechnique.detail[index].dateOfManufacture === ''
+                                            ?
+                                            true
+                                            :
+                                            false
+                                    )
+                                }
+                            })
+                        })
                         return false
                     }
                 }).includes(false) === false) {
                     technique.setListNewTechniqueFromModernization(
-                        technique.listNewTechniqueFromModernization.map((item, index) => {
-                            if (index === idTechnique) {
+                        technique.listNewTechniqueFromModernization.map((item) => {
+                            if (item.id === idTechnique) {
                                 return listTechnique
                             } else {
                                 return item
                             }
                         })
                     )
+
                     technique.setListNewTechniqueFromModernizationForTable(
-                        technique.listNewTechniqueFromModernizationForTable.map((item, index) => {
-                            if (index === idTechnique) {
+                        technique.listNewTechniqueFromModernizationForTable.map((item) => {
+                            if (item.id === idTechnique) {
                                 return listTechniqueForTable
                             } else {
                                 return item
                             }
                         })
                     )
+
                     technique.setListTechniqueValid(
-                        technique.listTechniqueValid.map((item, index) => {
-                            if (index === idTechnique) {
-                                return listDataValid
+                        technique.listTechniqueValid.map((item) => {
+                            if (item.id === idTechnique) {
+                                return listTechnique
                             } else {
                                 return item
                             }
@@ -185,13 +336,6 @@ const FormTechniqueChangeDeregistration = observer(({setVisible, idTechnique}) =
             } else {
                 setListDataValid({
                     ...listDataValid,
-                    subdivisionId: (
-                        listTechnique.subdivisionId === ''
-                            ?
-                            true
-                            :
-                            false
-                    ),
                     techniqueName: (
                         listTechnique.techniqueName === ''
                             ?
@@ -263,7 +407,6 @@ const FormTechniqueChangeDeregistration = observer(({setVisible, idTechnique}) =
                 })
             }
         }
-
         const getCategory = () => {
             if (listTechnique.techniqueTypeId) {
                 nameCategory(listTechnique.techniqueTypeId).then(data => technique.setCategory(data))

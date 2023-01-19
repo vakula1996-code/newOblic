@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -12,24 +12,17 @@ import FolderDeleteIcon from '@mui/icons-material/FolderDelete';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
 import MoveUpIcon from '@mui/icons-material/MoveUp';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 import {NavLink} from "react-router-dom";
 import classes from "./NavBar.module.css";
 import {
-    ADMIN_PANEL_DOCUMENTS_NAME,
-    ADMIN_PANEL_MEASUREMENT,
-    ADMIN_PANEL_RECORD,
-    ADMIN_PANEL_SUBDIVISION,
-    ADMIN_PANEL_TYPE,
-    ADMIN_PANEL_TYPE_ENSURING,
-    ADMIN_PANEL_USERS,
     COMING_CHARITY,
     COMING_OUTFIT,
     COMING_PURCHASE,
     DEREGISTRATION_MOVE,
     DEREGISTRATION_REPAIR,
-    ENSURING, INVENTORY,
+    ENSURING,
+    INVENTORY,
     LOOK_DOCUMENTS,
     MOVE_CONFIRM_TRANSMISSION,
     MOVE_DOCUMENT_EXECUTION,
@@ -37,8 +30,12 @@ import {
     MOVE_TO_FORM,
     REPORT_FOR_SUBDIVISION
 } from "../../utils/const";
+import {Context} from "../../index";
+import {observer} from "mobx-react-lite";
 
-export default function NavBar() {
+const NavBar = observer(() => {
+    const {user} = useContext(Context)
+
     const [open1, setOpen1] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [open3, setOpen3] = useState(false);
@@ -96,247 +93,259 @@ export default function NavBar() {
 
     };
 
-    return (<div>
-            <List
-                sx={{width: '100%', maxWidth: 360, bgcolor: 'rgba(243,230,221,0.95)'}}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-            >
-                <ListItemButton onClick={handleClick1}>
-                    <ListItemIcon>
-                        <MoveUpIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="Постановка на облік"/>
-                    {open1 ? <ExpandLess/> : <ExpandMore/>}
-                </ListItemButton>
-                <Collapse in={open1} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <NavLink to={COMING_PURCHASE} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Закупка"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={COMING_OUTFIT} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary="По наряду"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={COMING_CHARITY} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary="Шефська допомога"/>
-                            </ListItemButton>
-                        </NavLink>
-                    </List>
-                </Collapse>
+    return (
+        user.isAuth === true
+            ?
+            <div>
+                <List
+                    sx={{width: '100%', minWidth: 350, bgcolor: 'rgba(243,230,221,0.95)'}}
+                    component="nav"
+                    aria-labelledby="nested-list-subheader"
+                >
+                    <ListItemButton onClick={handleClick1}>
+                        <ListItemIcon>
+                            <MoveUpIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Постановка на облік"/>
+                        {open1 ? <ExpandLess/> : <ExpandMore/>}
+                    </ListItemButton>
+                    <Collapse in={open1} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <NavLink to={COMING_PURCHASE} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Закупка"/>
+                                </ListItemButton>
+                            </NavLink>
+                            <NavLink to={COMING_OUTFIT} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        primary="По наряду"/>
+                                </ListItemButton>
+                            </NavLink>
+                            <NavLink to={COMING_CHARITY} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        primary="Шефська допомога"/>
+                                </ListItemButton>
+                            </NavLink>
+                        </List>
+                    </Collapse>
 
-                <ListItemButton onClick={handleClick2}>
-                    <ListItemIcon>
-                        <MoveDownIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="Передача майна"/>
-                    {open2 ? <ExpandLess/> : <ExpandMore/>}
-                </ListItemButton>
-                <Collapse in={open2} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <NavLink to={MOVE_TO_FORM} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Формування наряду"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={MOVE_REGISTRATION} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Реєстрація наряду"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={MOVE_CONFIRM_TRANSMISSION} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Підтвердження передачі"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={MOVE_DOCUMENT_EXECUTION} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Відміна наряду"/>
-                            </ListItemButton>
-                        </NavLink>
-                    </List>
-                </Collapse>
+                    <ListItemButton onClick={handleClick2}>
+                        <ListItemIcon>
+                            <MoveDownIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Передача майна"/>
+                        {open2 ? <ExpandLess/> : <ExpandMore/>}
+                    </ListItemButton>
+                    <Collapse in={open2} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <NavLink to={MOVE_TO_FORM} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Формування наряду"/>
+                                </ListItemButton>
+                            </NavLink>
+                            <NavLink to={MOVE_REGISTRATION} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Реєстрація наряду"/>
+                                </ListItemButton>
+                            </NavLink>
+                            <NavLink to={MOVE_CONFIRM_TRANSMISSION} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Підтвердження передачі"/>
+                                </ListItemButton>
+                            </NavLink>
+                            <NavLink to={MOVE_DOCUMENT_EXECUTION} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Скасування наряду"/>
+                                </ListItemButton>
+                            </NavLink>
+                        </List>
+                    </Collapse>
 
-                <ListItemButton onClick={handleClick3}>
-                    <ListItemIcon>
-                        <FolderDeleteIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="Знятя з обліку"/>
-                    {open3 ? <ExpandLess/> : <ExpandMore/>}
-                </ListItemButton>
-                <Collapse in={open3} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <NavLink to={DEREGISTRATION_MOVE} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Списання"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={DEREGISTRATION_REPAIR} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Модернізація (ремонт)"/>
-                            </ListItemButton>
-                        </NavLink>
-                    </List>
-                </Collapse>
-                <ListItemButton onClick={handleClick4}>
-                    <ListItemIcon>
-                        <AssessmentIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="Звіти"/>
-                    {open4 ? <ExpandLess/> : <ExpandMore/>}
-                </ListItemButton>
-                <Collapse in={open4} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <NavLink to={ENSURING} className={classes.link}>
+                    <ListItemButton onClick={handleClick3}>
+                        <ListItemIcon>
+                            <FolderDeleteIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Знятя з обліку"/>
+                        {open3 ? <ExpandLess/> : <ExpandMore/>}
+                    </ListItemButton>
+                    <Collapse in={open3} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <NavLink to={DEREGISTRATION_MOVE} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Списання"/>
+                                </ListItemButton>
+                            </NavLink>
+                            <NavLink to={DEREGISTRATION_REPAIR} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Модернізація (ремонт)"/>
+                                </ListItemButton>
+                            </NavLink>
+                        </List>
+                    </Collapse>
+                    <ListItemButton onClick={handleClick4}>
+                        <ListItemIcon>
+                            <AssessmentIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Звіти"/>
+                        {open4 ? <ExpandLess/> : <ExpandMore/>}
+                    </ListItemButton>
+                    <Collapse in={open4} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            {user.role === 'admin' &&
+                                <NavLink to={ENSURING} className={classes.link}>
+                                    <ListItemButton sx={{pl: 4}}>
+                                        <ListItemIcon>
+                                            <FiberManualRecordIcon fontSize='small'/>
+                                        </ListItemIcon>
+                                        <ListItemText primary="Забезпеченість"/>
+                                    </ListItemButton>
+                                </NavLink>
+                            }
 
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Забезпеченість"/>
-                            </ListItemButton>
-                        </NavLink>
+                            <NavLink to={REPORT_FOR_SUBDIVISION} className={classes.link}>
 
-                        <NavLink to={REPORT_FOR_SUBDIVISION} className={classes.link}>
-
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Перегляд майна"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={LOOK_DOCUMENTS} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Перегляд документів"/>
-                            </ListItemButton>
-                        </NavLink>
-                    </List>
-                </Collapse>
-                <ListItemButton onClick={handleClick5}>
-                    <ListItemIcon>
-                        <InventoryIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="Інвентаризація"/>
-                    {open5 ? <ExpandLess/> : <ExpandMore/>}
-                </ListItemButton>
-                <Collapse in={open5} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <NavLink to={INVENTORY} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="За підрозділ"/>
-                            </ListItemButton>
-                        </NavLink>
-                    </List>
-                </Collapse>
-                <ListItemButton onClick={handleClick6}>
-                    <ListItemIcon>
-                        <SupervisorAccountIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="Адміністрування"/>
-                    {open6 ? <ExpandLess/> : <ExpandMore/>}
-                </ListItemButton>
-                <Collapse in={open6} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <NavLink to={ADMIN_PANEL_SUBDIVISION} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Підрозділи"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={ADMIN_PANEL_TYPE} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Типи"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={ADMIN_PANEL_TYPE_ENSURING} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Типи забезпечення"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={ADMIN_PANEL_MEASUREMENT} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Одиниці виміру"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={ADMIN_PANEL_DOCUMENTS_NAME} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Назви документів"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={ADMIN_PANEL_RECORD} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Записи"/>
-                            </ListItemButton>
-                        </NavLink>
-                        <NavLink to={ADMIN_PANEL_USERS} className={classes.link}>
-                            <ListItemButton sx={{pl: 4}}>
-                                <ListItemIcon>
-                                    <FiberManualRecordIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary="Користувачі"/>
-                            </ListItemButton>
-                        </NavLink>
-                    </List>
-                </Collapse>
-            </List>
-        </div>
-
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Перегляд майна"/>
+                                </ListItemButton>
+                            </NavLink>
+                            <NavLink to={LOOK_DOCUMENTS} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Перегляд документів"/>
+                                </ListItemButton>
+                            </NavLink>
+                        </List>
+                    </Collapse>
+                    <ListItemButton onClick={handleClick5}>
+                        <ListItemIcon>
+                            <InventoryIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Інвентаризація"/>
+                        {open5 ? <ExpandLess/> : <ExpandMore/>}
+                    </ListItemButton>
+                    <Collapse in={open5} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <NavLink to={INVENTORY} className={classes.link}>
+                                <ListItemButton sx={{pl: 4}}>
+                                    <ListItemIcon>
+                                        <FiberManualRecordIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="За підрозділ"/>
+                                </ListItemButton>
+                            </NavLink>
+                        </List>
+                    </Collapse>
+                    {/*{user.role === 'admin'*/}
+                    {/*    &&*/}
+                    {/*    <ListItemButton onClick={handleClick6}>*/}
+                    {/*        <ListItemIcon>*/}
+                    {/*            <SupervisorAccountIcon/>*/}
+                    {/*        </ListItemIcon>*/}
+                    {/*        <ListItemText primary="Адміністрування"/>*/}
+                    {/*        {open6 ? <ExpandLess/> : <ExpandMore/>}*/}
+                    {/*    </ListItemButton>*/}
+                    {/*}*/}
+                    {/*{user.role === 'admin'*/}
+                    {/*    &&*/}
+                    {/*    <Collapse in={open6} timeout="auto" unmountOnExit>*/}
+                    {/*        <List component="div" disablePadding>*/}
+                    {/*            <NavLink to={ADMIN_PANEL_SUBDIVISION} className={classes.link}>*/}
+                    {/*                <ListItemButton sx={{pl: 4}}>*/}
+                    {/*                    <ListItemIcon>*/}
+                    {/*                        <FiberManualRecordIcon fontSize='small'/>*/}
+                    {/*                    </ListItemIcon>*/}
+                    {/*                    <ListItemText primary="Підрозділи"/>*/}
+                    {/*                </ListItemButton>*/}
+                    {/*            </NavLink>*/}
+                    {/*            <NavLink to={ADMIN_PANEL_TYPE} className={classes.link}>*/}
+                    {/*                <ListItemButton sx={{pl: 4}}>*/}
+                    {/*                    <ListItemIcon>*/}
+                    {/*                        <FiberManualRecordIcon fontSize='small'/>*/}
+                    {/*                    </ListItemIcon>*/}
+                    {/*                    <ListItemText primary="Типи"/>*/}
+                    {/*                </ListItemButton>*/}
+                    {/*            </NavLink>*/}
+                    {/*            <NavLink to={ADMIN_PANEL_TYPE_ENSURING} className={classes.link}>*/}
+                    {/*                <ListItemButton sx={{pl: 4}}>*/}
+                    {/*                    <ListItemIcon>*/}
+                    {/*                        <FiberManualRecordIcon fontSize='small'/>*/}
+                    {/*                    </ListItemIcon>*/}
+                    {/*                    <ListItemText primary="Типи забезпечення"/>*/}
+                    {/*                </ListItemButton>*/}
+                    {/*            </NavLink>*/}
+                    {/*            <NavLink to={ADMIN_PANEL_MEASUREMENT} className={classes.link}>*/}
+                    {/*                <ListItemButton sx={{pl: 4}}>*/}
+                    {/*                    <ListItemIcon>*/}
+                    {/*                        <FiberManualRecordIcon fontSize='small'/>*/}
+                    {/*                    </ListItemIcon>*/}
+                    {/*                    <ListItemText primary="Одиниці виміру"/>*/}
+                    {/*                </ListItemButton>*/}
+                    {/*            </NavLink>*/}
+                    {/*            <NavLink to={ADMIN_PANEL_DOCUMENTS_NAME} className={classes.link}>*/}
+                    {/*                <ListItemButton sx={{pl: 4}}>*/}
+                    {/*                    <ListItemIcon>*/}
+                    {/*                        <FiberManualRecordIcon fontSize='small'/>*/}
+                    {/*                    </ListItemIcon>*/}
+                    {/*                    <ListItemText primary="Назви документів"/>*/}
+                    {/*                </ListItemButton>*/}
+                    {/*            </NavLink>*/}
+                    {/*            <NavLink to={ADMIN_PANEL_RECORD} className={classes.link}>*/}
+                    {/*                <ListItemButton sx={{pl: 4}}>*/}
+                    {/*                    <ListItemIcon>*/}
+                    {/*                        <FiberManualRecordIcon fontSize='small'/>*/}
+                    {/*                    </ListItemIcon>*/}
+                    {/*                    <ListItemText primary="Записи"/>*/}
+                    {/*                </ListItemButton>*/}
+                    {/*            </NavLink>*/}
+                    {/*            <NavLink to={ADMIN_PANEL_USERS} className={classes.link}>*/}
+                    {/*                <ListItemButton sx={{pl: 4}}>*/}
+                    {/*                    <ListItemIcon>*/}
+                    {/*                        <FiberManualRecordIcon fontSize='small'/>*/}
+                    {/*                    </ListItemIcon>*/}
+                    {/*                    <ListItemText primary="Користувачі"/>*/}
+                    {/*                </ListItemButton>*/}
+                    {/*            </NavLink>*/}
+                    {/*        </List>*/}
+                    {/*    </Collapse>*/}
+                    {/*}*/}
+                </List>
+            </div>
+            : <></>
     );
-}
+});
+
+export default NavBar;
